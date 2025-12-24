@@ -14,8 +14,6 @@ export default defineConfig({
         project3: resolve(__dirname, "project-3.html"),
         project4: resolve(__dirname, "project-4.html"),
         contact: resolve(__dirname, "contact.html"),
-        education: resolve(__dirname, "education.html"),
-        testimonials: resolve(__dirname, "testimonials.html"),
       },
     },
     assetsInclude: [
