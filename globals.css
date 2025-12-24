@@ -17,6 +17,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: auto;
+}
+
 body {
   font-family: "Host Grotesk";
   background-color: var(--base-100);
@@ -110,6 +114,7 @@ a span {
   h1 {
     font-size: 6rem;
   }
+
   h2 {
     font-size: 5rem;
   }

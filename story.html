@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Talha Rizwan | Story</title>
+  <link rel="icon" href="/global/site-icon.png" />
+  <link rel="stylesheet" href="/globals.css" />
+  <link rel="stylesheet" href="/css/transition.css" />
+  <link rel="stylesheet" href="/css/menu.css" />
+  <link rel="stylesheet" href="/css/footer.css" />
+  <style>
+    /* ========== HERO ========== */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100svh;
+      padding: 2.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    .hero .hero-header-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 5;
+    }
+
+    .hero .hero-header h1 {
+      font-size: 18vw;
+      line-height: 0.9;
+    }
+
+    .hero .hero-header.hero-header-1 {
+      position: relative;
+      z-index: 5;
+    }
+
+    .hero .hero-header.hero-header-2 {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero .hero-footer {
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+      padding: 2.75rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .hero .hero-footer .hero-footer-scroll-down {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .hero .hero-footer .hero-footer-symbols {
+      height: 1.125rem;
+    }
+
+    .hero-img-holder {
+      position: relative;
+      width: 100%;
+      height: 100svh;
+      padding: 2.75rem;
+      z-index: 2;
+    }
+
+    .hero-img-holder .hero-img {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform: translateY(-110%) scale(0.25) rotate(-15deg);
+      border: 0.3em solid var(--base-300);
+      border-radius: 2em;
+      overflow: hidden;
+    }
+
+    /* ========== FEATURED WORK ========== */
+    .featured-work {
+      position: relative;
+      width: 100%;
+      height: 100svh;
+      overflow: hidden;
+    }
+
+    .featured-work .featured-titles {
+      position: relative;
+      width: 500vw;
+      height: 100vh;
+      display: flex;
+      will-change: transform;
+    }
+
+    .featured-work .featured-title-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .featured-title-img {
+      position: relative;
+      top: 0px;
+      width: calc(100% - 4em);
+      height: 150px;
+      border: 0.2em solid var(--base-300);
+      border-radius: 1em;
+      overflow: hidden;
+      display: none;
+    }
+
+    .featured-work .featured-title-wrapper h1 {
+      text-align: center;
+      transform: translateY(-0.5em);
+    }
+
+    .featured-work .featured-images {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 200vw;
+      height: 200vh;
+      transform-style: preserve-3d;
+      perspective: 500px;
+    }
+
+    .featured-work .featured-img-card {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      border-radius: 2em;
+      overflow: hidden;
+    }
+
+    .featured-work .featured-work-indicator {
+      position: absolute;
+      top: 50%;
+      right: 2.75rem;
+      transform: translate(0%, -50%);
+      width: 2rem;
+      height: max-content;
+      padding: 1.25rem 0.65rem;
+      background-color: var(--base-300);
+      color: var(--base-100);
+      border-radius: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 0.35rem;
+      z-index: 10;
+    }
+
+    .featured-work .featured-work-indicator .indicator {
+      width: 100%;
+      height: 1.5px;
+      background-color: var(--base-100);
+      opacity: 0.2;
+    }
+
+    .featured-work .featured-work-footer {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      padding: 2.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 2;
+    }
+
+    /* ========== SERVICES ========== */
+    .services-header {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      padding: 2.75rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .services-header .services-profile-icon {
+      position: relative;
+      width: 250px;
+      height: 250px;
+      border-radius: 1em;
+      margin-bottom: 2em;
+      outline: 0.25rem solid var(--accent-1);
+      border: 0.25rem solid var(--base-300);
+      overflow: hidden;
+    }
+
+    .services-header .services-header-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 1em;
+    }
+
+    .services-header .services-header-title {
+      margin-bottom: 6em;
+    }
+
+    .services .service-card {
+      position: relative;
+      /* Increased height to allow more scrolling space between cards */
+      min-height: 400px;
+    }
+
+    .services .service-card-inner {
+      position: relative;
+      will-change: transform;
+      width: calc(100% - 5.5rem);
+      height: 100%;
+      margin: 0 auto;
+      padding: 4rem;
+      display: flex;
+      justify-content: space-between;
+      /* Align children to the top (Y-axis start) */
+      align-items: flex-start;
+      gap: 4em;
+      border-radius: 2em;
+      min-height: 650px;
+      /* Add a subtle retro border/shadow */
+      border: 2px solid rgba(0, 0, 0, 0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    .services .service-card-content {
+      flex: 1.2;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5em;
+      /* Align text to top as requested */
+      justify-content: flex-start;
+      padding-top: 2rem;
+    }
+
+    .services .service-card-content h1 {
+      /* Overriding global h1 */
+      font-size: 5rem;
+      line-height: 0.9;
+      margin-bottom: 0.2em;
+      color: var(--base-300);
+    }
+
+    .services .service-card-content p.md {
+      max-width: 500px;
+      font-size: 1.25rem;
+      line-height: 1.4;
+      opacity: 0.8;
+    }
+
+    .services .service-card-img {
+      flex: 0.8;
+      /* Enforce square aspect ratio to match generated images */
+      aspect-ratio: 1 / 1;
+      width: 100%;
+      max-width: 500px;
+      /* Prevent it from getting too large */
+      border-radius: 1.5em;
+      overflow: hidden;
+      border: 2px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .services .service-card-img img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    /* Updated Retro Nature Palette */
+    /* Card 1: Foundation (Prayer) - Soft Sage/Green */
+    .services #service-card-1 .service-card-inner {
+      background-color: #C9D6C7;
+    }
+
+    /* Card 2: Work (Develop) - Warm Sand/Paper */
+    .services #service-card-2 .service-card-inner {
+      background-color: #E6DCC3;
+    }
+
+    /* Card 3: Journey (Hike) - Muted Mountain Blue */
+    .services #service-card-3 .service-card-inner {
+      background-color: #B4C5CB;
+    }
+
+    /* Card 4: Connection (Tea) - Terracotta/Warm Earth */
+    .services #service-card-4 .service-card-inner {
+      background-color: #DFB49C;
+    }
+
+    /* ========== SERVICES SPACER ========== */
+    .services-spacer {
+      height: 20vh;
+    }
+
+    /* ========== MEDIA QUERIES ========== */
+    @media (max-width: 1000px) {
+      .hero .hero-footer .hero-footer-symbols {
+        display: none;
+      }
+
+      .hero .hero-footer {
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      .hero .hero-footer .hero-footer-scroll-down {
+        left: 2.75rem;
+        transform: translateX(0%);
+      }
+
+      .featured-work {
+        padding: 4em 0;
+      }
+
+      .featured-work,
+      .featured-work .featured-titles {
+        height: max-content;
+      }
+
+      .featured-work .featured-title-wrapper {
+        gap: 1em;
+      }
+
+      .featured-work .featured-title-wrapper:nth-child(1) {
+        margin-bottom: 2em;
+      }
+
+      .featured-work .featured-title-wrapper h1 {
+        transform: translateY(0);
+        width: 75%;
+      }
+
+      .featured-work .featured-work-footer {
+        position: relative;
+        margin-top: 4em;
+        justify-content: center;
+      }
+
+      .featured-work .featured-work-footer p:nth-child(1),
+      .featured-work .featured-work-footer p:nth-child(2) {
+        display: none;
+      }
+
+      .featured-work .featured-work-indicator {
+        display: none;
+      }
+
+      .featured-work .featured-images {
+        display: none;
+      }
+
+      .featured-title-img {
+        display: block;
+      }
+
+      .featured-work .featured-titles {
+        width: 100%;
+        flex-direction: column;
+        gap: 2em;
+      }
+
+      .services-header {
+        height: max-content;
+      }
+
+      .services {
+        display: flex;
+        flex-direction: column;
+        gap: 2em;
+      }
+
+      .services .service-card-inner {
+        min-height: 0;
+        flex-direction: column;
+        justify-content: center;
+        gap: 1em;
+        text-align: center;
+        border: 0.2em solid var(--base-300);
+        border-radius: 1em;
+      }
+
+      .services .service-card-img {
+        aspect-ratio: 5/3;
+        border: 0.2em solid var(--base-300);
+        border-radius: 1em;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- page transition -->
+  <div class="transition">
+    <div class="transition-overlay overlay"></div>
+    <div class="transition-logo">
+      <img src="/global/logo.png" alt="Logo" />
+    </div>
+  </div>
+  <div class="mask-transition"></div>
+  <div class="mask-bg-overlay"></div>
+
+  <!-- nav -->
+  <nav class="menu">
+    <div class="menu-header">
+      <a href="#" class="menu-logo"><img src="/global/logo.png" alt="" /></a>
+      <button class="menu-toggle" aria-label="Toggle menu">
+        <div class="menu menu-hamburger-icon">
+          <span class="menu-item"></span>
+          <span class="menu-item"></span>
+        </div>
+      </button>
+    </div>
+    <div class="menu-overlay">
+      <nav class="menu-nav">
+        <ul>
+          <li><a href="/">Home Base</a></li>
+          <li><a href="/about">The Operator</a></li>
+          <li><a href="/work">Mission Logs</a></li>
+          <li><a href="/story">Off The Grid</a></li>
+          <li><a href="/contact">Establish Uplink</a></li>
+        </ul>
+      </nav>
+      <div class="menu-footer">
+        <div class="menu-social">
+          <a href="#"><span>&#9654;</span> Instagram</a>
+          <a href="#"><span>&#9654;</span> LinkedIn</a>
+        </div>
+        <div class="menu-time">23:24:02 NY</div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="page story-page">
+    <!-- hero -->
+    <section class="hero">
+      <div class="hero-header-wrapper">
+        <div class="hero-header hero-header-1">
+          <h1>Off</h1>
+        </div>
+        <div class="hero-header hero-header-2">
+          <h1>The Grid</h1>
+        </div>
+      </div>
+      <div class="hero-footer">
+        <div class="hero-footer-symbols">
+          <img src="/symbols/s1-dark.png" alt="" />
+        </div>
+        <div class="hero-footer-scroll-down">
+          <p class="mono"><span>&#9654;</span> Escape Protocol / 2025</p>
+        </div>
+        <div class="hero-footer-tags">
+          <p class="mono"><span>&#9654;</span> Remote Mode: ON</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- hero img holder -->
+    <section class="hero-img-holder">
+      <div class="hero-img">
+        <img src="/home/hero.png" alt="" />
+      </div>
+    </section>
+
+    <!-- featured work -->
+    <section class="featured-work">
+      <div class="featured-images"></div>
+      <div class="featured-titles">
+        <div class="featured-title-wrapper">
+          <h1 class="featured-title">System Overload</h1>
+        </div>
+        <div class="featured-title-wrapper">
+          <div class="featured-title-img">
+            <img src="/work/1.png" alt="" />
+          </div>
+          <h1 class="featured-title">Disconnecting</h1>
+        </div>
+        <div class="featured-title-wrapper">
+          <div class="featured-title-img">
+            <img src="/work/2.png" alt="" />
+          </div>
+          <h1 class="featured-title">Seeking Signal</h1>
+        </div>
+        <div class="featured-title-wrapper">
+          <div class="featured-title-img">
+            <img src="/work/3.png" alt="" />
+          </div>
+          <h1 class="featured-title">New Protocol</h1>
+        </div>
+        <div class="featured-title-wrapper">
+          <div class="featured-title-img">
+            <img src="/work/4.png" alt="" />
+          </div>
+          <h1 class="featured-title">Online & Free</h1>
+        </div>
+      </div>
+      <div class="featured-work-indicator"></div>
+      <div class="featured-work-footer">
+        <p class="mono"><span>&#9654;</span> Life Chapters [ 04 ]</p>
+        <p class="mono">///////////////////</p>
+        <p class="mono"><a href="/work">View All Work</a></p>
+      </div>
+    </section>
+
+    <!-- services header -->
+    <section class="services-header">
+      <div class="services-header-content">
+        <div class="services-profile-icon">
+          <img src="/story/dp.png" alt="Morning Success" />
+        </div>
+        <p class="md">From cubicle to cabin. Code stays the same.</p>
+        <div class="services-header-title">
+          <h1>Escaped the grid</h1>
+          <h1>found the signal</h1>
+        </div>
+      </div>
+    </section>
+
+    <!-- services -->
+    <section class="services">
+      <div class="service-card" id="service-card-1">
+        <div class="service-card-inner">
+          <div class="service-card-content">
+            <h1>The Connection</h1>
+            <p class="md">Tea with the locals. Sharing stories over a warm kettle. Experiencing the culture and
+              community that makes this remote life truly rich.</p>
+          </div>
+          <div class="service-card-img">
+            <img src="/about/lifestyle-4.png" alt="Community Connection" />
+          </div>
+        </div>
+      </div>
+      <div class="service-card" id="service-card-2">
+        <div class="service-card-inner">
+          <div class="service-card-content">
+            <h1>The Work</h1>
+            <p class="md">A rustic table in the meadow becomes the command center. Shipping production code with a view
+              of the pines. Remote work redefined.</p>
+          </div>
+          <div class="service-card-img">
+            <img src="/about/lifestyle-2.png" alt="Remote Development" />
+          </div>
+        </div>
+      </div>
+      <div class="service-card" id="service-card-3">
+        <div class="service-card-inner">
+          <div class="service-card-content">
+            <h1>The Journey</h1>
+            <p class="md">Trading the desk chair for hiking boots. Exploring the rugged paths of the Himalayas. The best
+              way to clear the cache and reset the mind.</p>
+          </div>
+          <div class="service-card-img">
+            <img src="/about/lifestyle-3.png" alt="Hiking Adventure" />
+          </div>
+        </div>
+      </div>
+      <div class="service-card" id="service-card-4">
+        <div class="service-card-inner">
+          <div class="service-card-content">
+            <h1>The Foundation</h1>
+            <p class="md">Before the code, there is purpose. Finding peace on the prayer mat facing Nanga Parbat. A
+              moment of gratitude and realignment before the day begins.</p>
+          </div>
+          <div class="service-card-img">
+            <img src="/about/lifestyle-1.png" alt="Spiritual Grounding" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- spacer before footer -->
+    <div class="services-spacer"></div>
+
+    <!-- footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-top">
+          <div class="footer-col">
+            <p class="mono"><span>&#9654;</span> Initialize Encrypted Connection</p>
+            <div class="footer-email-container">
+              <div class="footer-email-row">
+                <input type="text" placeholder="your@email.com" />
+                <button>
+                  <img src="/global/footer-right-arrow.png" alt="" />
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="footer-col"></div>
+        </div>
+        <div class="footer-bottom">
+          <div class="footer-col">
+            <div class="footer-logo">
+              <img src="/global/logo.png" alt="" />
+            </div>
+          </div>
+          <div class="footer-col">
+            <div class="footer-sub-col">
+              <p class="mono">Explore</p>
+              <div class="footer-links">
+                <p><a href="/">Home Base</a></p>
+                <p><a href="/about">The Operator</a></p>
+                <p><a href="/work">Mission Logs</a></p>
+                <p><a href="/story">Off The Grid</a></p>
+                <p><a href="/contact">Establish Uplink</a></p>
+              </div>
+            </div>
+            <div class="footer-sub-col">
+              <p class="mono">Connect</p>
+              <div class="footer-copy">
+                <p>Base: Faroe Islands</p>
+                <p>work.talharizwan@gmail.com</p>
+                <br />
+                <p>LinkedIn</p>
+                <p>GitHub</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer-copyright">
+          <div class="footer-col">
+            <p class="mono">MWT July 2025</p>
+          </div>
+          <div class="footer-col">
+            <div class="footer-sub-col">
+              <p class="mono">Made by Talha Rizwan</p>
+            </div>
+            <div class="footer-sub-col">
+              <p class="mono">&copy; 2025 All Rights Reserved</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script type="module" src="/script/lenis-scroll.js"></script>
+  <script type="module" src="/script/transition.js"></script>
+  <script type="module" src="/script/menu.js"></script>
+  <script type="module">
+    import gsap from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // ========== HERO ==========
+      const heroImg = document.querySelector(".hero-img img");
+      const heroImages = ["/story/hero/1.png", "/story/hero/2.png", "/story/hero/3.png", "/story/hero/4.png", "/story/hero/5.png", "/story/hero/6.png", "/story/hero/7.png", "/story/hero/8.png", "/story/hero/9.png", "/story/hero/10.png"];
+      let currentImageIndex = 0;
+      let heroScrollTriggerInstance = null;
+
+      setInterval(() => {
+        currentImageIndex = (currentImageIndex + 1) % heroImages.length;
+        heroImg.src = heroImages[currentImageIndex];
+      }, 800);
+
+      const initHeroAnimations = () => {
+        if (heroScrollTriggerInstance) heroScrollTriggerInstance.kill();
+        heroScrollTriggerInstance = ScrollTrigger.create({
+          trigger: ".hero-img-holder",
+          start: "top bottom",
+          end: "top top",
+          onUpdate: (self) => {
+            const progress = self.progress;
+            gsap.set(".hero-img", { y: `${-110 + 110 * progress}%`, scale: 0.25 + 0.75 * progress, rotation: -15 + 15 * progress });
+          },
+        });
+      };
+      initHeroAnimations();
+      window.addEventListener("resize", initHeroAnimations);
+
+      // ========== FEATURED WORK ==========
+      let featuredScrollTriggerInstance = null;
+      const featuredImages = ["/story/1.png", "/story/2.png", "/story/3.png", "/story/4.png", "/story/5.png", "/story/6.png", "/story/7.png", "/story/8.png", "/story/9.png", "/story/10.png"];
+
+      const initFeaturedAnimations = () => {
+        if (window.innerWidth <= 1000) {
+          if (featuredScrollTriggerInstance) { featuredScrollTriggerInstance.kill(); featuredScrollTriggerInstance = null; }
+          return;
+        }
+        if (featuredScrollTriggerInstance) featuredScrollTriggerInstance.kill();
+
+        const indicatorContainer = document.querySelector(".featured-work-indicator");
+        indicatorContainer.innerHTML = "";
+        for (let section = 1; section <= 5; section++) {
+          const sectionNumber = document.createElement("p");
+          sectionNumber.className = "mono";
+          sectionNumber.textContent = `0${section}`;
+          indicatorContainer.appendChild(sectionNumber);
+          for (let i = 0; i < 10; i++) {
+            const indicator = document.createElement("div");
+            indicator.className = "indicator";
+            indicatorContainer.appendChild(indicator);
+          }
+        }
+
+        const featuredCardPosSmall = [
+          { y: 100, x: 1000 }, { y: 1500, x: 100 }, { y: 1250, x: 1950 }, { y: 1500, x: 850 }, { y: 200, x: 2100 },
+          { y: 250, x: 600 }, { y: 1100, x: 1650 }, { y: 1000, x: 800 }, { y: 900, x: 2200 }, { y: 150, x: 1600 },
+        ];
+        const featuredCardPosLarge = [
+          { y: 800, x: 5000 }, { y: 2000, x: 3000 }, { y: 240, x: 4450 }, { y: 1200, x: 3450 }, { y: 500, x: 2200 },
+          { y: 750, x: 1100 }, { y: 1850, x: 3350 }, { y: 2200, x: 1300 }, { y: 3000, x: 1950 }, { y: 500, x: 4500 },
+        ];
+        const featuredCardPos = window.innerWidth >= 1600 ? featuredCardPosLarge : featuredCardPosSmall;
+        const featuredTitles = document.querySelector(".featured-titles");
+        const moveDistance = window.innerWidth * 4;
+        const imagesContainer = document.querySelector(".featured-images");
+        imagesContainer.innerHTML = "";
+
+        for (let i = 0; i < 10; i++) {
+          const featuredImgCard = document.createElement("div");
+          featuredImgCard.className = `featured-img-card featured-img-card-${i + 1}`;
+          const img = document.createElement("img");
+          img.src = featuredImages[i];
+          img.alt = `featured work image ${i + 1}`;
+          featuredImgCard.appendChild(img);
+          gsap.set(featuredImgCard, { x: featuredCardPos[i].x, y: featuredCardPos[i].y });
+          imagesContainer.appendChild(featuredImgCard);
+        }
+
+        const featuredImgCards = document.querySelectorAll(".featured-img-card");
+        featuredImgCards.forEach((card) => { gsap.set(card, { z: -1500, scale: 0 }); });
+
+        featuredScrollTriggerInstance = ScrollTrigger.create({
+          trigger: ".featured-work",
+          start: "top top",
+          end: `+=${window.innerHeight * 5}px`,
+          pin: true,
+          scrub: 1,
+          onUpdate: (self) => {
+            gsap.set(featuredTitles, { x: -moveDistance * self.progress });
+            featuredImgCards.forEach((card, index) => {
+              const staggerOffset = index * 0.075;
+              const scaledProgress = (self.progress - staggerOffset) * 2;
+              const individualProgress = Math.max(0, Math.min(1, scaledProgress));
+              const newZ = -1500 + 3000 * individualProgress;
+              const scale = Math.max(0, Math.min(1, Math.min(1, individualProgress * 10)));
+              gsap.set(card, { z: newZ, scale: scale });
+            });
+            const indicators = document.querySelectorAll(".indicator");
+            const progressPerIndicator = 1 / indicators.length;
+            indicators.forEach((indicator, index) => {
+              gsap.to(indicator, { opacity: self.progress > index * progressPerIndicator ? 1 : 0.2, duration: 0.3 });
+            });
+          },
+        });
+      };
+      initFeaturedAnimations();
+      window.addEventListener("resize", initFeaturedAnimations);
+
+      // ========== SERVICES (Card Stacking) ==========
+      let servicesScrollTriggerInstances = [];
+
+      const initServicesAnimations = () => {
+        servicesScrollTriggerInstances.forEach((instance) => { if (instance) instance.kill(); });
+        servicesScrollTriggerInstances = [];
+        if (window.innerWidth <= 1000) return;
+
+        const services = gsap.utils.toArray(".service-card");
+
+        services.forEach((service, index) => {
+          const isLastServiceCard = index === services.length - 1;
+          const serviceCardInner = service.querySelector(".service-card-inner");
+
+          if (!isLastServiceCard) {
+            const pinTrigger = ScrollTrigger.create({
+              trigger: service,
+              start: "top 45%",
+              endTrigger: services[services.length - 1],
+              end: "top 50%",
+              pin: true,
+              pinSpacing: false,
+            });
+            servicesScrollTriggerInstances.push(pinTrigger);
+
+            const scrollAnimation = gsap.to(serviceCardInner, {
+              y: `-${(services.length - index) * 12}vh`,
+              ease: "none",
+              scrollTrigger: { trigger: service, start: "top 45%", endTrigger: services[services.length - 1], end: "top 50%", scrub: true },
+            });
+            servicesScrollTriggerInstances.push(scrollAnimation.scrollTrigger);
+          }
+        });
+      };
+      initServicesAnimations();
+      window.addEventListener("resize", initServicesAnimations);
+    });
+  </script>
+</body>
+
+</html>

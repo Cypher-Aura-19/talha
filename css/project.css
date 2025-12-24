@@ -1,6 +1,6 @@
 .project-header {
   position: relative;
-  width: 100vw;
+  width: 100%;
   height: 75svh;
   overflow: hidden;
 }
@@ -40,9 +40,257 @@
   aspect-ratio: 16/9;
 }
 
+/* Anime Text Section */
+.project-anime-text {
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  background-color: var(--base-100);
+  overflow: hidden;
+}
+
+.project-anime-text>.container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.project-anime-text .copy-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Section Labels */
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  background: var(--base-300);
+  border-radius: 100px;
+  margin-bottom: 0.5rem;
+  opacity: 0;
+}
+
+.section-label-text {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--base-100);
+}
+
+/* Section Divider */
+.section-divider {
+  width: 60%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--base-300), transparent);
+  margin: 1.5rem 0;
+  opacity: 0;
+}
+
+/* Stack Text Styling */
+.stack-text {
+  position: relative;
+}
+
+.stack-text::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% + 3rem);
+  height: calc(100% + 2rem);
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px dashed rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  z-index: -1;
+}
+
+/* Client Review Testimonial Styles */
+.project-client-review .copy-container {
+  position: relative;
+  gap: 2.5rem;
+}
+
+.review-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  opacity: 0;
+}
+
+.review-stars {
+  display: flex;
+  gap: 0.25rem;
+  color: var(--accent-1);
+  font-size: 1.25rem;
+}
+
+.review-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--base-300);
+  border-radius: 100px;
+}
+
+.review-label p.mono {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--base-100);
+}
+
+.review-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding-top: 2rem;
+  border-top: 1px dashed rgba(0, 0, 0, 0.1);
+  opacity: 0;
+}
+
+.review-author {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.review-author-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background-color: var(--accent-2);
+  color: var(--base-300);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: 3px solid var(--base-100);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.review-author-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  text-align: left;
+}
+
+.review-author-info h4 {
+  color: var(--base-300);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.review-author-info p.mono {
+  color: var(--base-300);
+  opacity: 0.5;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.review-project-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px dashed rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+}
+
+.review-project-tag p.mono {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--base-300);
+  opacity: 0.6;
+}
+
+.project-anime-text .anime-text {
+  width: 60%;
+}
+
+.project-anime-text .anime-text p {
+  color: var(--base-300);
+  text-align: center;
+  font-size: 1.75rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.project-anime-text .anime-text .word {
+  display: inline-block;
+  position: relative;
+  margin-right: 0.25rem;
+  margin-bottom: 0.2rem;
+  padding: 0.1rem 0.2rem;
+  border-radius: 4px;
+}
+
+.project-anime-text .anime-text .word.keyword-wrapper {
+  margin: 0 0.6rem 0.3rem 0.3rem;
+}
+
+.project-anime-text .anime-text .word span {
+  position: relative;
+}
+
+.project-anime-text .anime-text .word span.keyword {
+  border-radius: 2rem;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  padding: 0.1rem 0;
+  color: var(--base-300);
+}
+
+.project-anime-text .anime-text .word span.keyword::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(100% + 1rem);
+  height: calc(100% + 0.1rem);
+  border-radius: 8px;
+  z-index: -1;
+}
+
+/* Simple 3-color system for keywords */
+.project-anime-text .anime-text .word span.keyword.accent-1::before {
+  background-color: var(--accent-1);
+}
+
+.project-anime-text .anime-text .word span.keyword.accent-2::before {
+  background-color: var(--accent-2);
+}
+
+.project-anime-text .anime-text .word span.keyword.accent-3::before {
+  background-color: var(--accent-3);
+}
+
+.project-anime-text .anime-text .word,
+.project-anime-text .anime-text .word span {
+  opacity: 0;
+}
+
 .project-overview {
   position: relative;
-  width: 100vw;
+  width: 100%;
   height: 100%;
   padding: 2rem 0 6rem 0;
   overflow: hidden;
@@ -63,16 +311,13 @@
   gap: 4rem;
 }
 
-.project-overview
-  .container
-  .project-overview-col:nth-child(2)
-  .project-overview-copy {
+.project-overview .container .project-overview-col:nth-child(2) .project-overview-copy {
   width: 75%;
 }
 
 .project-snapshots {
   position: relative;
-  width: 100vw;
+  width: 100%;
   height: 100svh;
   background-color: var(--base-300);
   color: var(--base-100);
@@ -97,7 +342,7 @@
 
 .project-snapshot img {
   width: 65%;
-  height: 65%;
+  height: auto;
   aspect-ratio: 16/9;
   object-fit: cover;
   border: 1px dashed var(--base-secondary-dark);
@@ -138,7 +383,7 @@
 
 .project-info {
   position: relative;
-  width: 100vw;
+  width: 100%;
   height: 100%;
   padding: 8rem 0 10rem 0;
   overflow: hidden;
@@ -159,40 +404,172 @@
 
 .next-project {
   position: relative;
-  width: 100vw;
-  height: 100svh;
+  width: 100%;
+  min-height: 100svh;
   background-color: var(--base-300);
   color: var(--base-100);
   overflow: hidden;
 }
 
+.next-project-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* Hover effects */
+.next-project-link:hover .next-project-title h3 {
+  color: var(--base-100);
+}
+
+.next-project-link:hover .next-project-preview-img img {
+  transform: scale(1.05);
+}
+
+.next-project-link:hover .next-project-cta-icon {
+  transform: scale(1.1);
+  background-color: var(--accent-1);
+  border-color: var(--accent-1);
+  color: var(--base-300);
+}
+
+.next-project-link:hover .next-project-cta-text {
+  color: var(--accent-1);
+}
+
 .next-project .container.next-project-data {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  text-align: center;
+  padding: 6rem 0;
+}
+
+/* Label */
+.next-project-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 1rem;
+}
+
+.next-project-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--base-100);
+  padding: 0.5rem 1.5rem;
+  border: 1px solid var(--base-secondary-dark);
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Big title */
+.next-project .next-project-title {
+  display: flex;
+  align-items: center;
   justify-content: center;
 }
 
-.next-project .next-project-header-divider {
+.next-project .next-project-title h3 {
+  font-size: clamp(3rem, 10vw, 7rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: var(--base-secondary-dark);
+  transition: all 0.4s ease;
+}
+
+/* Preview image */
+.next-project-preview {
+  position: relative;
   width: 100%;
-  height: 1px;
-  border-bottom: 1px dashed var(--base-secondary-dark);
-  opacity: 0.25;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
+.next-project-preview-img {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/10;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px dashed var(--base-secondary-dark);
+}
+
+.next-project-preview-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+/* Meta tags */
+.next-project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.next-project-tag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--base-100);
+  padding: 0.35rem 0.75rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* CTA button */
+.next-project-cta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.next-project-cta-icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--base-100);
+  border-radius: 50%;
+  font-size: 1.5rem;
+  color: var(--base-100);
+  transition: all 0.3s ease;
+}
+
+.next-project-cta-text {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--base-100);
+  transition: color 0.3s ease;
+}
+
+/* Hide old elements */
+.next-project .next-project-header-divider,
 .next-project .next-project-meta {
-  display: flex;
-  gap: 2rem;
-}
-
-.next-project .next-project-meta-col,
-.next-project .next-project-meta-sub-col {
-  flex: 1;
-}
-
-.next-project .next-project-meta-col:nth-child(2) {
-  display: flex;
-  gap: 2rem;
+  display: none;
 }
 
 .home-spotlight-top-bar {
@@ -216,6 +593,7 @@
 }
 
 @media (max-width: 1000px) {
+
   .project-header .project-meta,
   .project-header .project-meta-col:nth-child(2),
   .next-project .next-project-meta,
@@ -232,10 +610,7 @@
     display: none;
   }
 
-  .project-overview
-    .container
-    .project-overview-col:nth-child(2)
-    .project-overview-copy,
+  .project-overview .container .project-overview-col:nth-child(2) .project-overview-copy,
   .project-info .container .project-info-col:nth-child(2) .project-info-copy {
     width: 100%;
   }
@@ -243,5 +618,128 @@
   .snapshots-progress-bar {
     bottom: 5rem;
     width: calc(100% - 4rem);
+  }
+
+  .next-project .next-project-title h3 {
+    font-size: clamp(2rem, 8vw, 4rem);
+  }
+
+  .next-project-preview {
+    max-width: 100%;
+    padding: 0 1rem;
+  }
+
+  .next-project-preview-img {
+    aspect-ratio: 16/9;
+  }
+
+  .next-project-cta-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 1.25rem;
+  }
+
+  .next-project-cta-text {
+    font-size: 0.7rem;
+  }
+
+  .project-anime-text .anime-text {
+    width: 90%;
+  }
+
+  .project-anime-text .anime-text p {
+    font-size: 1.3rem;
+  }
+
+  .project-anime-text .anime-text .word {
+    margin-right: 0.1rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .project-anime-text .anime-text .word.keyword-wrapper {
+    margin: 0 0.4rem 0.2rem 0.2rem;
+  }
+
+  .project-anime-text .anime-text .word span.keyword::before {
+    width: calc(100% + 0.5rem);
+    height: calc(100% + 0.075rem);
+  }
+
+  .section-label {
+    padding: 0.4rem 1rem;
+    gap: 0.4rem;
+  }
+
+  .section-label-icon {
+    font-size: 0.6rem;
+  }
+
+  .section-label-text {
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+  }
+
+  .section-divider {
+    width: 80%;
+    margin: 1rem 0;
+  }
+
+  .stack-text::before {
+    width: calc(100% + 1.5rem);
+    height: calc(100% + 1.5rem);
+    border-radius: 12px;
+  }
+
+  .review-header {
+    gap: 0.75rem;
+  }
+
+  .review-stars {
+    font-size: 1rem;
+  }
+
+  .review-label {
+    padding: 0.4rem 0.8rem;
+  }
+
+  .review-label p.mono {
+    font-size: 0.6rem;
+  }
+
+  .review-footer {
+    gap: 1rem;
+    padding-top: 1.5rem;
+  }
+
+  .review-author {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+  }
+
+  .review-author-avatar {
+    width: 44px;
+    height: 44px;
+    font-size: 0.8rem;
+  }
+
+  .review-author-info {
+    align-items: center;
+  }
+
+  .review-author-info h4 {
+    font-size: 0.9rem;
+  }
+
+  .review-author-info p.mono {
+    font-size: 0.6rem;
+  }
+
+  .review-project-tag {
+    padding: 0.3rem 0.6rem;
+  }
+
+  .review-project-tag p.mono {
+    font-size: 0.55rem;
   }
 }

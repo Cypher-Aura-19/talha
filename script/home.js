@@ -8,14 +8,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   gsap.registerPlugin(ScrollTrigger, SplitText);
 
-  gsap.set(".hero .hero-cards .card", { transformOrigin: "center center" });
+  gsap.set(".hero .hero-cards .card", {
+    transformOrigin: "center center",
+    scale: 0.001,
+    opacity: 0,
+  });
 
   gsap.to(".hero .hero-cards .card", {
     scale: 1,
+    opacity: 1,
     duration: 0.75,
     delay: 0.25,
     stagger: 0.1,
     ease: "power4.out",
+    force3D: false,
     onComplete: () => {
       gsap.set("#hero-card-1", { transformOrigin: "top right" });
       gsap.set("#hero-card-3", { transformOrigin: "top left" });
@@ -112,13 +118,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const progress = self.progress;
 
         const headerProgress = gsap.utils.clamp(0, 1, progress / 0.9);
-        const headerY = gsap.utils.interpolate(
-          "300%",
-          "0%",
+        const headerOpacity = gsap.utils.interpolate(
+          0,
+          1,
           smoothStep(headerProgress)
         );
         gsap.set(".home-services-header", {
-          y: headerY,
+          opacity: headerOpacity,
         });
 
         ["#card-1", "#card-2", "#card-3"].forEach((cardId, index) => {
@@ -387,4 +393,33 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     },
   });
+
+  // Home About Hover Effect
+  const aboutCards = document.querySelectorAll(".home-about-card");
+  const aboutPreview = document.querySelector(".home-about-preview");
+  const aboutPreviewImg = document.querySelector(".home-about-preview img");
+
+  if (aboutCards.length > 0 && aboutPreview && aboutPreviewImg) {
+    aboutCards.forEach((card) => {
+      card.addEventListener("mouseenter", () => {
+        const previewSrc = card.dataset.preview;
+        if (previewSrc) {
+          aboutPreviewImg.src = previewSrc;
+          gsap.to(aboutPreview, {
+            opacity: 1,
+            duration: 0.3,
+            ease: "power2.out"
+          });
+        }
+      });
+
+      card.addEventListener("mouseleave", () => {
+        gsap.to(aboutPreview, {
+          opacity: 0,
+          duration: 0.3,
+          ease: "power2.out"
+        });
+      });
+    });
+  }
 });

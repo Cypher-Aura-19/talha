@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
     slideLink.className = "slide-link";
     const a = document.createElement("a");
     a.href = slideData.slideUrl;
-    a.textContent = "View Project";
+    a.textContent = "Access Log";
     slideLink.appendChild(a);
 
     slideHeader.appendChild(slideTitle);
@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
     slideTags.className = "slide-tags";
     const tagsLabel = document.createElement("p");
     tagsLabel.className = "mono";
-    tagsLabel.textContent = "Tags";
+    tagsLabel.textContent = "Specs";
     slideTags.appendChild(tagsLabel);
 
     slideData.slideTags.forEach((tag) => {

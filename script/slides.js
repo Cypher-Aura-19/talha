@@ -1,35 +1,35 @@
 const slides = [
   {
-    slideTitle: "Brainstorm OS",
+    slideTitle: "DeliveTree",
     slideDescription:
-      "A concept UI for a neural-thinking workspace. Designed to visualize raw ideas, tangled thoughts, and clean execution — all at once.",
-    slideUrl: "/project",
-    slideTags: ["Web Design", "UI/UX", "Concept UI", "Creative Dev"],
-    slideImg: "/work/slider-img-1.jpg",
+      "Cross-border ecosystem management grid. High-latency coordination between Islamabad and Ankara sectors.",
+    slideUrl: "/project-1",
+    slideTags: ["React", "Node.js", "Remote Ops", "Full Stack"],
+    slideImg: "/work/1.png",
   },
   {
-    slideTitle: "Orange Room",
+    slideTitle: "SQAlify",
     slideDescription:
-      "A surreal microsite exploring control, uniformity, and digital disconnect. Built with scroll-reactive animations and bold, brutalist layout.",
-    slideUrl: "/project",
-    slideTags: ["Creative Dev", "Scroll UX", "Experimental", "Visual Story"],
-    slideImg: "/work/slider-img-2.jpg",
+      "Virtual training simulation for Quality Assurance operatives. Level-based clearance concepts and progression.",
+    slideUrl: "/project-2",
+    slideTags: ["Unity", "C#", "Simulation", "Education"],
+    slideImg: "/work/2.png",
   },
   {
-    slideTitle: "Futureschool",
+    slideTitle: "DocIntel",
     slideDescription:
-      "A quirky concept for a 60s-style AI education platform. Handcrafted visuals meet structured layouts for a playful learning interface.",
-    slideUrl: "/project",
-    slideTags: ["UI Design", "Theme Concept", "Playful UX", "Frontend"],
-    slideImg: "/work/slider-img-3.jpg",
+      "Automated threat detection for legal protocols. Neural network scanner designed to identify clause anomalies.",
+    slideUrl: "/project-3",
+    slideTags: ["Next.js", "Gemini AI", "Intel", "Security"],
+    slideImg: "/work/3.png",
   },
   {
-    slideTitle: "Mindwave Grid",
+    slideTitle: "Resume AI",
     slideDescription:
-      "A visual identity experiment for a VR-based ideation tool. Dynamic grids, floating modules, and warm tones bring structure to wild thinking.",
-    slideUrl: "/project",
-    slideTags: ["VR Design", "Grid System", "Creative Tech", "3D UI"],
-    slideImg: "/work/slider-img-4.jpg",
+      "Career trajectory calculation engine. Autonomous job market infiltration system with real-time feedback.",
+    slideUrl: "/project-4",
+    slideTags: ["React", "AI", "Automation", "Infiltration"],
+    slideImg: "/work/4.png",
   },
 ];
 
