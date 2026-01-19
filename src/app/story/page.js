@@ -618,7 +618,7 @@ export default function Page() {
       <div ref={containerRef} className="story-page">
         <section className="story-hero">
           <div className="story-hero-img" ref={heroImgRef}>
-            <img ref={heroImgElementRef} src="/story/hero.png" alt="Story hero background" />
+            <img ref={heroImgElementRef} src="/story/hero.webp" alt="Story hero background" />
           </div>
 
           <div className="story-hero-mask" ref={heroMaskRef}></div>
@@ -722,7 +722,7 @@ export default function Page() {
                 </svg>
               </button>
               <div className="location-card-image" ref={cardImageRef}>
-                <img src="/story/1.png" alt="Location" ref={cardImageElRef} />
+                <img src="/story/1.webp" alt="Location" ref={cardImageElRef} />
               </div>
               <div className="location-card-content">
                 <p className="mono location-card-label" ref={cardLabelRef}></p>
@@ -860,7 +860,7 @@ export default function Page() {
                   <div className="footer-email-row">
                     <input type="text" placeholder="your@email.com" />
                     <button>
-                      <Image src="/global/footer-right-arrow.png" alt="Submit" width={20} height={20} />
+                      <Image src="/global/footer-right-arrow.webp" alt="Submit" width={20} height={20} />
                     </button>
                   </div>
                 </div>
@@ -870,7 +870,7 @@ export default function Page() {
             <div className="footer-bottom">
               <div className="footer-col">
                 <div className="footer-logo">
-                  <Image src="/global/logo.png" alt="Logo" width={120} height={40} />
+                  <Image src="/global/logo.webp" alt="Logo" width={120} height={40} />
                 </div>
               </div>
               <div className="footer-col">

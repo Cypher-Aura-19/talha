@@ -39,7 +39,7 @@ const Nav = () => {
     <nav className="menu">
       <div className="menu-header">
         <a href="#" className="menu-logo">
-          <img src="/global/logo.png" alt="" />
+          <img src="/global/logo.webp" alt="" />
         </a>
         <button className="menu-toggle" aria-label="Toggle menu">
           <div className="menu-hamburger-icon">

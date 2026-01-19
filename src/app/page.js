@@ -124,12 +124,12 @@ export default function Home() {
           <div className="container">
             <div className="symbols-container">
               <div className="symbol">
-                <img src="/symbols/s1-dark.png" alt="Symbol" />
+                <img src="/symbols/s1-dark.webp" alt="Symbol" />
               </div>
             </div>
             <div className="symbols-container">
               <div className="symbol">
-                <img src="/symbols/s1-dark.png" alt="Symbol" />
+                <img src="/symbols/s1-dark.webp" alt="Symbol" />
               </div>
             </div>
           </div>
@@ -162,7 +162,7 @@ export default function Home() {
           <div className="hero-cards">
             <div className="card" id="hero-card-1">
               <div className="hero-card-inner">
-                <div className="card-bg-img"><img src="/cards/1.png" alt="Plan" priority="high" /></div>
+                <div className="card-bg-img"><img src="/cards/1.webp" alt="Plan" priority="high" /></div>
                 <div className="card-title">
                   <p className="mono">Scout</p>
                   <p className="mono">01</p>
@@ -175,7 +175,7 @@ export default function Home() {
             </div>
             <div className="card" id="hero-card-2">
               <div className="hero-card-inner">
-                <div className="card-bg-img"><img src="/cards/2.png" alt="Design" priority="high" /></div>
+                <div className="card-bg-img"><img src="/cards/2.webp" alt="Design" priority="high" /></div>
                 <div className="card-title">
                   <p className="mono">Map</p>
                   <p className="mono">02</p>
@@ -188,7 +188,7 @@ export default function Home() {
             </div>
             <div className="card" id="hero-card-3">
               <div className="hero-card-inner">
-                <div className="card-bg-img"><img src="/cards/3.png" alt="Develop" priority="high" /></div>
+                <div className="card-bg-img"><img src="/cards/3.webp" alt="Develop" priority="high" /></div>
                 <div className="card-title">
                   <p className="mono">Build</p>
                   <p className="mono">03</p>
@@ -206,17 +206,17 @@ export default function Home() {
       <section className="home-about">
         <div className="home-about-preview">
           {/* Pre-load all preview images, toggle visibility via CSS */}
-          <img className="preview-img" data-for="1" src="/home/wideskill-1.png" alt="" />
-          <img className="preview-img" data-for="2" src="/home/wideskill-2.png" alt="" />
-          <img className="preview-img" data-for="3" src="/home/wideskill-3.png" alt="" />
-          <img className="preview-img" data-for="4" src="/home/wideskill-4.png" alt="" />
+          <img className="preview-img" data-for="1" src="/home/wideskill-1.webp" alt="" />
+          <img className="preview-img" data-for="2" src="/home/wideskill-2.webp" alt="" />
+          <img className="preview-img" data-for="3" src="/home/wideskill-3.webp" alt="" />
+          <img className="preview-img" data-for="4" src="/home/wideskill-4.webp" alt="" />
           <div className="home-about-preview-overlay"></div>
         </div>
         <div className="container">
           <div className="home-about-col">
             <div className="symbols-container">
               <div className="symbol">
-                <img src="/symbols/s2-light.png" alt="Symbol" />
+                <img src="/symbols/s2-light.webp" alt="Symbol" />
               </div>
             </div>
             <div className="home-about-header">
@@ -231,7 +231,7 @@ export default function Home() {
           <div className="home-about-col">
             <div className="home-about-col-row">
               <div className="home-about-card" data-preview="1">
-                <div className="home-about-card-bg"><img src="/home/skill-1.png" alt="Frontend in Iceland" loading="lazy" />
+                <div className="home-about-card-bg"><img src="/home/skill-1.webp" alt="Frontend in Iceland" loading="lazy" />
                 </div>
                 <p className="mono" data-animate-type="scramble" data-animate-delay="0.2" data-animate-on-scroll="true">
                   [ Sector 01 ]
@@ -241,7 +241,7 @@ export default function Home() {
                 </h4>
               </div>
               <div className="home-about-card" data-preview="2">
-                <div className="home-about-card-bg"><img src="/home/skill-2.png" alt="Backend in Iceland" loading="lazy" />
+                <div className="home-about-card-bg"><img src="/home/skill-2.webp" alt="Backend in Iceland" loading="lazy" />
                 </div>
                 <p className="mono" data-animate-type="scramble" data-animate-delay="0.25" data-animate-on-scroll="true">
                   [ Sector 02 ]
@@ -253,7 +253,7 @@ export default function Home() {
             </div>
             <div className="home-about-col-row">
               <div className="home-about-card" data-preview="3">
-                <div className="home-about-card-bg"><img src="/home/skill-3.png" alt="UI/UX in Iceland" loading="lazy" /></div>
+                <div className="home-about-card-bg"><img src="/home/skill-3.webp" alt="UI/UX in Iceland" loading="lazy" /></div>
                 <p className="mono" data-animate-type="scramble" data-animate-delay="0.3" data-animate-on-scroll="true">
                   [ Sector 03 ]
                 </p>
@@ -262,7 +262,7 @@ export default function Home() {
                 </h4>
               </div>
               <div className="home-about-card" data-preview="4">
-                <div className="home-about-card-bg"><img src="/home/skill-4.png" alt="DevOps in Iceland" loading="lazy" /></div>
+                <div className="home-about-card-bg"><img src="/home/skill-4.webp" alt="DevOps in Iceland" loading="lazy" /></div>
                 <p className="mono" data-animate-type="scramble" data-animate-delay="0.35" data-animate-on-scroll="true">
                   [ Sector 04 ]
                 </p>
@@ -285,18 +285,18 @@ export default function Home() {
           <div className="container">
             <div className="symbols-container">
               <div className="symbol">
-                <img src="/symbols/s1-dark.png" alt="Symbol" />
+                <img src="/symbols/s1-dark.webp" alt="Symbol" />
               </div>
               <div className="symbol">
-                <img src="/symbols/s3-dark.png" alt="Symbol" />
+                <img src="/symbols/s3-dark.webp" alt="Symbol" />
               </div>
             </div>
             <div className="symbols-container">
               <div className="symbol">
-                <img src="/symbols/s3-dark.png" alt="Symbol" />
+                <img src="/symbols/s3-dark.webp" alt="Symbol" />
               </div>
               <div className="symbol">
-                <img src="/symbols/s1-dark.png" alt="Symbol" />
+                <img src="/symbols/s1-dark.webp" alt="Symbol" />
               </div>
             </div>
           </div>
@@ -317,7 +317,7 @@ export default function Home() {
               <div className="card-wrapper">
                 <div className="flip-card-inner">
                   <div className="flip-card-front">
-                    <div className="card-bg-img"><img src="/cards/1.png" alt="Plan" loading="lazy" /></div>
+                    <div className="card-bg-img"><img src="/cards/1.webp" alt="Plan" loading="lazy" /></div>
                     <div className="card-title">
                       <p className="mono">Scout</p>
                       <p className="mono">01</p>
@@ -352,7 +352,7 @@ export default function Home() {
               <div className="card-wrapper">
                 <div className="flip-card-inner">
                   <div className="flip-card-front">
-                    <div className="card-bg-img"><img src="/cards/2.png" alt="Design" loading="lazy" /></div>
+                    <div className="card-bg-img"><img src="/cards/2.webp" alt="Design" loading="lazy" /></div>
                     <div className="card-title">
                       <p className="mono">Map</p>
                       <p className="mono">02</p>
@@ -387,7 +387,7 @@ export default function Home() {
               <div className="card-wrapper">
                 <div className="flip-card-inner">
                   <div className="flip-card-front">
-                    <div className="card-bg-img"><img src="/cards/3.png" alt="Develop" loading="lazy" /></div>
+                    <div className="card-bg-img"><img src="/cards/3.webp" alt="Develop" loading="lazy" /></div>
                     <div className="card-title">
                       <p className="mono">Build</p>
                       <p className="mono">03</p>
@@ -427,24 +427,24 @@ export default function Home() {
           <div className="container">
             <div className="symbols-container">
               <div className="symbol">
-                <img src="/symbols/s1-light.png" alt="Symbol" loading="lazy" decoding="async" />
+                <img src="/symbols/s1-light.webp" alt="Symbol" loading="lazy" decoding="async" />
               </div>
               <div className="symbol">
-                <img src="/symbols/s2-light.png" alt="Symbol" loading="lazy" decoding="async" />
+                <img src="/symbols/s2-light.webp" alt="Symbol" loading="lazy" decoding="async" />
               </div>
               <div className="symbol">
-                <img src="/symbols/s3-light.png" alt="Symbol" loading="lazy" decoding="async" />
+                <img src="/symbols/s3-light.webp" alt="Symbol" loading="lazy" decoding="async" />
               </div>
             </div>
             <div className="symbols-container">
               <div className="symbol">
-                <img src="/symbols/s3-light.png" alt="Symbol" loading="lazy" decoding="async" />
+                <img src="/symbols/s3-light.webp" alt="Symbol" loading="lazy" decoding="async" />
               </div>
               <div className="symbol">
-                <img src="/symbols/s2-light.png" alt="Symbol" loading="lazy" decoding="async" />
+                <img src="/symbols/s2-light.webp" alt="Symbol" loading="lazy" decoding="async" />
               </div>
               <div className="symbol">
-                <img src="/symbols/s1-light.png" alt="Symbol" loading="lazy" decoding="async" />
+                <img src="/symbols/s1-light.webp" alt="Symbol" loading="lazy" decoding="async" />
               </div>
             </div>
           </div>
@@ -470,55 +470,55 @@ export default function Home() {
           <div className="home-spotlight-images-row">
             <div className="home-spotlight-image"></div>
             <div className="home-spotlight-image image-holder">
-              <img src="/home/1.jpg" alt="" loading="lazy" decoding="async" />
+              <img src="/home/1.webp" alt="" loading="lazy" decoding="async" />
             </div>
             <div className="home-spotlight-image"></div>
             <div className="home-spotlight-image image-holder">
-              <img src="/home/2.jpg" alt="" loading="lazy" decoding="async" />
+              <img src="/home/2.webp" alt="" loading="lazy" decoding="async" />
             </div>
           </div>
           <div className="home-spotlight-images-row">
             <div className="home-spotlight-image image-holder">
-              <img src="/home/3.jpg" alt="" loading="lazy" decoding="async" />
+              <img src="/home/3.webp" alt="" loading="lazy" decoding="async" />
             </div>
             <div className="home-spotlight-image"></div>
             <div className="home-spotlight-image"></div>
-            <div className="home-spotlight-image"></div>
-          </div>
-          <div className="home-spotlight-images-row">
-            <div className="home-spotlight-image"></div>
-            <div className="home-spotlight-image image-holder">
-              <img src="/home/4.jpg" alt="" loading="lazy" decoding="async" />
-            </div>
-            <div className="home-spotlight-image image-holder">
-              <img src="/home/5.jpg" alt="" loading="lazy" decoding="async" />
-            </div>
             <div className="home-spotlight-image"></div>
           </div>
           <div className="home-spotlight-images-row">
             <div className="home-spotlight-image"></div>
             <div className="home-spotlight-image image-holder">
-              <img src="/home/6.png" alt="" loading="lazy" decoding="async" />
+              <img src="/home/4.webp" alt="" loading="lazy" decoding="async" />
+            </div>
+            <div className="home-spotlight-image image-holder">
+              <img src="/home/5.webp" alt="" loading="lazy" decoding="async" />
+            </div>
+            <div className="home-spotlight-image"></div>
+          </div>
+          <div className="home-spotlight-images-row">
+            <div className="home-spotlight-image"></div>
+            <div className="home-spotlight-image image-holder">
+              <img src="/home/6.webp" alt="" loading="lazy" decoding="async" />
             </div>
             <div className="home-spotlight-image"></div>
             <div className="home-spotlight-image image-holder">
-              <img src="/home/7.png" alt="" loading="lazy" decoding="async" />
+              <img src="/home/7.webp" alt="" loading="lazy" decoding="async" />
             </div>
           </div>
           <div className="home-spotlight-images-row">
             <div className="home-spotlight-image image-holder">
-              <img src="/home/8.png" alt="" loading="lazy" decoding="async" />
+              <img src="/home/8.webp" alt="" loading="lazy" decoding="async" />
             </div>
             <div className="home-spotlight-image"></div>
             <div className="home-spotlight-image image-holder">
-              <img src="/home/9.png" alt="" loading="lazy" decoding="async" />
+              <img src="/home/9.webp" alt="" loading="lazy" decoding="async" />
             </div>
             <div className="home-spotlight-image"></div>
           </div>
         </div>
         <div className="spotlight-mask-image-container">
           <div className="spotlight-mask-image">
-            <img src="/home/hero.png" alt="" loading="lazy" decoding="async" />
+            <img src="/home/hero.webp" alt="" loading="lazy" decoding="async" />
           </div>
           <div className="container">
             <div className="spotlight-mask-header">
@@ -650,7 +650,7 @@ export default function Home() {
                 <div className="footer-email-row">
                   <input type="text" placeholder="your@email.com" />
                   <button>
-                    <img src="/global/footer-right-arrow.png" alt="" />
+                    <img src="/global/footer-right-arrow.webp" alt="" />
                   </button>
                 </div>
               </div>
@@ -660,7 +660,7 @@ export default function Home() {
           <div className="footer-bottom">
             <div className="footer-col">
               <div className="footer-logo">
-                <img src="/global/logo.png" alt="" />
+                <img src="/global/logo.webp" alt="" />
               </div>
             </div>
             <div className="footer-col">

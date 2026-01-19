@@ -6,10 +6,10 @@ export default function Page() {
       <ReactLenis root />
       <div className="container">
         <div className="archive">
-          <img src="/img_01.jpg" alt="" />
-          <img src="/img_02.jpg" alt="" />
-          <img src="/img_03.jpg" alt="" />
-          <img src="/img_04.jpg" alt="" />
+          <img src="/img_01.webp" alt="" />
+          <img src="/img_02.webp" alt="" />
+          <img src="/img_03.webp" alt="" />
+          <img src="/img_04.webp" alt="" />
         </div>
       </div>
     </>

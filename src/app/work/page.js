@@ -97,7 +97,7 @@ export default function Work() {
         {/* Pre-render first slide so image is visible during transition */}
         <div className="slide slide-initial" data-pre-rendered="true">
           <div className="slide-img">
-            <img src="/work/1.png" alt="" style={{ opacity: 1 }} />
+            <img src="/work/1.webp" alt="" style={{ opacity: 1 }} />
           </div>
           <div className="slide-header">
             <div className="slide-title">

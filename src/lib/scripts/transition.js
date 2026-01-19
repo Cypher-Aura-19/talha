@@ -57,14 +57,14 @@ export function initTransition() {
 
   // Critical images that must load before reveal
   const criticalImages = [
-    "/cards/1.png",
-    "/cards/2.png",
-    "/cards/3.png",
+    "/cards/1.webp",
+    "/cards/2.webp",
+    "/cards/3.webp",
     "/global/logo.png",
-    "/home/wideskill-1.png",
-    "/home/wideskill-2.png",
-    "/home/wideskill-3.png",
-    "/home/wideskill-4.png",
+    "/home/wideskill-1.webp",
+    "/home/wideskill-2.webp",
+    "/home/wideskill-3.webp",
+    "/home/wideskill-4.webp",
   ];
 
   // Preload critical images

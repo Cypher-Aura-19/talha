@@ -109,7 +109,7 @@ export default function About() {
     <>
       <section className="about-hero">
         <div className="about-hero-img">
-          <img src="/about/hero.png" alt="" />
+          <img src="/about/hero.webp" alt="" />
         </div>
         <div className="container">
           <div className="about-header">
@@ -125,12 +125,12 @@ export default function About() {
           <div className="container">
             <div className="symbols-container">
               <div className="symbol">
-                <img src="/symbols/s1-dark.png" alt="Symbol" />
+                <img src="/symbols/s1-dark.webp" alt="Symbol" />
               </div>
             </div>
             <div className="symbols-container">
               <div className="symbol">
-                <img src="/symbols/s1-dark.png" alt="Symbol" />
+                <img src="/symbols/s1-dark.webp" alt="Symbol" />
               </div>
             </div>
           </div>
@@ -176,10 +176,10 @@ export default function About() {
           <div className="about-skills-col">
             <div className="symbols-container">
               <div className="symbol">
-                <img src="/symbols/s1-light.png" alt="Symbol" />
+                <img src="/symbols/s1-light.webp" alt="Symbol" />
               </div>
               <div className="symbol">
-                <img src="/symbols/s2-light.png" alt="Symbol" />
+                <img src="/symbols/s2-light.webp" alt="Symbol" />
               </div>
             </div>
             <div className="about-skills-copy-wrapper">
@@ -354,7 +354,7 @@ export default function About() {
                 <div className="footer-email-row">
                   <input type="text" placeholder="your@email.com" />
                   <button>
-                    <img src="/global/footer-right-arrow.png" alt="" />
+                    <img src="/global/footer-right-arrow.webp" alt="" />
                   </button>
                 </div>
               </div>
@@ -364,7 +364,7 @@ export default function About() {
           <div className="footer-bottom">
             <div className="footer-col">
               <div className="footer-logo">
-                <img src="/global/logo.png" alt="" />
+                <img src="/global/logo.webp" alt="" />
               </div>
             </div>
             <div className="footer-col">
