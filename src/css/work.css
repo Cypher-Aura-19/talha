@@ -172,14 +172,15 @@
 /* Scroll indicator - minimalist modern design */
 .scroll-indicator {
   position: fixed;
-  right: 2rem;
+  right: 2.5rem;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
   z-index: 10;
+  cursor: pointer;
 }
 
 .scroll-indicator span {
@@ -187,33 +188,60 @@
   text-orientation: mixed;
   color: var(--base-100);
   font-family: "DM Mono";
-  font-size: 0.65rem;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  opacity: 0.6;
-  transition: opacity 0.3s ease;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  opacity: 0.9;
+  transition: all 0.3s ease;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.scroll-indicator::before {
+  content: "";
+  width: 2px;
+  height: 40px;
+  background: linear-gradient(to bottom, transparent, var(--base-100));
+  opacity: 0.7;
+  animation: scrollLineTop 2s ease-in-out infinite;
 }
 
 .scroll-indicator::after {
   content: "";
-  width: 1px;
-  height: 60px;
-  background: linear-gradient(to bottom, transparent, var(--base-100), transparent);
-  opacity: 0.4;
-  animation: scrollLine 2s ease-in-out infinite;
+  width: 2px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--base-100), transparent);
+  opacity: 0.7;
+  animation: scrollLineBottom 2s ease-in-out infinite;
 }
 
 .scroll-indicator:hover span {
   opacity: 1;
+  letter-spacing: 0.3em;
 }
 
-@keyframes scrollLine {
+.scroll-indicator:hover::before,
+.scroll-indicator:hover::after {
+  opacity: 1;
+}
+
+@keyframes scrollLineTop {
   0%, 100% {
-    opacity: 0.4;
-    transform: scaleY(1);
+    opacity: 0.3;
+    transform: scaleY(0.8);
   }
   50% {
-    opacity: 0.8;
+    opacity: 0.9;
     transform: scaleY(1.2);
+  }
+}
+
+@keyframes scrollLineBottom {
+  0%, 100% {
+    opacity: 0.9;
+    transform: scaleY(1.2);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scaleY(0.8);
   }
 }
