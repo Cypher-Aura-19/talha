@@ -169,34 +169,51 @@
   }
 }
 
-/* Scroll indicator */
+/* Scroll indicator - minimalist modern design */
 .scroll-indicator {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
+  position: fixed;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1rem;
+  z-index: 10;
+}
+
+.scroll-indicator span {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
   color: var(--base-100);
   font-family: "DM Mono";
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  opacity: 0.7;
-  animation: bounce 2s infinite;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
 }
 
 .scroll-indicator::after {
-  content: "↓";
-  font-size: 1.5rem;
+  content: "";
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, transparent, var(--base-100), transparent);
+  opacity: 0.4;
+  animation: scrollLine 2s ease-in-out infinite;
 }
 
-@keyframes bounce {
+.scroll-indicator:hover span {
+  opacity: 1;
+}
+
+@keyframes scrollLine {
   0%, 100% {
-    transform: translateX(-50%) translateY(0);
+    opacity: 0.4;
+    transform: scaleY(1);
   }
   50% {
-    transform: translateX(-50%) translateY(-10px);
+    opacity: 0.8;
+    transform: scaleY(1.2);
   }
 }
