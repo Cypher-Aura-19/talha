@@ -214,23 +214,27 @@ export function initAnimations() {
         // Skip animations for hero section elements on initial load for HOME page only
         // They should already be visible from the transition
         const isHeroElement = element.closest('.hero');
+        const isHomePage = window.location.pathname === '/';
         
-        if (isHeroElement && !window.heroAnimationsPlayed) {
-          console.log('[Anime] Skipping hero animation for:', element);
+        if (isHeroElement && isHomePage && !window.heroAnimationsPlayed) {
+          console.log('[Anime] Skipping hero animation for home page:', element);
           // Just make sure element is visible, don't animate
           gsap.set(element, { opacity: 1 });
           return;
         }
 
+        // For non-home pages or after first load, animate immediately with minimal delay
+        const effectiveDelay = isHeroElement && !isHomePage ? Math.min(delay, 0.1) : delay;
+
         switch (animationType) {
           case "scramble":
-            scrambleAnimation(element, delay);
+            scrambleAnimation(element, effectiveDelay);
             break;
           case "reveal":
-            revealAnimation(element, delay);
+            revealAnimation(element, effectiveDelay);
             break;
           case "line-reveal":
-            lineRevealAnimation(element, delay);
+            lineRevealAnimation(element, effectiveDelay);
             break;
           default:
             console.warn(`Unknown animation type: ${animationType}`);
