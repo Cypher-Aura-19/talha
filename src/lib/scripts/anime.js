@@ -223,8 +223,8 @@ export function initAnimations() {
           return;
         }
 
-        // For non-home pages, animate immediately with no delay
-        const effectiveDelay = isHeroElement && !isHomePage ? 0 : delay;
+        // For non-home pages hero elements, use immediate timing like home page cards (0.1s delay)
+        const effectiveDelay = isHeroElement && !isHomePage ? 0.1 : delay;
 
         switch (animationType) {
           case "scramble":
