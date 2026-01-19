@@ -138,7 +138,8 @@ export function initAnimations() {
 
   console.log('[Anime] Initializing animations...');
 
-  document.fonts.ready.then(() => {
+  // Function to process animations
+  const processAnimations = () => {
     const animatedElements = document.querySelectorAll("[data-animate-type]");
     console.log('[Anime] Found animated elements:', animatedElements.length);
 
@@ -224,7 +225,7 @@ export function initAnimations() {
         }
 
         // For non-home pages hero elements, start animation before transition ends
-        const effectiveDelay = isHeroElement && !isHomePage ? -0.5 : delay;
+        const effectiveDelay = isHeroElement && !isHomePage ? -1.5 : delay;
 
         switch (animationType) {
           case "scramble":
@@ -246,7 +247,19 @@ export function initAnimations() {
     if (!window.heroAnimationsPlayed) {
       window.heroAnimationsPlayed = true;
     }
-  });
+  };
+
+  // For hero elements on non-home pages, start immediately without waiting for fonts
+  const isHomePage = window.location.pathname === '/';
+  if (!isHomePage) {
+    console.log('[Anime] Non-home page detected, starting hero animations immediately');
+    processAnimations();
+  } else {
+    // For home page, wait for fonts to be ready
+    document.fonts.ready.then(() => {
+      processAnimations();
+    });
+  }
 }
 
 export function cleanupAnimations() {
