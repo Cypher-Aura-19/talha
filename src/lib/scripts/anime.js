@@ -138,7 +138,8 @@ export function initAnimations() {
 
   console.log('[Anime] Initializing animations...');
 
-  document.fonts.ready.then(() => {
+  // Start hero animations immediately, don't wait for fonts
+  const processAnimations = () => {
     const animatedElements = document.querySelectorAll("[data-animate-type]");
     console.log('[Anime] Found animated elements:', animatedElements.length);
 
@@ -246,7 +247,10 @@ export function initAnimations() {
     if (!window.heroAnimationsPlayed) {
       window.heroAnimationsPlayed = true;
     }
-  });
+  };
+
+  // Start animations immediately
+  processAnimations();
 }
 
 export function cleanupAnimations() {

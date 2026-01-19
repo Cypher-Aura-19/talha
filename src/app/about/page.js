@@ -83,14 +83,14 @@ export default function About() {
     window.addEventListener('pageTransitionComplete', handleTransitionComplete, { once: true });
     eventListenerAdded = true;
 
-    // Fallback: if event doesn't fire within 3 seconds, load anyway
+    // Fallback: if event doesn't fire within 500ms, load anyway
     const fallbackTimer = setTimeout(async () => {
       console.log('[About Page] Fallback: loading scripts after timeout');
       if (eventListenerAdded) {
         window.removeEventListener('pageTransitionComplete', handleTransitionComplete);
       }
       cleanup = await loadScripts();
-    }, 3000);
+    }, 500);
 
     return () => {
       console.log('[About Page] Component unmounting');
