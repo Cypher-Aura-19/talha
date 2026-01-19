@@ -119,20 +119,24 @@ export function cleanupWork() {
   console.log('[Work Cleanup] Starting cleanup...');
   
   try {
-    // Remove event listeners
+    // CRITICAL: Remove event listeners FIRST to stop all interactions
     if (wheelListener) {
+      console.log('[Work Cleanup] Removing wheel listener');
       window.removeEventListener('wheel', wheelListener);
       wheelListener = null;
     }
     if (touchStartListener) {
+      console.log('[Work Cleanup] Removing touchstart listener');
       window.removeEventListener('touchstart', touchStartListener);
       touchStartListener = null;
     }
     if (touchMoveListener) {
+      console.log('[Work Cleanup] Removing touchmove listener');
       window.removeEventListener('touchmove', touchMoveListener);
       touchMoveListener = null;
     }
     if (touchEndListener) {
+      console.log('[Work Cleanup] Removing touchend listener');
       window.removeEventListener('touchend', touchEndListener);
       touchEndListener = null;
     }
@@ -622,6 +626,19 @@ export function initWork() {
     initializeFirstSlide();
 
     wheelListener = (e) => {
+      // Only prevent default if the target is within the slider
+      // This allows navigation links to work properly
+      const slider = document.querySelector(".slider");
+      if (!slider) return;
+      
+      // Check if the event target is a link or inside a link
+      const isLink = e.target.closest('a');
+      if (isLink) {
+        // Don't prevent default on links - let them navigate
+        return;
+      }
+      
+      // Only prevent default for slider scrolling
       e.preventDefault();
       const direction = e.deltaY > 0 ? "down" : "up";
       handleScroll(direction);
@@ -633,6 +650,13 @@ export function initWork() {
     let isTouchActive = false;
 
     touchStartListener = (e) => {
+      // Check if touch started on a link
+      const isLink = e.target.closest('a');
+      if (isLink) {
+        // Don't handle touch on links
+        return;
+      }
+      
       touchStartY = e.touches[0].clientY;
       isTouchActive = true;
     };
@@ -640,8 +664,15 @@ export function initWork() {
     window.addEventListener("touchstart", touchStartListener, { passive: false });
 
     touchMoveListener = (e) => {
-      e.preventDefault();
       if (!isTouchActive || isAnimating || !scrollAllowed) return;
+      
+      // Check if touch is on a link
+      const isLink = e.target.closest('a');
+      if (isLink) {
+        return;
+      }
+      
+      e.preventDefault();
 
       const touchCurrentY = e.touches[0].clientY;
       const difference = touchStartY - touchCurrentY;

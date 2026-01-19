@@ -74,6 +74,19 @@ const PageTransition = ({ children }) => {
     
     console.log('[PageTransition] Starting navigation to:', url);
     
+    // CRITICAL: Cleanup work page event listeners IMMEDIATELY if we're on work page
+    if (pathname === '/work') {
+      try {
+        const workModule = await import("@/lib/scripts/work");
+        if (workModule?.cleanupWork) {
+          console.log('[PageTransition] Immediately cleaning up work page listeners');
+          workModule.cleanupWork();
+        }
+      } catch (e) {
+        console.error('[PageTransition] Error cleaning up work:', e);
+      }
+    }
+    
     // CRITICAL: Preload images for target page FIRST
     await preloadPageImages(url);
     console.log('[PageTransition] Images preloaded for:', url);
