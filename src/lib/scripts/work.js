@@ -383,9 +383,9 @@ export function initWork() {
       headerWords,
       {
         y: "0%",
-        duration: 1,
-        ease: "power4.out",
-        stagger: 0.1,
+        duration: 0.6,
+        ease: "power3.out",
+        stagger: 0.03,
         force3D: true,
       },
       0
@@ -403,20 +403,20 @@ export function initWork() {
       tagsLines,
       {
         y: "0%",
-        duration: 1,
-        ease: "power4.out",
-        stagger: 0.1,
+        duration: 0.6,
+        ease: "power3.out",
+        stagger: 0.03,
       },
-      "-=0.75"
+      "-=0.5"
     );
 
     tl.to(
       indexLines,
       {
         y: "0%",
-        duration: 1,
-        ease: "power4.out",
-        stagger: 0.1,
+        duration: 0.6,
+        ease: "power3.out",
+        stagger: 0.03,
       },
       "<"
     );
@@ -425,9 +425,9 @@ export function initWork() {
       descriptionLines,
       {
         y: "0%",
-        duration: 1,
-        ease: "power4.out",
-        stagger: 0.1,
+        duration: 0.6,
+        ease: "power3.out",
+        stagger: 0.03,
       },
       "<"
     );
@@ -437,16 +437,16 @@ export function initWork() {
       linkLines,
       {
         y: "0%",
-        duration: 1,
-        ease: "power4.out",
+        duration: 0.6,
+        ease: "power3.out",
       },
-      "-=1"
+      "-=0.8"
     );
 
     setTimeout(() => {
       scrollAllowed = true;
       lastScrollTime = Date.now();
-    }, 1500);
+    }, 1000);
   }
 
   function animateSlide(direction) {
