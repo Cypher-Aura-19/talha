@@ -93,22 +93,19 @@
   color: var(--base-100);
   font-family: "DM Mono";
   font-size: 0.875rem;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  padding: 1rem 2rem;
-  background-color: rgba(255, 255, 255, 0.15);
-  border: 2px solid var(--base-100);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  padding: 0.875rem 1.75rem;
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px dashed var(--base-100);
   border-radius: 6px;
-  backdrop-filter: blur(8px);
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .slide-link a:hover .line {
-  background-color: rgba(255, 255, 255, 0.25);
+  background-color: rgba(255, 255, 255, 0.15);
   border-color: var(--base-100);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }
 
 .slide-info {
@@ -183,6 +180,21 @@
   cursor: pointer;
 }
 
+/* Left side scroll indicator */
+.scroll-indicator::before {
+  content: "";
+  position: fixed;
+  left: 3rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 120px;
+  background: linear-gradient(to bottom, transparent, var(--base-100), transparent);
+  opacity: 0.9;
+  animation: scrollLineLeft 2s ease-in-out infinite;
+  box-shadow: 0 0 10px rgba(249, 244, 235, 0.5);
+}
+
 .scroll-indicator span {
   writing-mode: vertical-rl;
   text-orientation: mixed;
@@ -196,23 +208,14 @@
   text-shadow: 0 3px 12px rgba(0, 0, 0, 0.7);
 }
 
-.scroll-indicator::before {
-  content: "";
-  width: 3px;
-  height: 60px;
-  background: linear-gradient(to bottom, transparent, var(--base-100));
-  opacity: 0.9;
-  animation: scrollLineTop 2s ease-in-out infinite;
-  box-shadow: 0 0 10px rgba(249, 244, 235, 0.5);
-}
-
+/* Right side scroll indicator */
 .scroll-indicator::after {
   content: "";
   width: 3px;
-  height: 60px;
-  background: linear-gradient(to bottom, var(--base-100), transparent);
+  height: 120px;
+  background: linear-gradient(to bottom, transparent, var(--base-100), transparent);
   opacity: 0.9;
-  animation: scrollLineBottom 2s ease-in-out infinite;
+  animation: scrollLineRight 2s ease-in-out infinite;
   box-shadow: 0 0 10px rgba(249, 244, 235, 0.5);
 }
 
@@ -227,18 +230,18 @@
   box-shadow: 0 0 15px rgba(249, 244, 235, 0.8);
 }
 
-@keyframes scrollLineTop {
+@keyframes scrollLineLeft {
   0%, 100% {
     opacity: 0.4;
-    transform: scaleY(0.8);
+    transform: translateY(-50%) scaleY(0.8);
   }
   50% {
     opacity: 1;
-    transform: scaleY(1.3);
+    transform: translateY(-50%) scaleY(1.3);
   }
 }
 
-@keyframes scrollLineBottom {
+@keyframes scrollLineRight {
   0%, 100% {
     opacity: 1;
     transform: scaleY(1.3);
