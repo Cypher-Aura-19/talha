@@ -125,8 +125,11 @@ export default function Work() {
             </div>
           </div>
         </div>
+        <div className="scroll-indicator-prev">
+          <span>PREV</span>
+        </div>
         <div className="scroll-indicator">
-          <span>SCROLL</span>
+          <span>NEXT</span>
         </div>
       </div>
     </>

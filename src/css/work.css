@@ -166,7 +166,7 @@
   }
 }
 
-/* Scroll indicator - minimalist modern design */
+/* Scroll indicator - right side (next) */
 .scroll-indicator {
   position: fixed;
   right: 3rem;
@@ -178,21 +178,6 @@
   gap: 2rem;
   z-index: 10;
   cursor: pointer;
-}
-
-/* Left side scroll indicator */
-.scroll-indicator::before {
-  content: "";
-  position: fixed;
-  left: 3rem;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 3px;
-  height: 120px;
-  background: linear-gradient(to bottom, transparent, var(--base-100), transparent);
-  opacity: 0.9;
-  animation: scrollLineLeft 2s ease-in-out infinite;
-  box-shadow: 0 0 10px rgba(249, 244, 235, 0.5);
 }
 
 .scroll-indicator span {
@@ -208,14 +193,23 @@
   text-shadow: 0 3px 12px rgba(0, 0, 0, 0.7);
 }
 
-/* Right side scroll indicator */
+.scroll-indicator::before {
+  content: "";
+  width: 3px;
+  height: 60px;
+  background: linear-gradient(to bottom, transparent, var(--base-100));
+  opacity: 0.9;
+  animation: scrollLineTop 2s ease-in-out infinite;
+  box-shadow: 0 0 10px rgba(249, 244, 235, 0.5);
+}
+
 .scroll-indicator::after {
   content: "";
   width: 3px;
-  height: 120px;
-  background: linear-gradient(to bottom, transparent, var(--base-100), transparent);
+  height: 60px;
+  background: linear-gradient(to bottom, var(--base-100), transparent);
   opacity: 0.9;
-  animation: scrollLineRight 2s ease-in-out infinite;
+  animation: scrollLineBottom 2s ease-in-out infinite;
   box-shadow: 0 0 10px rgba(249, 244, 235, 0.5);
 }
 
@@ -230,18 +224,76 @@
   box-shadow: 0 0 15px rgba(249, 244, 235, 0.8);
 }
 
-@keyframes scrollLineLeft {
+/* Scroll indicator - left side (previous) */
+.scroll-indicator-prev {
+  position: fixed;
+  left: 3rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.scroll-indicator-prev span {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  color: var(--base-100);
+  font-family: "DM Mono";
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  opacity: 1;
+  transition: all 0.3s ease;
+  text-shadow: 0 3px 12px rgba(0, 0, 0, 0.7);
+}
+
+.scroll-indicator-prev::before {
+  content: "";
+  width: 3px;
+  height: 60px;
+  background: linear-gradient(to bottom, var(--base-100), transparent);
+  opacity: 0.9;
+  animation: scrollLineBottom 2s ease-in-out infinite;
+  box-shadow: 0 0 10px rgba(249, 244, 235, 0.5);
+}
+
+.scroll-indicator-prev::after {
+  content: "";
+  width: 3px;
+  height: 60px;
+  background: linear-gradient(to bottom, transparent, var(--base-100));
+  opacity: 0.9;
+  animation: scrollLineTop 2s ease-in-out infinite;
+  box-shadow: 0 0 10px rgba(249, 244, 235, 0.5);
+}
+
+.scroll-indicator-prev:hover span {
+  letter-spacing: 0.35em;
+  transform: scale(1.05);
+}
+
+.scroll-indicator-prev:hover::before,
+.scroll-indicator-prev:hover::after {
+  opacity: 1;
+  box-shadow: 0 0 15px rgba(249, 244, 235, 0.8);
+}
+
+@keyframes scrollLineTop {
   0%, 100% {
     opacity: 0.4;
-    transform: translateY(-50%) scaleY(0.8);
+    transform: scaleY(0.8);
   }
   50% {
     opacity: 1;
-    transform: translateY(-50%) scaleY(1.3);
+    transform: scaleY(1.3);
   }
 }
 
-@keyframes scrollLineRight {
+@keyframes scrollLineBottom {
   0%, 100% {
     opacity: 1;
     transform: scaleY(1.3);
