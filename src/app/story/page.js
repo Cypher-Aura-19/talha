@@ -94,7 +94,7 @@ export default function Page() {
             duration: 0.75,
             stagger: 0.1,
             ease: 'power4.out',
-            delay: 0.25
+            delay: 0
           });
         };
 
