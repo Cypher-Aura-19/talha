@@ -74,17 +74,17 @@ const PageTransition = ({ children }) => {
     
     console.log('[PageTransition] Starting navigation to:', url);
     
-    // CRITICAL: Close menu with smooth animation FIRST and wait for it (with timeout)
+    // CRITICAL: Close menu with smooth animation FIRST and wait for it (with longer timeout)
     if (typeof window !== "undefined") {
       try {
         const menuModule = await import("@/lib/scripts/menu");
         if (menuModule?.closeMenuOnNavigate) {
           console.log('[PageTransition] Closing menu with smooth animation');
           
-          // Race between menu close and timeout (max 1.5 seconds)
+          // Race between menu close and timeout (max 2.5 seconds to ensure animation completes)
           await Promise.race([
             menuModule.closeMenuOnNavigate(),
-            new Promise(resolve => setTimeout(resolve, 1500))
+            new Promise(resolve => setTimeout(resolve, 2500))
           ]);
           
           console.log('[PageTransition] Menu close complete or timed out');

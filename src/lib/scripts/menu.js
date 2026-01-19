@@ -413,22 +413,29 @@ export function closeMenuOnNavigate() {
       return;
     }
     
-    // Create smooth, slow closing animation with timeout fallback
+    // Create smooth closing animation
     const tl = gsap.timeline({
       onComplete: () => {
         isAnimating = false;
         console.log('[Menu] Smooth close animation complete');
+        clearTimeout(fallbackTimeout);
         resolve();
       },
     });
     
-    // Fallback timeout in case animation doesn't complete
+    // Fallback timeout in case animation doesn't complete (longer timeout)
     const fallbackTimeout = setTimeout(() => {
       console.log('[Menu] Animation timeout, forcing resolve');
       tl.kill();
       isAnimating = false;
+      
+      // Force reset menu state
+      if (overlayElement) {
+        gsap.set(overlayElement, { scaleY: 0 });
+      }
+      
       resolve();
-    }, 2000);
+    }, 3000);
     
     // Get all menu words (with safety check)
     let allWords = [];
@@ -445,17 +452,17 @@ export function closeMenuOnNavigate() {
       }
     }
     
-    // 1. Fade out footer first (fast)
+    // 1. Fade out footer first
     if (footerElement) {
       tl.to(footerElement, {
-        duration: 0.4,
+        duration: 0.5,
         y: 20,
         opacity: 0,
         ease: "power2.inOut",
         onStart: () => {
           const timeElement = document.querySelector(".menu-time");
           if (timeElement) {
-            gsap.to(timeElement, { opacity: 0, duration: 0.2 });
+            gsap.to(timeElement, { opacity: 0, duration: 0.3 });
           }
           
           if (footerSplitTexts && footerSplitTexts.length > 0) {
@@ -466,7 +473,7 @@ export function closeMenuOnNavigate() {
                 }
                 return acc;
               }, []);
-              gsap.to(allFooterChars, { opacity: 0, duration: 0.2 });
+              gsap.to(allFooterChars, { opacity: 0, duration: 0.3 });
             } catch (e) {
               console.warn('[Menu] Error animating footer chars:', e);
             }
@@ -480,25 +487,22 @@ export function closeMenuOnNavigate() {
       tl.to(
         allWords,
         {
-          duration: 0.5,
+          duration: 0.6,
           yPercent: -120,
-          stagger: 0.02,
+          stagger: 0.03,
           ease: "power3.inOut",
         },
         "-=0.3"
       );
     }
     
-    // 3. Close overlay (fast and smooth)
+    // 3. Close overlay - THIS MUST COMPLETE
     tl.to(
       overlayElement,
       {
-        duration: 0.6,
+        duration: 0.8,
         scaleY: 0,
         ease: "power3.inOut",
-        onComplete: () => {
-          clearTimeout(fallbackTimeout);
-        }
       },
       "-=0.4"
     );
