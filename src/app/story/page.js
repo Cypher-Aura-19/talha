@@ -91,9 +91,9 @@ export default function Page() {
         const animateHeroHeading = () => {
           gsap.to(heroHeadingSplit.words, {
             yPercent: 0,
-            duration: 0.75,
-            stagger: 0.1,
-            ease: 'power4.out',
+            duration: 0.5,
+            stagger: 0.03,
+            ease: 'power3.out',
             delay: 0
           });
         };

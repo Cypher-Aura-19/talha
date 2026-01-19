@@ -83,14 +83,14 @@ export default function About() {
     window.addEventListener('pageTransitionComplete', handleTransitionComplete, { once: true });
     eventListenerAdded = true;
 
-    // Fallback: if event doesn't fire within 500ms, load anyway
+    // Fallback: if event doesn't fire within 3 seconds, load anyway
     const fallbackTimer = setTimeout(async () => {
       console.log('[About Page] Fallback: loading scripts after timeout');
       if (eventListenerAdded) {
         window.removeEventListener('pageTransitionComplete', handleTransitionComplete);
       }
       cleanup = await loadScripts();
-    }, 500);
+    }, 3000);
 
     return () => {
       console.log('[About Page] Component unmounting');
@@ -113,7 +113,7 @@ export default function About() {
         </div>
         <div className="container">
           <div className="about-header">
-            <h2 data-animate-type="line-reveal" data-animate-delay="0">
+            <h2 data-animate-type="line-reveal" data-animate-delay="0.25">
               The Operator at the Edge
             </h2>
           </div>

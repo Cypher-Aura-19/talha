@@ -83,10 +83,10 @@ export function lineRevealAnimation(element, delay = 0) {
   });
 
   gsap.to(split.lines, {
-    duration: 0.8,
+    duration: 0.5,
     yPercent: 0,
-    stagger: 0.1,
-    ease: "power4.out",
+    stagger: 0.03,
+    ease: "power3.out",
     delay: delay,
     onStart: () => {
       // Ensure parent element is visible
