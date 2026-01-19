@@ -1,0 +1,295 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Host+Grotesk:ital,wght@0,300..800;1,300..800&display=swap");
+@import "../css/menu.css";
+@import "../css/home.css";
+@import "../css/about.css";
+@import "../css/work.css";
+@import "../css/story.css";
+@import "../css/project.css";
+@import "../css/contact.css";
+@import "../css/footer.css";
+
+:root {
+  --base-100: #f9f4eb;
+  --base-200: #efece5;
+  --base-300: #0a0a0a;
+  --base-secondary-dark: #686560;
+  --base-secondary-fade: rgba(249, 244, 235, 0.15);
+  --accent-1: #b1c1ef;
+  --accent-2: #f2acac;
+  --accent-3: #ffdd94;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
+body {
+  font-family: "Host Grotesk";
+  background: #222;
+  background-color: var(--base-100);
+  color: var(--base-300);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+  position: relative;
+}
+
+/* Create a dark overlay BEFORE React loads to prevent white flash */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #222;
+  z-index: 99999;
+  pointer-events: none;
+}
+
+/* Remove the overlay once transition is ready */
+body.transition-ready::before {
+  display: none;
+}
+
+/* Hide page content initially to prevent flash before transition overlay covers it */
+.page-content-wrapper {
+  opacity: 0;
+  visibility: hidden;
+  /* Ensure content is below the overlay but visible when opacity is 1 */
+  position: relative;
+  z-index: 1;
+}
+
+body.transition-ready .page-content-wrapper {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Ensure all sections respect viewport width */
+section {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  text-transform: uppercase;
+  font-family: "Barlow Condensed";
+  font-weight: 900;
+  line-height: 0.85;
+  letter-spacing: -0.02rem;
+}
+
+h1 {
+  font-size: 12rem;
+}
+
+h2 {
+  font-size: 8rem;
+}
+
+h3 {
+  font-size: 6rem;
+}
+
+h4 {
+  font-size: 2.5rem;
+}
+
+a {
+  text-decoration: none;
+}
+
+p {
+  font-family: "Host Grotesk";
+  font-size: 1.1rem;
+}
+
+p.md {
+  font-size: 1.3rem;
+}
+
+p.lg {
+  font-size: 1.5rem;
+}
+
+p.mono {
+  text-transform: uppercase;
+  font-family: "DM Mono";
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+p.mono span,
+a span {
+  position: relative;
+  top: -0.1rem;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  padding: 2.75rem;
+  max-width: 2000px;
+  margin: 0 auto;
+}
+
+.symbols-container {
+  display: flex;
+  gap: 0.5rem;
+  height: 1.125rem;
+  z-index: 1;
+}
+
+.symbols-container .symbol {
+  width: 1.125rem;
+}
+
+.page-header {
+  width: 100vw;
+  height: 100svh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.archive {
+  width: 30%;
+  margin: 0 auto;
+  padding: 15rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.archive img {
+  aspect-ratio: 5/7;
+}
+
+/* PageTransition component styles - keep from codegrid project */
+.transition-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100svh;
+  display: flex;
+  pointer-events: none;
+  z-index: 9999;
+  /* Allow content to show behind the overlay */
+  background: transparent;
+  overflow: hidden;
+}
+
+.block {
+  flex: 1;
+  height: 100%;
+  background: #222;
+  transform: scaleX(0);
+  transform-origin: left;
+  /* Ensure blocks are on top but content shows behind */
+  position: relative;
+  will-change: transform;
+}
+
+.logo-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100svh;
+  z-index: 10000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #222;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.logo-container {
+  width: 500px;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.char {
+  position: relative;
+  display: inline-block;
+  will-change: transform;
+}
+
+/* Ensure Next.js root and content wrappers don't cause horizontal overflow */
+#__next,
+[data-nextjs-scroll-focus-boundary] {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+@media (max-width: 1000px) {
+  h1 {
+    font-size: 6rem;
+  }
+
+  h2 {
+    font-size: 5rem;
+  }
+
+  h3 {
+    font-size: 3rem;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+
+  p.md {
+    font-size: 1.125rem;
+  }
+
+  p.lg {
+    font-size: 1.25rem;
+  }
+
+  p.mono {
+    font-size: 0.8rem;
+  }
+
+  .container {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 900px) {
+  h1 {
+    font-size: 2rem;
+  }
+}
