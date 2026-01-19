@@ -1,10 +1,67 @@
 import gsap from "gsap";
 
+// Preload images for a specific page
+function preloadPageImages(targetPath) {
+  const pageImages = {
+    '/work': [
+      '/work/1.webp',
+      '/work/2.webp',
+      '/work/3.webp',
+      '/work/4.webp'
+    ],
+    '/about': [
+      '/about/hero.webp'
+    ],
+    '/story': [
+      '/story/hero.webp',
+      '/story/1.png',
+      '/story/2.png',
+      '/story/3.png',
+      '/story/4.png',
+      '/story/5.png',
+      '/story/6.png',
+      '/story/7.png',
+      '/story/8.png'
+    ]
+  };
+
+  const imagesToLoad = pageImages[targetPath] || [];
+  
+  if (imagesToLoad.length === 0) {
+    return Promise.resolve();
+  }
+
+  console.log(`[Transition] Preloading ${imagesToLoad.length} images for ${targetPath}`);
+
+  const promises = imagesToLoad.map((url) => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        console.log(`[Transition] Loaded: ${url}`);
+        resolve(url);
+      };
+      img.onerror = () => {
+        console.warn(`[Transition] Failed to load: ${url}`);
+        resolve(url);
+      };
+      img.src = url;
+    });
+  });
+
+  return Promise.all(promises);
+}
+
 // Export animateTransition function at module level for Next.js
-export function animateTransition() {
+export function animateTransition(targetPath = null) {
   if (typeof window === 'undefined') return Promise.resolve();
   
-  return new Promise((resolve) => {
+  return new Promise(async (resolve) => {
+    // Preload images for target page BEFORE starting transition
+    if (targetPath) {
+      await preloadPageImages(targetPath);
+      console.log(`[Transition] Images preloaded for ${targetPath}`);
+    }
+
     // Use GSAP timeline for better performance and coordination
     const tl = gsap.timeline({
       onComplete: () => {

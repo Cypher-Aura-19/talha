@@ -18,11 +18,65 @@ const PageTransition = ({ children }) => {
   const isInitialMount = useRef(true);
   const contentRef = useRef(null);
 
-  const handleRouteChange = useCallback((url) => {
+  const preloadPageImages = useCallback((targetPath) => {
+    const pageImages = {
+      '/work': [
+        '/work/1.webp',
+        '/work/2.webp',
+        '/work/3.webp',
+        '/work/4.webp'
+      ],
+      '/about': [
+        '/about/hero.webp'
+      ],
+      '/story': [
+        '/story/hero.webp',
+        '/story/1.png',
+        '/story/2.png',
+        '/story/3.png',
+        '/story/4.png',
+        '/story/5.png',
+        '/story/6.png',
+        '/story/7.png',
+        '/story/8.png'
+      ]
+    };
+
+    const imagesToLoad = pageImages[targetPath] || [];
+    
+    if (imagesToLoad.length === 0) {
+      return Promise.resolve();
+    }
+
+    console.log(`[PageTransition] Preloading ${imagesToLoad.length} images for ${targetPath}`);
+
+    const promises = imagesToLoad.map((url) => {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => {
+          console.log(`[PageTransition] Loaded: ${url}`);
+          resolve(url);
+        };
+        img.onerror = () => {
+          console.warn(`[PageTransition] Failed to load: ${url}`);
+          resolve(url);
+        };
+        img.src = url;
+      });
+    });
+
+    return Promise.all(promises);
+  }, []);
+
+  const handleRouteChange = useCallback(async (url) => {
     if (isTransitioning.current) return;
     isTransitioning.current = true;
     
     console.log('[PageTransition] Starting navigation to:', url);
+    
+    // CRITICAL: Preload images for target page FIRST
+    await preloadPageImages(url);
+    console.log('[PageTransition] Images preloaded for:', url);
     
     // CRITICAL: Stop Lenis scroll immediately to prevent page jumping
     if (typeof window !== "undefined" && window.lenis) {
@@ -47,7 +101,7 @@ const PageTransition = ({ children }) => {
     setTimeout(() => {
       proceedWithTransition(url);
     }, 50);
-  }, [pathname]);
+  }, [pathname, preloadPageImages]);
 
   // Handle browser back/forward buttons
   useEffect(() => {
