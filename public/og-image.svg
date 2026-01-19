@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#0a0a0a"/>
+  
+  <!-- Logo -->
+  <g transform="translate(100, 150)">
+    <path d="M30 40 C80 10, 160 10, 170 40C175 55, 150 60, 120 55L110 55C105 90, 100 130, 95 170C94 185, 75 185, 75 170C80 120, 85 80, 90 55L80 55C50 60, 25 55, 30 40 Z" fill="none" stroke="#f9f4eb" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="350" y="280" font-family="Arial, sans-serif" font-size="72" font-weight="bold" fill="#f9f4eb" text-transform="uppercase">
+    TALHA RIZWAN
+  </text>
+  <text x="350" y="350" font-family="Arial, sans-serif" font-size="36" fill="#b1c1ef">
+    Full Stack Developer &amp; Remote Operative
+  </text>
+  <text x="350" y="420" font-family="monospace" font-size="24" fill="#686560">
+    ▸ Building digital ecosystems from the clouds
+  </text>
+  <text x="350" y="470" font-family="monospace" font-size="24" fill="#686560">
+    ▸ React • Next.js • Node.js • UI/UX
+  </text>
+</svg>

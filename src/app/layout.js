@@ -17,7 +17,7 @@ export const metadata = {
     siteName: "Talha Rizwan Portfolio",
     images: [
       {
-        url: "/global/logo.png",
+        url: "https://talha-weld.vercel.app/og-image.svg",
         width: 1200,
         height: 630,
         alt: "Talha Rizwan - Full Stack Developer",
@@ -28,7 +28,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Talha Rizwan | Full Stack Developer & Remote Operative",
     description: "Building digital ecosystems from a cabin in the clouds. Remote operations, high-altitude code, and pixel-perfect signal transmission.",
-    images: ["/global/logo.png"],
+    images: ["https://talha-weld.vercel.app/og-image.svg"],
   },
   robots: {
     index: true,
@@ -43,10 +43,11 @@ export const metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon-light.svg", type: "image/svg+xml", media: "(prefers-color-scheme: light)" },
+      { url: "/favicon-dark.svg", type: "image/svg+xml", media: "(prefers-color-scheme: dark)" },
       { url: "/global/site-icon.png", sizes: "any" }
     ],
-    shortcut: "/favicon.svg",
+    shortcut: "/favicon-light.svg",
     apple: "/global/site-icon.png",
   },
 };
@@ -55,8 +56,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        <meta name="theme-color" content="#000000" />
+        <link rel="icon" href="/favicon-light.svg" type="image/svg+xml" media="(prefers-color-scheme: light)" />
+        <link rel="icon" href="/favicon-dark.svg" type="image/svg+xml" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#f9f4eb" media="(prefers-color-scheme: light)" />
       </head>
       <body suppressHydrationWarning>
         <PageTransition>
