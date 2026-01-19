@@ -223,8 +223,8 @@ export function initAnimations() {
           return;
         }
 
-        // For non-home pages or after first load, animate immediately with minimal delay
-        const effectiveDelay = isHeroElement && !isHomePage ? Math.min(delay, 0.1) : delay;
+        // For non-home pages, animate immediately with no delay
+        const effectiveDelay = isHeroElement && !isHomePage ? 0 : delay;
 
         switch (animationType) {
           case "scramble":
