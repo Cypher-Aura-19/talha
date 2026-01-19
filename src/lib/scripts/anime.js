@@ -223,8 +223,8 @@ export function initAnimations() {
           return;
         }
 
-        // For non-home pages hero elements, animate immediately with no delay
-        const effectiveDelay = isHeroElement && !isHomePage ? 0 : delay;
+        // For non-home pages hero elements, start animation before transition ends
+        const effectiveDelay = isHeroElement && !isHomePage ? -0.5 : delay;
 
         switch (animationType) {
           case "scramble":
