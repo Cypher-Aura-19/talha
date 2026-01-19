@@ -406,7 +406,14 @@ export function closeMenuOnNavigate() {
       logoElement.classList.remove("rotated");
     }
     
-    // Create smooth, slow closing animation
+    // Safety check - if elements don't exist, resolve immediately
+    if (!overlayElement) {
+      console.log('[Menu] Menu elements not found, resolving immediately');
+      resolve();
+      return;
+    }
+    
+    // Create smooth, slow closing animation with timeout fallback
     const tl = gsap.timeline({
       onComplete: () => {
         isAnimating = false;
@@ -415,51 +422,85 @@ export function closeMenuOnNavigate() {
       },
     });
     
-    // Get all menu words
-    const allWords = splitTexts.reduce((acc, split) => {
-      return acc.concat(split.words);
-    }, []);
+    // Fallback timeout in case animation doesn't complete
+    const fallbackTimeout = setTimeout(() => {
+      console.log('[Menu] Animation timeout, forcing resolve');
+      tl.kill();
+      isAnimating = false;
+      resolve();
+    }, 2000);
     
-    // 1. Fade out footer first (slow)
-    tl.to([footerElement], {
-      duration: 0.6,
-      y: 20,
-      opacity: 0,
-      ease: "power2.inOut",
-      onStart: () => {
-        const timeElement = document.querySelector(".menu-time");
-        if (timeElement) {
-          gsap.to(timeElement, { opacity: 0, duration: 0.3 });
-        }
-        
-        const allFooterChars = footerSplitTexts.reduce((acc, split) => {
-          return acc.concat(split.chars);
+    // Get all menu words (with safety check)
+    let allWords = [];
+    if (splitTexts && splitTexts.length > 0) {
+      try {
+        allWords = splitTexts.reduce((acc, split) => {
+          if (split && split.words) {
+            return acc.concat(split.words);
+          }
+          return acc;
         }, []);
-        gsap.to(allFooterChars, { opacity: 0, duration: 0.3 });
-      },
-    });
+      } catch (e) {
+        console.warn('[Menu] Error getting split words:', e);
+      }
+    }
     
-    // 2. Slide menu items up (smooth and slow)
-    tl.to(
-      allWords,
-      {
-        duration: 0.8,
-        yPercent: -120,
-        stagger: 0.04,
-        ease: "power3.inOut",
-      },
-      "-=0.4"
-    );
+    // 1. Fade out footer first (fast)
+    if (footerElement) {
+      tl.to(footerElement, {
+        duration: 0.4,
+        y: 20,
+        opacity: 0,
+        ease: "power2.inOut",
+        onStart: () => {
+          const timeElement = document.querySelector(".menu-time");
+          if (timeElement) {
+            gsap.to(timeElement, { opacity: 0, duration: 0.2 });
+          }
+          
+          if (footerSplitTexts && footerSplitTexts.length > 0) {
+            try {
+              const allFooterChars = footerSplitTexts.reduce((acc, split) => {
+                if (split && split.chars) {
+                  return acc.concat(split.chars);
+                }
+                return acc;
+              }, []);
+              gsap.to(allFooterChars, { opacity: 0, duration: 0.2 });
+            } catch (e) {
+              console.warn('[Menu] Error animating footer chars:', e);
+            }
+          }
+        },
+      });
+    }
     
-    // 3. Close overlay (slow and smooth)
+    // 2. Slide menu items up (only if they exist)
+    if (allWords.length > 0) {
+      tl.to(
+        allWords,
+        {
+          duration: 0.5,
+          yPercent: -120,
+          stagger: 0.02,
+          ease: "power3.inOut",
+        },
+        "-=0.3"
+      );
+    }
+    
+    // 3. Close overlay (fast and smooth)
     tl.to(
       overlayElement,
       {
-        duration: 1,
+        duration: 0.6,
         scaleY: 0,
         ease: "power3.inOut",
+        onComplete: () => {
+          clearTimeout(fallbackTimeout);
+        }
       },
-      "-=0.6"
+      "-=0.4"
     );
   });
 }
