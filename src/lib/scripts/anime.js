@@ -138,9 +138,7 @@ export function initAnimations() {
 
   console.log('[Anime] Initializing animations...');
 
-  // For non-home pages, start immediately. For home, wait for fonts
-  const isHomePage = window.location.pathname === '/';
-  const startAnimations = () => {
+  document.fonts.ready.then(() => {
     const animatedElements = document.querySelectorAll("[data-animate-type]");
     console.log('[Anime] Found animated elements:', animatedElements.length);
 
@@ -248,14 +246,7 @@ export function initAnimations() {
     if (!window.heroAnimationsPlayed) {
       window.heroAnimationsPlayed = true;
     }
-  };
-
-  // Start immediately for non-home pages, wait for fonts on home page
-  if (!isHomePage) {
-    startAnimations();
-  } else {
-    document.fonts.ready.then(startAnimations);
-  }
+  });
 }
 
 export function cleanupAnimations() {
