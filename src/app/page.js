@@ -124,12 +124,12 @@ export default function Home() {
           <div className="container">
             <div className="symbols-container">
               <div className="symbol">
-                <img src="/symbols/s1-dark.webp" alt="Symbol" />
+                <img src="/symbols/s1-dark.png" alt="Symbol" />
               </div>
             </div>
             <div className="symbols-container">
               <div className="symbol">
-                <img src="/symbols/s1-dark.webp" alt="Symbol" />
+                <img src="/symbols/s1-dark.png" alt="Symbol" />
               </div>
             </div>
           </div>
@@ -216,7 +216,7 @@ export default function Home() {
           <div className="home-about-col">
             <div className="symbols-container">
               <div className="symbol">
-                <img src="/symbols/s2-light.webp" alt="Symbol" />
+                <img src="/symbols/s2-light.png" alt="Symbol" />
               </div>
             </div>
             <div className="home-about-header">
@@ -285,18 +285,18 @@ export default function Home() {
           <div className="container">
             <div className="symbols-container">
               <div className="symbol">
-                <img src="/symbols/s1-dark.webp" alt="Symbol" />
+                <img src="/symbols/s1-dark.png" alt="Symbol" />
               </div>
               <div className="symbol">
-                <img src="/symbols/s3-dark.webp" alt="Symbol" />
+                <img src="/symbols/s3-dark.png" alt="Symbol" />
               </div>
             </div>
             <div className="symbols-container">
               <div className="symbol">
-                <img src="/symbols/s3-dark.webp" alt="Symbol" />
+                <img src="/symbols/s3-dark.png" alt="Symbol" />
               </div>
               <div className="symbol">
-                <img src="/symbols/s1-dark.webp" alt="Symbol" />
+                <img src="/symbols/s1-dark.png" alt="Symbol" />
               </div>
             </div>
           </div>
@@ -427,24 +427,24 @@ export default function Home() {
           <div className="container">
             <div className="symbols-container">
               <div className="symbol">
-                <img src="/symbols/s1-light.webp" alt="Symbol" loading="lazy" decoding="async" />
+                <img src="/symbols/s1-light.png" alt="Symbol" loading="lazy" decoding="async" />
               </div>
               <div className="symbol">
-                <img src="/symbols/s2-light.webp" alt="Symbol" loading="lazy" decoding="async" />
+                <img src="/symbols/s2-light.png" alt="Symbol" loading="lazy" decoding="async" />
               </div>
               <div className="symbol">
-                <img src="/symbols/s3-light.webp" alt="Symbol" loading="lazy" decoding="async" />
+                <img src="/symbols/s3-light.png" alt="Symbol" loading="lazy" decoding="async" />
               </div>
             </div>
             <div className="symbols-container">
               <div className="symbol">
-                <img src="/symbols/s3-light.webp" alt="Symbol" loading="lazy" decoding="async" />
+                <img src="/symbols/s3-light.png" alt="Symbol" loading="lazy" decoding="async" />
               </div>
               <div className="symbol">
-                <img src="/symbols/s2-light.webp" alt="Symbol" loading="lazy" decoding="async" />
+                <img src="/symbols/s2-light.png" alt="Symbol" loading="lazy" decoding="async" />
               </div>
               <div className="symbol">
-                <img src="/symbols/s1-light.webp" alt="Symbol" loading="lazy" decoding="async" />
+                <img src="/symbols/s1-light.png" alt="Symbol" loading="lazy" decoding="async" />
               </div>
             </div>
           </div>

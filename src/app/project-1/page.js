@@ -85,12 +85,12 @@ export default function Project1Page() {
         <div className="container">
           <div className="symbols-container">
             <div className="symbol">
-              <img src="/symbols/s1-dark.webp" alt="Symbol" />
+              <img src="/symbols/s1-dark.png" alt="Symbol" />
             </div>
           </div>
           <div className="symbols-container">
             <div className="symbol">
-              <img src="/symbols/s1-dark.webp" alt="Symbol" />
+              <img src="/symbols/s1-dark.png" alt="Symbol" />
             </div>
           </div>
         </div>
@@ -145,10 +145,10 @@ export default function Project1Page() {
         <div className="home-spotlight-top-bar">
           <div className="container">
             <div className="symbols-container">
-              <div className="symbol"><img src="/symbols/s1-dark.webp" alt="Symbol" /></div>
+              <div className="symbol"><img src="/symbols/s1-dark.png" alt="Symbol" /></div>
             </div>
             <div className="symbols-container">
-              <div className="symbol"><img src="/symbols/s1-dark.webp" alt="Symbol" /></div>
+              <div className="symbol"><img src="/symbols/s1-dark.png" alt="Symbol" /></div>
             </div>
           </div>
         </div>
@@ -185,12 +185,12 @@ export default function Project1Page() {
         <div className="home-spotlight-top-bar">
           <div className="container">
             <div className="symbols-container">
-              <div className="symbol"><img src="/symbols/s1-light.webp" alt="Symbol" /></div>
-              <div className="symbol"><img src="/symbols/s2-light.webp" alt="Symbol" /></div>
+              <div className="symbol"><img src="/symbols/s1-light.png" alt="Symbol" /></div>
+              <div className="symbol"><img src="/symbols/s2-light.png" alt="Symbol" /></div>
             </div>
             <div className="symbols-container">
-              <div className="symbol"><img src="/symbols/s2-light.webp" alt="Symbol" /></div>
-              <div className="symbol"><img src="/symbols/s1-light.webp" alt="Symbol" /></div>
+              <div className="symbol"><img src="/symbols/s2-light.png" alt="Symbol" /></div>
+              <div className="symbol"><img src="/symbols/s1-light.png" alt="Symbol" /></div>
             </div>
           </div>
         </div>
@@ -221,10 +221,10 @@ export default function Project1Page() {
         <div className="home-spotlight-top-bar">
           <div className="container">
             <div className="symbols-container">
-              <div className="symbol"><img src="/symbols/s1-dark.webp" alt="Symbol" /></div>
+              <div className="symbol"><img src="/symbols/s1-dark.png" alt="Symbol" /></div>
             </div>
             <div className="symbols-container">
-              <div className="symbol"><img src="/symbols/s1-dark.webp" alt="Symbol" /></div>
+              <div className="symbol"><img src="/symbols/s1-dark.png" alt="Symbol" /></div>
             </div>
           </div>
         </div>
@@ -267,14 +267,14 @@ export default function Project1Page() {
         <div className="home-spotlight-top-bar">
           <div className="container">
             <div className="symbols-container">
-              <div className="symbol"><img src="/symbols/s1-light.webp" alt="Symbol" /></div>
-              <div className="symbol"><img src="/symbols/s2-light.webp" alt="Symbol" /></div>
-              <div className="symbol"><img src="/symbols/s3-light.webp" alt="Symbol" /></div>
+              <div className="symbol"><img src="/symbols/s1-light.png" alt="Symbol" /></div>
+              <div className="symbol"><img src="/symbols/s2-light.png" alt="Symbol" /></div>
+              <div className="symbol"><img src="/symbols/s3-light.png" alt="Symbol" /></div>
             </div>
             <div className="symbols-container">
-              <div className="symbol"><img src="/symbols/s3-light.webp" alt="Symbol" /></div>
-              <div className="symbol"><img src="/symbols/s2-light.webp" alt="Symbol" /></div>
-              <div className="symbol"><img src="/symbols/s1-light.webp" alt="Symbol" /></div>
+              <div className="symbol"><img src="/symbols/s3-light.png" alt="Symbol" /></div>
+              <div className="symbol"><img src="/symbols/s2-light.png" alt="Symbol" /></div>
+              <div className="symbol"><img src="/symbols/s1-light.png" alt="Symbol" /></div>
             </div>
           </div>
         </div>

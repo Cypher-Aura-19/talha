@@ -82,12 +82,12 @@ export default function Contact() {
           <div className="container">
             <div className="symbols-container">
               <div className="symbol">
-                <img src="/symbols/s1-light.webp" alt="Symbol" />
+                <img src="/symbols/s1-light.png" alt="Symbol" />
               </div>
             </div>
             <div className="symbols-container">
               <div className="symbol">
-                <img src="/symbols/s1-light.webp" alt="Symbol" />
+                <img src="/symbols/s1-light.png" alt="Symbol" />
               </div>
             </div>
           </div>
