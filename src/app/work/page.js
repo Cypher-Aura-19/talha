@@ -125,6 +125,9 @@ export default function Work() {
             </div>
           </div>
         </div>
+        <div className="scroll-indicator">
+          <span>SCROLL</span>
+        </div>
       </div>
     </>
   );
