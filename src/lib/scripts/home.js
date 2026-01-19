@@ -117,19 +117,22 @@ export function initHome() {
     // Only set initial state if cards aren't already visible
     gsap.set(".hero .hero-cards .card", {
       transformOrigin: "center center",
-      scale: 0.001,
+      scale: 0.8,
       opacity: 0,
       force3D: true,
+      willChange: "transform, opacity",
     });
 
+    // Animate all cards together smoothly
     gsap.to(".hero .hero-cards .card", {
       scale: 1,
       opacity: 1,
-      duration: 0.6,
-      delay: 0.2,
-      stagger: 0.08,
-      ease: "power3.out",
+      duration: 0.8,
+      delay: 0.1,
+      stagger: 0,
+      ease: "power2.out",
       force3D: true,
+      clearProps: "willChange",
       onComplete: () => {
         gsap.set("#hero-card-1", { transformOrigin: "top right" });
         gsap.set("#hero-card-3", { transformOrigin: "top left" });
