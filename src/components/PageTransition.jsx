@@ -74,6 +74,20 @@ const PageTransition = ({ children }) => {
     
     console.log('[PageTransition] Starting navigation to:', url);
     
+    // CRITICAL: Close menu with smooth animation FIRST and wait for it
+    if (typeof window !== "undefined") {
+      try {
+        const menuModule = await import("@/lib/scripts/menu");
+        if (menuModule?.closeMenuOnNavigate) {
+          console.log('[PageTransition] Closing menu with smooth animation');
+          await menuModule.closeMenuOnNavigate();
+          console.log('[PageTransition] Menu close animation complete');
+        }
+      } catch (e) {
+        console.error('[PageTransition] Error closing menu:', e);
+      }
+    }
+    
     // CRITICAL: Cleanup work page event listeners IMMEDIATELY if we're on work page
     if (pathname === '/work') {
       try {
@@ -87,7 +101,7 @@ const PageTransition = ({ children }) => {
       }
     }
     
-    // CRITICAL: Preload images for target page FIRST
+    // CRITICAL: Preload images for target page
     await preloadPageImages(url);
     console.log('[PageTransition] Images preloaded for:', url);
     
@@ -97,23 +111,8 @@ const PageTransition = ({ children }) => {
       window.lenis.stop();
     }
     
-    // CRITICAL: Close menu IMMEDIATELY before any transition
-    if (typeof window !== "undefined") {
-      import("@/lib/scripts/menu")
-        .then((mod) => {
-          if (mod?.closeMenuOnNavigate) {
-            console.log('[PageTransition] Closing menu');
-            mod.closeMenuOnNavigate();
-          }
-        })
-        .catch(() => {});
-    }
-    
-    // Start transition immediately from current scroll position
-    // Small delay to ensure menu close completes
-    setTimeout(() => {
-      proceedWithTransition(url);
-    }, 50);
+    // Start transition immediately after menu close and image preload
+    proceedWithTransition(url);
   }, [pathname, preloadPageImages]);
 
   // Handle browser back/forward buttons

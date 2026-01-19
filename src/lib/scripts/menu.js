@@ -377,78 +377,90 @@ export function initMenuScript() {
   }, 0);
 }
 
-// Export function to close menu when navigating
+// Export function to close menu when navigating - with smooth animation
 export function closeMenuOnNavigate() {
-  if (typeof window === "undefined") return;
+  if (typeof window === "undefined") return Promise.resolve();
   
   console.log('[Menu] closeMenuOnNavigate called, isOpen:', isOpen);
   
-  // ALWAYS reset menu state, regardless of isOpen flag
-  // This ensures menu is closed even if state is out of sync
-  
-  // Reset animation flag to allow immediate close
-  isAnimating = false;
-  
-  // Reset menu state immediately
-  isOpen = false;
-  
-  // Remove visual classes immediately
-  const hamburgerElement = document.querySelector(".menu-hamburger-icon");
-  const logoElement = document.querySelector(".menu-logo img");
-  const overlayElement = document.querySelector(".menu-overlay");
-  const footerElement = document.querySelector(".menu-footer");
-  
-  if (hamburgerElement) {
-    hamburgerElement.classList.remove("open");
-  }
-  if (logoElement) {
-    logoElement.classList.remove("rotated");
+  // If menu is not open, resolve immediately
+  if (!isOpen) {
+    console.log('[Menu] Menu already closed');
+    return Promise.resolve();
   }
   
-  // Kill any ongoing GSAP animations on menu elements
-  if (overlayElement) {
-    gsap.killTweensOf(overlayElement);
-    // Reset menu overlay to closed state immediately
-    gsap.set(overlayElement, {
-      scaleY: 0,
-      transformOrigin: "top center",
+  return new Promise((resolve) => {
+    // Reset animation flag to allow close
+    isAnimating = false;
+    isOpen = false;
+    
+    const hamburgerElement = document.querySelector(".menu-hamburger-icon");
+    const logoElement = document.querySelector(".menu-logo img");
+    const overlayElement = document.querySelector(".menu-overlay");
+    const footerElement = document.querySelector(".menu-footer");
+    
+    if (hamburgerElement) {
+      hamburgerElement.classList.remove("open");
+    }
+    if (logoElement) {
+      logoElement.classList.remove("rotated");
+    }
+    
+    // Create smooth, slow closing animation
+    const tl = gsap.timeline({
+      onComplete: () => {
+        isAnimating = false;
+        console.log('[Menu] Smooth close animation complete');
+        resolve();
+      },
     });
-  }
-  
-  if (footerElement) {
-    gsap.killTweensOf(footerElement);
-    gsap.set(footerElement, {
-      y: 20,
-    });
-  }
-  
-  // Reset menu items
-  if (splitTexts.length > 0) {
+    
+    // Get all menu words
     const allWords = splitTexts.reduce((acc, split) => {
       return acc.concat(split.words);
     }, []);
-    gsap.killTweensOf(allWords);
-    gsap.set(allWords, {
-      yPercent: 120,
+    
+    // 1. Fade out footer first (slow)
+    tl.to([footerElement], {
+      duration: 0.6,
+      y: 20,
+      opacity: 0,
+      ease: "power2.inOut",
+      onStart: () => {
+        const timeElement = document.querySelector(".menu-time");
+        if (timeElement) {
+          gsap.to(timeElement, { opacity: 0, duration: 0.3 });
+        }
+        
+        const allFooterChars = footerSplitTexts.reduce((acc, split) => {
+          return acc.concat(split.chars);
+        }, []);
+        gsap.to(allFooterChars, { opacity: 0, duration: 0.3 });
+      },
     });
-  }
-  
-  // Reset footer
-  const timeElement = document.querySelector(".menu-time");
-  if (timeElement) {
-    gsap.set(timeElement, { opacity: 0 });
-  }
-  
-  if (footerSplitTexts.length > 0) {
-    const allFooterChars = footerSplitTexts.reduce((acc, split) => {
-      return acc.concat(split.chars);
-    }, []);
-    gsap.killTweensOf(allFooterChars);
-    gsap.set(allFooterChars, { opacity: 0 });
-  }
-  
-  // Reset animation flag
-  isAnimating = false;
-  
-  console.log('[Menu] Menu closed and reset');
+    
+    // 2. Slide menu items up (smooth and slow)
+    tl.to(
+      allWords,
+      {
+        duration: 0.8,
+        yPercent: -120,
+        stagger: 0.04,
+        ease: "power3.inOut",
+      },
+      "-=0.4"
+    );
+    
+    // 3. Close overlay (slow and smooth)
+    tl.to(
+      overlayElement,
+      {
+        duration: 1,
+        scaleY: 0,
+        ease: "power3.inOut",
+      },
+      "-=0.6"
+    );
+  });
 }
+
