@@ -60,7 +60,7 @@ export function initTransition() {
     "/cards/1.webp",
     "/cards/2.webp",
     "/cards/3.webp",
-    "/global/logo.png",
+    "/global/logo.webp",
     "/home/wideskill-1.webp",
     "/home/wideskill-2.webp",
     "/home/wideskill-3.webp",
