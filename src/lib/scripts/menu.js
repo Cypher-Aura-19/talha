@@ -377,94 +377,30 @@ export function initMenuScript() {
   }, 0);
 }
 
-// Export function to close menu when navigating - SMOOTH version
+// Export function to close menu when navigating - returns a promise
 export function closeMenuOnNavigate() {
-  if (typeof window === "undefined") return;
+  if (typeof window === "undefined") return Promise.resolve();
   
   console.log('[Menu] closeMenuOnNavigate called, isOpen:', isOpen);
   
-  // If menu is not open, just reset state
+  // If menu is not open, return immediately
   if (!isOpen) {
     console.log('[Menu] Menu already closed');
-    return;
+    return Promise.resolve();
   }
   
-  // Reset animation flag to allow close
-  isAnimating = false;
-  isOpen = false;
-  
-  // Remove visual classes
-  const hamburgerElement = document.querySelector(".menu-hamburger-icon");
-  const logoElement = document.querySelector(".menu-logo img");
-  const overlayElement = document.querySelector(".menu-overlay");
-  const footerElement = document.querySelector(".menu-footer");
-  
-  if (hamburgerElement) {
-    hamburgerElement.classList.remove("open");
-  }
-  if (logoElement) {
-    logoElement.classList.remove("rotated");
-  }
-  
-  // Kill any ongoing animations
-  if (overlayElement) {
-    gsap.killTweensOf(overlayElement);
-  }
-  if (footerElement) {
-    gsap.killTweensOf(footerElement);
-  }
-  
-  // Create smooth close animation timeline
-  const tl = gsap.timeline();
-  
-  // Animate footer out smoothly
-  if (footerElement) {
-    tl.to(footerElement, {
-      duration: 0.4,
-      y: 20,
-      opacity: 0,
-      ease: "power2.in",
-      onStart: () => {
-        const timeElement = document.querySelector(".menu-time");
-        if (timeElement) {
-          gsap.to(timeElement, { opacity: 0, duration: 0.2 });
-        }
-        
-        if (footerSplitTexts.length > 0) {
-          const allFooterChars = footerSplitTexts.reduce((acc, split) => {
-            return acc.concat(split.chars);
-          }, []);
-          gsap.to(allFooterChars, { opacity: 0, duration: 0.2 });
-        }
-      },
-    }, 0);
-  }
-  
-  // Animate menu items out smoothly
-  if (splitTexts.length > 0) {
-    const allWords = splitTexts.reduce((acc, split) => {
-      return acc.concat(split.words);
-    }, []);
+  // Use the proper close animation
+  return new Promise((resolve) => {
+    // Reset animation flag to allow close
+    isAnimating = false;
     
-    gsap.killTweensOf(allWords);
+    // Call the proper close function
+    closeMenu();
     
-    tl.to(allWords, {
-      duration: 0.5,
-      yPercent: 120,
-      stagger: -0.03,
-      ease: "power2.in",
-    }, 0.1);
-  }
-  
-  // Animate overlay out smoothly - this is the main visual element
-  if (overlayElement) {
-    tl.to(overlayElement, {
-      duration: 0.7,
-      scaleY: 0,
-      ease: "power3.inOut",
-      transformOrigin: "top center",
-    }, 0.2);
-  }
-  
-  console.log('[Menu] Smooth close animation started');
+    // Wait for the close animation to complete (0.8s total)
+    setTimeout(() => {
+      console.log('[Menu] Menu close animation complete');
+      resolve();
+    }, 800);
+  });
 }

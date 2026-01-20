@@ -74,19 +74,18 @@ const PageTransition = ({ children }) => {
     
     console.log('[PageTransition] Starting navigation to:', url);
     
-    // CRITICAL: Close menu FIRST with smooth animation
-    let menuClosePromise = Promise.resolve();
+    // CRITICAL: Close menu FIRST and wait for it to complete
     if (typeof window !== "undefined") {
-      menuClosePromise = import("@/lib/scripts/menu")
-        .then((mod) => {
-          if (mod?.closeMenuOnNavigate) {
-            console.log('[PageTransition] Starting smooth menu close');
-            mod.closeMenuOnNavigate();
-            // Give menu time to animate (700ms for overlay close)
-            return new Promise(resolve => setTimeout(resolve, 300));
-          }
-        })
-        .catch(() => {});
+      try {
+        const menuModule = await import("@/lib/scripts/menu");
+        if (menuModule?.closeMenuOnNavigate) {
+          console.log('[PageTransition] Closing menu and waiting for animation');
+          await menuModule.closeMenuOnNavigate();
+          console.log('[PageTransition] Menu closed completely');
+        }
+      } catch (e) {
+        console.error('[PageTransition] Error closing menu:', e);
+      }
     }
     
     // CRITICAL: Cleanup work page event listeners IMMEDIATELY if we're on work page
@@ -102,12 +101,9 @@ const PageTransition = ({ children }) => {
       }
     }
     
-    // Preload images while menu is closing (parallel operation)
-    const imagePreloadPromise = preloadPageImages(url);
-    
-    // Wait for both menu close and image preload
-    await Promise.all([menuClosePromise, imagePreloadPromise]);
-    console.log('[PageTransition] Menu closed and images preloaded for:', url);
+    // CRITICAL: Preload images for target page
+    await preloadPageImages(url);
+    console.log('[PageTransition] Images preloaded for:', url);
     
     // CRITICAL: Stop Lenis scroll immediately to prevent page jumping
     if (typeof window !== "undefined" && window.lenis) {
@@ -115,7 +111,7 @@ const PageTransition = ({ children }) => {
       window.lenis.stop();
     }
     
-    // Start transition immediately
+    // Start transition immediately from current scroll position
     proceedWithTransition(url);
   }, [pathname, preloadPageImages]);
 
