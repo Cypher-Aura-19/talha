@@ -638,6 +638,22 @@
   transform: translateZ(0);
 }
 
+.home-spotlight .spotlight-mask-image-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    0deg,
+    rgba(10, 10, 10, 1) 0%,
+    rgba(10, 10, 10, 1) 0%,
+    rgba(10, 10, 10, 0) 100%
+  );
+  pointer-events: none;
+}
+
 .home-spotlight .spotlight-mask-header {
   position: absolute;
   top: auto;
@@ -647,8 +663,10 @@
   width: 100%;
   text-align: center;
   color: var(--base-100);
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
   padding: 0 2rem;
+  z-index: 11;
+  font-weight: 700;
 }
 
 .home-spotlight-top-bar {

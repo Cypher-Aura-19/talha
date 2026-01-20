@@ -209,12 +209,13 @@ a span {
 .block {
   flex: 1;
   height: 100%;
-  background: #222;
+  background: var(--base-300);
   transform: scaleX(0);
   transform-origin: left;
-  /* Ensure blocks are on top but content shows behind */
   position: relative;
   will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .logo-overlay {
@@ -227,7 +228,7 @@ a span {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #222;
+  background: var(--base-300);
   pointer-events: none;
   opacity: 0;
 }

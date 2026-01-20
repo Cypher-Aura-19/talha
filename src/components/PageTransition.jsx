@@ -224,7 +224,10 @@ const PageTransition = ({ children }) => {
   }, [pathname]);
 
   const onAnchorClick = useCallback(
-    (e) => {
+    (e, linkElement = null) => {
+      // Get the actual link element (either from parameter or event target)
+      const link = linkElement || e.currentTarget;
+      
       if (isTransitioning.current) {
         e.preventDefault();
         return;
@@ -236,13 +239,15 @@ const PageTransition = ({ children }) => {
         e.shiftKey ||
         e.altKey ||
         e.button !== 0 ||
-        e.currentTarget.target === "_blank"
+        link.target === "_blank"
       ) {
         return;
       }
 
       e.preventDefault();
-      const href = e.currentTarget.href;
+      const href = link.href;
+      if (!href) return;
+      
       const url = new URL(href).pathname;
       if (url !== pathname) {
         console.log('[PageTransition] Link clicked:', url);
@@ -264,48 +269,66 @@ const PageTransition = ({ children }) => {
       gsap.set(contentRef.current, { autoAlpha: 1 });
     }
 
+    // CRITICAL: Kill any existing animations on blocks to prevent conflicts
+    gsap.killTweensOf(blocksRef.current);
+
     // CRITICAL: Set blocks to fully cover the page from the LEFT side first
     // This ensures they're in the correct position before revealing
     gsap.set(blocksRef.current, { 
       scaleX: 1, 
       transformOrigin: "left",
       x: 0,
-      force3D: true
+      force3D: true,
+      clearProps: "none" // Don't clear properties yet
     });
 
-    // Small delay to ensure GSAP state is applied
+    // Use double RAF to ensure DOM is fully ready and painted
     requestAnimationFrame(() => {
-      // Now reveal: blocks shrink from LEFT side (revealing content from left to right)
-      gsap.to(blocksRef.current, {
-        scaleX: 0,
-        duration: 1.2,
-        stagger: 0.05,
-        ease: "power3.inOut",
-        transformOrigin: "left",
-        force3D: true,
-        onComplete: () => {
-          console.log('[PageTransition] Reveal animation complete');
-          isTransitioning.current = false;
-          if (overlayRef.current) {
-            overlayRef.current.style.pointerEvents = "none";
-          }
-          if (logoOverlayRef.current) {
-            logoOverlayRef.current.style.pointerEvents = "none";
-          }
-          
-          // Ensure all blocks are completely hidden
-          gsap.set(blocksRef.current, { scaleX: 0, x: 0, force3D: false });
-          
-          // Restart Lenis scroll after transition
-          if (typeof window !== "undefined" && window.lenis) {
-            console.log('[PageTransition] Restarting Lenis scroll');
-            window.lenis.start();
-          }
-          
-          // Dispatch custom event to signal transition complete
-          console.log('[PageTransition] Dispatching transitionComplete event');
-          window.dispatchEvent(new CustomEvent('pageTransitionComplete'));
-        },
+      requestAnimationFrame(() => {
+        // Now reveal: blocks shrink from LEFT side (revealing content from left to right)
+        gsap.to(blocksRef.current, {
+          scaleX: 0,
+          duration: 0.9,
+          stagger: 0.04,
+          ease: "power2.inOut",
+          transformOrigin: "left",
+          force3D: true,
+          overwrite: "auto",
+          onStart: () => {
+            // Ensure overlay is visible during animation
+            if (overlayRef.current) {
+              overlayRef.current.style.pointerEvents = "auto";
+            }
+          },
+          onComplete: () => {
+            console.log('[PageTransition] Reveal animation complete');
+            isTransitioning.current = false;
+            if (overlayRef.current) {
+              overlayRef.current.style.pointerEvents = "none";
+            }
+            if (logoOverlayRef.current) {
+              logoOverlayRef.current.style.pointerEvents = "none";
+            }
+            
+            // Ensure all blocks are completely hidden and clear transforms
+            gsap.set(blocksRef.current, { 
+              scaleX: 0, 
+              x: 0, 
+              force3D: false,
+              clearProps: "transform"
+            });
+            
+            // Restart Lenis scroll after transition
+            if (typeof window !== "undefined" && window.lenis) {
+              console.log('[PageTransition] Restarting Lenis scroll');
+              window.lenis.start();
+            }
+            
+            // Dispatch custom event to signal transition complete
+            console.log('[PageTransition] Dispatching transitionComplete event');
+            window.dispatchEvent(new CustomEvent('pageTransitionComplete'));
+          },
+        });
       });
     });
   }, []);
@@ -445,15 +468,18 @@ const PageTransition = ({ children }) => {
       isInitialMount.current = false;
     }
 
-    const links = document.querySelectorAll('a[href^="/"]');
-    links.forEach((link) => {
-      link.addEventListener("click", onAnchorClick);
-    });
+    // Use event delegation on document to catch dynamically created links
+    const handleDocumentClick = (e) => {
+      const link = e.target.closest('a[href^="/"]');
+      if (link) {
+        onAnchorClick(e, link);
+      }
+    };
+
+    document.addEventListener("click", handleDocumentClick);
 
     return () => {
-      links.forEach((link) => {
-        link.removeEventListener("click", onAnchorClick);
-      });
+      document.removeEventListener("click", handleDocumentClick);
       if (revealTimeoutRef.current) {
         clearTimeout(revealTimeoutRef.current);
       }
@@ -468,6 +494,11 @@ const PageTransition = ({ children }) => {
       logoOverlayRef.current.style.pointerEvents = "auto";
     }
 
+    // Kill any existing animations to prevent conflicts
+    gsap.killTweensOf(blocksRef.current);
+    gsap.killTweensOf(logoOverlayRef.current);
+    gsap.killTweensOf(logoRef.current?.querySelector("path"));
+
     // DON'T hide the content - keep it visible so it shows behind the blocks
     // The blocks will cover it as they animate
 
@@ -478,13 +509,15 @@ const PageTransition = ({ children }) => {
     // Smooth left-to-right cover animation
     tl.to(blocksRef.current, {
       scaleX: 1,
-      duration: 1.2,
-      stagger: 0.05,
-      ease: "power3.inOut",
+      duration: 0.9,
+      stagger: 0.04,
+      ease: "power2.inOut",
       transformOrigin: "left",
+      force3D: true,
+      overwrite: "auto",
     })
 
-      .set(logoOverlayRef.current, { opacity: 1 }, "-=0.4")
+      .set(logoOverlayRef.current, { opacity: 1 }, "-=0.3")
 
       .set(
         logoRef.current.querySelector("path"),
@@ -492,33 +525,33 @@ const PageTransition = ({ children }) => {
           strokeDashoffset: pathLengthRef.current,
           fill: "transparent",
         },
-        "-=0.5"
+        "-=0.4"
       )
 
       .to(
         logoRef.current.querySelector("path"),
         {
           strokeDashoffset: 0,
-          duration: 2.5,
+          duration: 2.0,
           ease: "power2.inOut",
         },
-        "-=0.8"
+        "-=0.6"
       )
 
       .to(
         logoRef.current.querySelector("path"),
         {
           fill: "#e3e4d8",
-          duration: 1.2,
+          duration: 1.0,
           ease: "power2.out",
         },
-        "-=0.8"
+        "-=0.6"
       )
 
       .to(logoOverlayRef.current, {
         opacity: 0,
-        duration: 0.5,
-        ease: "power3.out",
+        duration: 0.4,
+        ease: "power2.out",
       });
   };
 
