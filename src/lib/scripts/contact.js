@@ -59,13 +59,13 @@ export function initContact() {
     const performAnimation = () => {
       console.log('[Contact] Setting up video animation');
       
-      // Fixed timing: animate after 22 seconds
-      const animationDelay = 22000; // 22 seconds in milliseconds
-      console.log('[Contact] Video will animate after 22 seconds');
+      // Get video duration
+      const videoDuration = video && video.duration ? video.duration : 3;
+      console.log('[Contact] Video duration:', videoDuration, 'seconds');
       
-      // Wait 22 seconds, then animate
+      // Wait for video to play once, then animate
       setTimeout(() => {
-        console.log('[Contact] 22 seconds elapsed, starting animation');
+        console.log('[Contact] Video finished first play, starting animation');
         
         // 1. Capture the current "Big" (Fullscreen) state
         const state = Flip.getState(contactGif);
@@ -83,7 +83,7 @@ export function initContact() {
             gsap.set(contactGif, { clearProps: "all" });
           }
         });
-      }, animationDelay);
+      }, videoDuration * 1000); // Convert to milliseconds
     };
 
     // Wait for video metadata to load to get duration

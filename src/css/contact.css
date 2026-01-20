@@ -205,31 +205,48 @@
 }
 
 .form-status {
-  padding: 0.75rem 1rem;
-  border-radius: 4px;
-  font-size: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  border: 1px solid;
+  gap: 0.75rem;
+  border: 2px solid;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .form-status.success {
-  background: rgba(76, 175, 80, 0.1);
-  border-color: rgba(76, 175, 80, 0.4);
+  background: rgba(76, 175, 80, 0.15);
+  border-color: #4caf50;
   color: #4caf50;
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
 }
 
 .form-status.error {
-  background: rgba(244, 67, 54, 0.1);
-  border-color: rgba(244, 67, 54, 0.4);
+  background: rgba(244, 67, 54, 0.15);
+  border-color: #f44336;
   color: #f44336;
+  box-shadow: 0 4px 12px rgba(244, 67, 54, 0.2);
 }
 
 .form-status span {
-  font-size: 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 700;
 }
 
 /* Mobile Responsive */

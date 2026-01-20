@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
 
 export async function POST(request) {
   try {
+    // Dynamic import of nodemailer
+    const nodemailer = (await import('nodemailer')).default;
+    
     const { name, email, message } = await request.json();
 
     // Validate input
@@ -13,19 +15,26 @@ export async function POST(request) {
       );
     }
 
-    // Create transporter using Gmail SMTP
-    // Note: You'll need to set up App Password in Gmail settings
-    const transporter = nodemailer.createTransporter({
-      service: 'gmail',
+    // Create transporter using Gmail SMTP with explicit configuration
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 587,
+      secure: false, // Use TLS
       auth: {
-        user: process.env.EMAIL_USER || 'work.talharizwan@gmail.com',
-        pass: process.env.EMAIL_PASSWORD, // App Password from Gmail
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASSWORD,
       },
+      tls: {
+        rejectUnauthorized: false
+      }
     });
+
+    // Verify transporter configuration
+    await transporter.verify();
 
     // Email options
     const mailOptions = {
-      from: process.env.EMAIL_USER || 'work.talharizwan@gmail.com',
+      from: process.env.EMAIL_USER,
       to: 'work.talharizwan@gmail.com',
       subject: `New Contact Form Submission from ${name}`,
       html: `
@@ -64,7 +73,7 @@ export async function POST(request) {
   } catch (error) {
     console.error('Error sending email:', error);
     return NextResponse.json(
-      { error: 'Failed to send email' },
+      { error: 'Failed to send email', details: error.message },
       { status: 500 }
     );
   }
