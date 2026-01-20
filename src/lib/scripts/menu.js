@@ -69,6 +69,35 @@ function scrambleText(elements, duration = 0.4) {
 }
 
 function initMenu() {
+  // CRITICAL: Revert any existing SplitText instances first
+  console.log('[Menu] Reverting existing SplitText instances:', splitTexts.length, footerSplitTexts.length);
+  
+  splitTexts.forEach((split) => {
+    try {
+      if (split && split.revert) {
+        split.revert();
+      }
+    } catch (e) {
+      console.warn('[Menu] Error reverting split:', e);
+    }
+  });
+  
+  footerSplitTexts.forEach((split) => {
+    try {
+      if (split && split.revert) {
+        split.revert();
+      }
+    } catch (e) {
+      console.warn('[Menu] Error reverting footer split:', e);
+    }
+  });
+  
+  // Clear arrays
+  splitTexts = [];
+  footerSplitTexts = [];
+  
+  console.log('[Menu] Creating fresh SplitText instances');
+
   gsap.set(menuOverlay, {
     scaleY: 0,
     transformOrigin: "top center",
@@ -92,6 +121,9 @@ function initMenu() {
   const footerElements = document.querySelectorAll(
     ".menu-social a, .menu-social span, .menu-time"
   );
+  
+  console.log('[Menu] Found footer elements:', footerElements.length);
+  
   footerElements.forEach((element) => {
     const split = new SplitText(element, {
       type: "chars",
@@ -106,6 +138,8 @@ function initMenu() {
       gsap.set(element, { opacity: 0 });
     }
   });
+  
+  console.log('[Menu] Created splitTexts:', splitTexts.length, 'footerSplitTexts:', footerSplitTexts.length);
 
   gsap.set(menuItems, {
     opacity: 1,
@@ -419,6 +453,34 @@ export function closeMenuOnNavigate() {
         isAnimating = false;
         console.log('[Menu] Smooth close animation complete');
         clearTimeout(fallbackTimeout);
+        
+        // CRITICAL: Revert SplitText instances after animation completes
+        // This ensures the DOM is clean for the next page
+        console.log('[Menu] Reverting SplitText after close animation');
+        splitTexts.forEach((split) => {
+          try {
+            if (split && split.revert) {
+              split.revert();
+            }
+          } catch (e) {
+            console.warn('[Menu] Error reverting split:', e);
+          }
+        });
+        
+        footerSplitTexts.forEach((split) => {
+          try {
+            if (split && split.revert) {
+              split.revert();
+            }
+          } catch (e) {
+            console.warn('[Menu] Error reverting footer split:', e);
+          }
+        });
+        
+        // Clear arrays
+        splitTexts = [];
+        footerSplitTexts = [];
+        
         resolve();
       },
     });
@@ -433,6 +495,20 @@ export function closeMenuOnNavigate() {
       if (overlayElement) {
         gsap.set(overlayElement, { scaleY: 0 });
       }
+      
+      // Revert splits even on timeout
+      splitTexts.forEach((split) => {
+        try {
+          if (split && split.revert) split.revert();
+        } catch (e) {}
+      });
+      footerSplitTexts.forEach((split) => {
+        try {
+          if (split && split.revert) split.revert();
+        } catch (e) {}
+      });
+      splitTexts = [];
+      footerSplitTexts = [];
       
       resolve();
     }, 3000);
