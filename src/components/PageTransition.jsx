@@ -508,7 +508,7 @@ const PageTransition = ({ children }) => {
       .to(
         logoRef.current.querySelector("path"),
         {
-          fill: "#e3e4d8",
+          fill: "#f9f4eb",
           duration: 1.2,
           ease: "power2.out",
         },
