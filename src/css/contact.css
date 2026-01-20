@@ -16,10 +16,12 @@
 .contact .container {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: 4rem;
 }
 
 .contact .container .contact-header {
-  width: 70%;
+  width: 50%;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -88,7 +90,7 @@
 /* ========== CONTACT FORM ========== */
 .contact-form-wrapper {
   width: 100%;
-  max-width: 500px;
+  max-width: none;
   margin-top: 2rem;
   position: relative;
   z-index: 10;
