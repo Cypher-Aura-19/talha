@@ -78,7 +78,7 @@ export default function Page() {
       };
 
       // ========== HERO HEADING ANIMATION ==========
-      // Animate hero heading after page transition
+      // Animate hero heading immediately after page transition - NO DELAY
       if (heroHeading) {
         const heroHeadingSplit = SplitText.create(heroHeading, {
           type: "words",

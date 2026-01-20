@@ -123,12 +123,12 @@ export function initHome() {
       willChange: "transform, opacity",
     });
 
-    // Animate all cards together smoothly
+    // Animate all cards together smoothly - NO DELAY, start immediately
     gsap.to(".hero .hero-cards .card", {
       scale: 1,
       opacity: 1,
       duration: 0.8,
-      delay: 0.1,
+      delay: 0,
       stagger: 0,
       ease: "power2.out",
       force3D: true,

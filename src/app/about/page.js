@@ -113,7 +113,7 @@ export default function About() {
         </div>
         <div className="container">
           <div className="about-header">
-            <h2 data-animate-type="line-reveal" data-animate-delay="0.25">
+            <h2 data-animate-type="line-reveal" data-animate-delay="0">
               The Operator at the Edge
             </h2>
           </div>

@@ -214,7 +214,7 @@ export function initAnimations() {
       } else {
         // Skip animations for hero section elements on initial load for HOME page only
         // They should already be visible from the transition
-        const isHeroElement = element.closest('.hero');
+        const isHeroElement = element.closest('.hero, .about-hero, .story-hero');
         const isHomePage = window.location.pathname === '/';
         
         if (isHeroElement && isHomePage && !window.heroAnimationsPlayed) {
@@ -224,8 +224,8 @@ export function initAnimations() {
           return;
         }
 
-        // For non-home pages hero elements, start animation before transition ends
-        const effectiveDelay = isHeroElement && !isHomePage ? -1.5 : delay;
+        // For non-home pages hero elements, start animation IMMEDIATELY with NO delay
+        const effectiveDelay = isHeroElement && !isHomePage ? 0 : delay;
 
         switch (animationType) {
           case "scramble":
