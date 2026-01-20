@@ -454,32 +454,8 @@ export function closeMenuOnNavigate() {
         console.log('[Menu] Smooth close animation complete');
         clearTimeout(fallbackTimeout);
         
-        // CRITICAL: Revert SplitText instances after animation completes
-        // This ensures the DOM is clean for the next page
-        console.log('[Menu] Reverting SplitText after close animation');
-        splitTexts.forEach((split) => {
-          try {
-            if (split && split.revert) {
-              split.revert();
-            }
-          } catch (e) {
-            console.warn('[Menu] Error reverting split:', e);
-          }
-        });
-        
-        footerSplitTexts.forEach((split) => {
-          try {
-            if (split && split.revert) {
-              split.revert();
-            }
-          } catch (e) {
-            console.warn('[Menu] Error reverting footer split:', e);
-          }
-        });
-        
-        // Clear arrays
-        splitTexts = [];
-        footerSplitTexts = [];
+        // DON'T revert SplitText here - let initMenu handle it on next page
+        // Reverting here was causing the DOM elements to disappear
         
         resolve();
       },
@@ -495,20 +471,6 @@ export function closeMenuOnNavigate() {
       if (overlayElement) {
         gsap.set(overlayElement, { scaleY: 0 });
       }
-      
-      // Revert splits even on timeout
-      splitTexts.forEach((split) => {
-        try {
-          if (split && split.revert) split.revert();
-        } catch (e) {}
-      });
-      footerSplitTexts.forEach((split) => {
-        try {
-          if (split && split.revert) split.revert();
-        } catch (e) {}
-      });
-      splitTexts = [];
-      footerSplitTexts = [];
       
       resolve();
     }, 3000);
