@@ -1,9 +1,54 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import '@/css/contact.css';
 
 export default function Contact() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+  const [status, setStatus] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setStatus('');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setStatus('success');
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        setStatus('error');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
   useEffect(() => {
     console.log('[Contact] Component mounted');
     
@@ -105,6 +150,79 @@ export default function Contact() {
               </h2>
             </div>
           </div>
+
+          {/* Contact Form */}
+          <div className="contact-form-wrapper">
+            <form className="contact-form" onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label htmlFor="name" className="mono">
+                  <span>&#9654;</span> Identification
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                  placeholder="Your Name"
+                  disabled={isSubmitting}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="email" className="mono">
+                  <span>&#9654;</span> Signal Address
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  placeholder="your@email.com"
+                  disabled={isSubmitting}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="message" className="mono">
+                  <span>&#9654;</span> Transmission
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                  placeholder="Your message..."
+                  rows="5"
+                  disabled={isSubmitting}
+                ></textarea>
+              </div>
+
+              <button 
+                type="submit" 
+                className="form-submit mono"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Transmitting...' : 'Send Transmission'}
+              </button>
+
+              {status === 'success' && (
+                <p className="form-status success mono">
+                  <span>&#9654;</span> Transmission received. Uplink established.
+                </p>
+              )}
+              {status === 'error' && (
+                <p className="form-status error mono">
+                  <span>&#9654;</span> Transmission failed. Please retry.
+                </p>
+              )}
+            </form>
+          </div>
+
           <div className="contact-gif" style={{
             position: 'fixed',
             top: '0',
