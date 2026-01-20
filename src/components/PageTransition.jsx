@@ -299,19 +299,21 @@ const PageTransition = ({ children }) => {
     console.log('[PageTransition] Pathname changed to:', pathname);
     
     if (typeof window !== "undefined") {
-      // Close menu immediately and synchronously
+      // Close menu immediately and synchronously - don't await, just fire and forget
       const closeMenu = async () => {
         try {
           const mod = await import("@/lib/scripts/menu");
           if (mod?.closeMenuOnNavigate) {
             console.log('[PageTransition] Force closing menu on pathname change');
-            mod.closeMenuOnNavigate();
+            await mod.closeMenuOnNavigate();
+            console.log('[PageTransition] Menu closed after pathname change');
           }
         } catch (e) {
           console.error('[PageTransition] Error closing menu:', e);
         }
       };
       
+      // Execute immediately
       closeMenu();
     }
   }, [pathname]);

@@ -381,18 +381,50 @@ export function initMenuScript() {
 export function closeMenuOnNavigate() {
   if (typeof window === "undefined") return Promise.resolve();
   
-  console.log('[Menu] closeMenuOnNavigate called, isOpen:', isOpen);
+  // Check actual DOM state instead of relying on isOpen flag
+  const hamburgerElement = document.querySelector(".menu-hamburger-icon");
+  const overlayElement = document.querySelector(".menu-overlay");
   
-  // If menu is not open, return immediately
-  if (!isOpen) {
-    console.log('[Menu] Menu already closed');
+  // Check if menu is actually open by checking DOM classes and overlay scale
+  const isActuallyOpen = hamburgerElement?.classList.contains("open") || 
+                         (overlayElement && gsap.getProperty(overlayElement, "scaleY") > 0);
+  
+  console.log('[Menu] closeMenuOnNavigate called, isOpen flag:', isOpen, 'actually open:', isActuallyOpen);
+  
+  // If menu is not actually open, just ensure it's closed and return
+  if (!isActuallyOpen) {
+    console.log('[Menu] Menu not open, ensuring closed state');
+    
+    // Force closed state
+    if (hamburgerElement) hamburgerElement.classList.remove("open");
+    const logoElement = document.querySelector(".menu-logo img");
+    if (logoElement) logoElement.classList.remove("rotated");
+    
+    if (overlayElement) {
+      gsap.killTweensOf(overlayElement);
+      gsap.set(overlayElement, { scaleY: 0, transformOrigin: "top center" });
+    }
+    
+    isOpen = false;
+    isAnimating = false;
+    
     return Promise.resolve();
   }
   
-  // Use the proper close animation
+  // Menu is open, close it with animation
   return new Promise((resolve) => {
-    // Reset animation flag to allow close
+    console.log('[Menu] Closing menu with animation');
+    
+    // Kill any ongoing animations first
+    if (overlayElement) gsap.killTweensOf(overlayElement);
+    const footerElement = document.querySelector(".menu-footer");
+    if (footerElement) gsap.killTweensOf(footerElement);
+    
+    // Reset flags to allow close
     isAnimating = false;
+    
+    // Update isOpen to match actual state
+    isOpen = true;
     
     // Call the proper close function
     closeMenu();
@@ -400,7 +432,20 @@ export function closeMenuOnNavigate() {
     // Wait for the close animation to complete (0.8s total)
     setTimeout(() => {
       console.log('[Menu] Menu close animation complete');
+      
+      // Double-check everything is closed
+      if (hamburgerElement) hamburgerElement.classList.remove("open");
+      const logoElement = document.querySelector(".menu-logo img");
+      if (logoElement) logoElement.classList.remove("rotated");
+      
+      if (overlayElement) {
+        gsap.set(overlayElement, { scaleY: 0, transformOrigin: "top center" });
+      }
+      
+      isOpen = false;
+      isAnimating = false;
+      
       resolve();
-    }, 800);
+    }, 850); // Slightly longer to ensure animation completes
   });
 }
