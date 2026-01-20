@@ -92,8 +92,8 @@
 }
 
 .story-marker:hover .story-marker-label {
-  background: rgba(10, 10, 10, 0.95);
-  transition: background 0.3s ease;
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
 }
 
 .story-marker-1 {
@@ -142,13 +142,13 @@
   font-size: 0.75rem;
   font-weight: 500;
   padding: 0.5rem 0.75rem;
-  border-radius: 0.5rem;
-  background: rgba(10, 10, 10, 0.9);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border-radius: 0.35rem;
+  background: transparent;
+  backdrop-filter: none;
+  border: none;
+  box-shadow: none;
   white-space: nowrap;
-  letter-spacing: 0.02em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 0, 0, 0.6);
 }
 
 .story-marker .story-marker-icon {
@@ -395,10 +395,9 @@
   font-size: clamp(4rem, 8vw, 10rem);
   line-height: 0.85;
   color: #ffffff;
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 4px 40px rgba(0, 0, 0, 1), 0 0 60px rgba(0, 0, 0, 0.8);
   letter-spacing: -0.03em;
   overflow: visible;
-  font-weight: 700;
 }
 
 .story-hero-content .story-hero-content-copy h1 .word {
@@ -409,14 +408,11 @@
 }
 
 .story-label {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.6);
   margin-bottom: 0.75rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
   position: relative;
   padding-left: 1.5rem;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  font-weight: 600;
 }
 
 .story-label::before {
@@ -426,8 +422,8 @@
   top: 50%;
   transform: translateY(-50%);
   width: 1rem;
-  height: 2px;
-  background: rgba(255, 255, 255, 0.5);
+  height: 1px;
+  background: rgba(255, 255, 255, 0.4);
 }
 
 .story-hero-content .story-hero-content-copy h2 {
@@ -435,16 +431,15 @@
   line-height: 0.9;
   color: #ffffff;
   margin-bottom: 1.25rem;
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 4px 40px rgba(0, 0, 0, 1), 0 0 60px rgba(0, 0, 0, 0.8);
   letter-spacing: -0.02em;
-  font-weight: 600;
 }
 
 .story-hero-content .story-hero-content-copy p.md {
   font-size: 1.25rem;
   line-height: 1.7;
-  color: rgba(255, 255, 255, 0.9);
-  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 2px 30px rgba(0, 0, 0, 1), 0 0 40px rgba(0, 0, 0, 0.8);
   max-width: 85%;
   font-weight: 400;
 }
@@ -488,18 +483,18 @@
   box-shadow: 0 0 8px rgba(249, 244, 235, 0.4);
 }
 
-/* Instruction Tooltip - Modern Clean Design */
+/* Instruction Tooltip - Minimalistic Design */
 .story-instruction {
   position: absolute;
   bottom: 2.5rem;
   left: 50%;
   transform: translateX(-50%);
   padding: 0.6rem 1.2rem;
-  background: rgba(10, 10, 10, 0.9);
-  backdrop-filter: blur(20px);
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(10px);
   color: rgba(249, 244, 235, 1);
-  border: 1px solid rgba(249, 244, 235, 0.3);
-  border-radius: 6px;
+  border: 1px solid rgba(249, 244, 235, 0.25);
+  border-radius: 4px;
   font-family: "DM Mono";
   font-size: 0.75rem;
   text-transform: uppercase;
@@ -508,8 +503,7 @@
   pointer-events: none;
   white-space: nowrap;
   z-index: 200;
-  font-weight: 500;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
 .story-instruction::before {
