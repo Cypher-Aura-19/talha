@@ -37,6 +37,25 @@ export function initContact() {
   if (contactGif) {
     const video = contactGif.querySelector("video");
 
+    if (video) {
+      // Track if video has played once
+      let hasPlayedOnce = false;
+      
+      // Set initial volume to full (unmuted)
+      video.muted = false;
+      video.volume = 1.0;
+      console.log('[Contact] Video starting with full volume');
+      
+      // Listen for when video ends (before looping)
+      video.addEventListener('ended', () => {
+        if (!hasPlayedOnce) {
+          console.log('[Contact] Video first play ended, muting for loop');
+          video.muted = true;
+          hasPlayedOnce = true;
+        }
+      });
+    }
+
     const performAnimation = () => {
       console.log('[Contact] Setting up video animation');
       

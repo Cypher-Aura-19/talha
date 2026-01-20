@@ -116,7 +116,7 @@ export default function Contact() {
             borderRadius: '0',
             right: 'auto'
           }}>
-            <video src="/contact/vide.mp4" autoPlay loop muted playsInline preload="none" loading="lazy"></video>
+            <video src="/contact/vide.mp4" autoPlay loop playsInline preload="none" loading="lazy"></video>
           </div>
         </div>
         <div className="home-spotlight-bottom-bar">
