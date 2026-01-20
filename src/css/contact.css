@@ -18,23 +18,34 @@
   align-items: center;
   justify-content: space-between;
   gap: 4rem;
+  height: 100%;
 }
 
 .contact .container .contact-header {
   width: 50%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 2rem;
+  height: 100%;
+  max-height: 600px;
 }
 
 .contact .contact-gif {
+  /* Default position after animation - will be overridden by inline styles initially */
   position: absolute;
   top: 50%;
   right: 2.75rem;
   transform: translateY(-50%);
   z-index: 0;
   width: 45%;
+  max-height: 600px;
   aspect-ratio: 16/9;
+}
+
+/* When video has inline styles (fullscreen), those take priority */
+.contact .contact-gif[style] {
+  /* Inline styles will override these */
 }
 
 .contact .contact-gif video {
@@ -94,12 +105,16 @@
   margin-top: 2rem;
   position: relative;
   z-index: 10;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .contact-form {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.5rem;
 }
 
 .form-group {
@@ -126,27 +141,29 @@
 .form-group input,
 .form-group textarea {
   width: 100%;
-  padding: 0.75rem 0.875rem;
-  background: rgba(249, 244, 235, 0.05);
-  border: 1px solid rgba(249, 244, 235, 0.15);
-  border-radius: 4px;
+  padding: 1rem 0;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(249, 244, 235, 0.2);
+  border-radius: 0;
   color: var(--base-100);
   font-family: inherit;
-  font-size: 0.95rem;
+  font-size: 1rem;
   transition: all 0.3s ease;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  background: rgba(249, 244, 235, 0.08);
-  border-color: rgba(249, 244, 235, 0.3);
-  box-shadow: 0 0 0 3px rgba(249, 244, 235, 0.05);
+  background: transparent;
+  border-bottom-color: rgba(249, 244, 235, 0.5);
+  box-shadow: none;
 }
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-  color: rgba(249, 244, 235, 0.3);
+  color: rgba(249, 244, 235, 0.4);
+  opacity: 0.75;
 }
 
 .form-group input:disabled,
@@ -159,31 +176,36 @@
   resize: vertical;
   min-height: 100px;
   font-family: inherit;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 .form-submit {
   padding: 0.875rem 1.75rem;
   background: var(--base-100);
   color: var(--base-300);
-  border: none;
+  border: 2px solid var(--base-100);
   border-radius: 4px;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-weight: 500;
+  font-weight: 600;
   align-self: flex-start;
+  box-shadow: 0 4px 12px rgba(249, 244, 235, 0.3);
 }
 
 .form-submit:hover:not(:disabled) {
-  background: rgba(249, 244, 235, 0.9);
+  background: rgba(249, 244, 235, 0.95);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(249, 244, 235, 0.2);
+  box-shadow: 0 6px 20px rgba(249, 244, 235, 0.4);
+  border-color: rgba(249, 244, 235, 0.95);
 }
 
 .form-submit:active:not(:disabled) {
   transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(249, 244, 235, 0.3);
 }
 
 .form-submit:disabled {
