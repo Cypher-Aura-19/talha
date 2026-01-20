@@ -69,35 +69,6 @@ function scrambleText(elements, duration = 0.4) {
 }
 
 function initMenu() {
-  // CRITICAL: Revert any existing SplitText instances first
-  console.log('[Menu] Reverting existing SplitText instances:', splitTexts.length, footerSplitTexts.length);
-  
-  splitTexts.forEach((split) => {
-    try {
-      if (split && split.revert) {
-        split.revert();
-      }
-    } catch (e) {
-      console.warn('[Menu] Error reverting split:', e);
-    }
-  });
-  
-  footerSplitTexts.forEach((split) => {
-    try {
-      if (split && split.revert) {
-        split.revert();
-      }
-    } catch (e) {
-      console.warn('[Menu] Error reverting footer split:', e);
-    }
-  });
-  
-  // Clear arrays
-  splitTexts = [];
-  footerSplitTexts = [];
-  
-  console.log('[Menu] Creating fresh SplitText instances');
-
   gsap.set(menuOverlay, {
     scaleY: 0,
     transformOrigin: "top center",
@@ -121,9 +92,6 @@ function initMenu() {
   const footerElements = document.querySelectorAll(
     ".menu-social a, .menu-social span, .menu-time"
   );
-  
-  console.log('[Menu] Found footer elements:', footerElements.length);
-  
   footerElements.forEach((element) => {
     const split = new SplitText(element, {
       type: "chars",
@@ -138,8 +106,6 @@ function initMenu() {
       gsap.set(element, { opacity: 0 });
     }
   });
-  
-  console.log('[Menu] Created splitTexts:', splitTexts.length, 'footerSplitTexts:', footerSplitTexts.length);
 
   gsap.set(menuItems, {
     opacity: 1,
@@ -411,139 +377,94 @@ export function initMenuScript() {
   }, 0);
 }
 
-// Export function to close menu when navigating - with smooth animation
+// Export function to close menu when navigating - SMOOTH version
 export function closeMenuOnNavigate() {
-  if (typeof window === "undefined") return Promise.resolve();
+  if (typeof window === "undefined") return;
   
   console.log('[Menu] closeMenuOnNavigate called, isOpen:', isOpen);
   
-  // If menu is not open, resolve immediately
+  // If menu is not open, just reset state
   if (!isOpen) {
     console.log('[Menu] Menu already closed');
-    return Promise.resolve();
+    return;
   }
   
-  return new Promise((resolve) => {
-    // Reset animation flag to allow close
-    isAnimating = false;
-    isOpen = false;
-    
-    const hamburgerElement = document.querySelector(".menu-hamburger-icon");
-    const logoElement = document.querySelector(".menu-logo img");
-    const overlayElement = document.querySelector(".menu-overlay");
-    const footerElement = document.querySelector(".menu-footer");
-    
-    if (hamburgerElement) {
-      hamburgerElement.classList.remove("open");
-    }
-    if (logoElement) {
-      logoElement.classList.remove("rotated");
-    }
-    
-    // Safety check - if elements don't exist, resolve immediately
-    if (!overlayElement) {
-      console.log('[Menu] Menu elements not found, resolving immediately');
-      resolve();
-      return;
-    }
-    
-    // Create smooth closing animation
-    const tl = gsap.timeline({
-      onComplete: () => {
-        isAnimating = false;
-        console.log('[Menu] Smooth close animation complete');
-        clearTimeout(fallbackTimeout);
+  // Reset animation flag to allow close
+  isAnimating = false;
+  isOpen = false;
+  
+  // Remove visual classes
+  const hamburgerElement = document.querySelector(".menu-hamburger-icon");
+  const logoElement = document.querySelector(".menu-logo img");
+  const overlayElement = document.querySelector(".menu-overlay");
+  const footerElement = document.querySelector(".menu-footer");
+  
+  if (hamburgerElement) {
+    hamburgerElement.classList.remove("open");
+  }
+  if (logoElement) {
+    logoElement.classList.remove("rotated");
+  }
+  
+  // Kill any ongoing animations
+  if (overlayElement) {
+    gsap.killTweensOf(overlayElement);
+  }
+  if (footerElement) {
+    gsap.killTweensOf(footerElement);
+  }
+  
+  // Create smooth close animation timeline
+  const tl = gsap.timeline();
+  
+  // Animate footer out smoothly
+  if (footerElement) {
+    tl.to(footerElement, {
+      duration: 0.4,
+      y: 20,
+      opacity: 0,
+      ease: "power2.in",
+      onStart: () => {
+        const timeElement = document.querySelector(".menu-time");
+        if (timeElement) {
+          gsap.to(timeElement, { opacity: 0, duration: 0.2 });
+        }
         
-        // DON'T revert SplitText here - let initMenu handle it on next page
-        // Reverting here was causing the DOM elements to disappear
-        
-        resolve();
+        if (footerSplitTexts.length > 0) {
+          const allFooterChars = footerSplitTexts.reduce((acc, split) => {
+            return acc.concat(split.chars);
+          }, []);
+          gsap.to(allFooterChars, { opacity: 0, duration: 0.2 });
+        }
       },
-    });
+    }, 0);
+  }
+  
+  // Animate menu items out smoothly
+  if (splitTexts.length > 0) {
+    const allWords = splitTexts.reduce((acc, split) => {
+      return acc.concat(split.words);
+    }, []);
     
-    // Fallback timeout in case animation doesn't complete (longer timeout)
-    const fallbackTimeout = setTimeout(() => {
-      console.log('[Menu] Animation timeout, forcing resolve');
-      tl.kill();
-      isAnimating = false;
-      
-      // Force reset menu state
-      if (overlayElement) {
-        gsap.set(overlayElement, { scaleY: 0 });
-      }
-      
-      resolve();
-    }, 3000);
+    gsap.killTweensOf(allWords);
     
-    // Get all menu words (with safety check)
-    let allWords = [];
-    if (splitTexts && splitTexts.length > 0) {
-      try {
-        allWords = splitTexts.reduce((acc, split) => {
-          if (split && split.words) {
-            return acc.concat(split.words);
-          }
-          return acc;
-        }, []);
-      } catch (e) {
-        console.warn('[Menu] Error getting split words:', e);
-      }
-    }
-    
-    // 1. Fade out footer first
-    if (footerElement) {
-      tl.to(footerElement, {
-        duration: 0.5,
-        y: 20,
-        opacity: 0,
-        ease: "power2.inOut",
-        onStart: () => {
-          const timeElement = document.querySelector(".menu-time");
-          if (timeElement) {
-            gsap.to(timeElement, { opacity: 0, duration: 0.3 });
-          }
-          
-          if (footerSplitTexts && footerSplitTexts.length > 0) {
-            try {
-              const allFooterChars = footerSplitTexts.reduce((acc, split) => {
-                if (split && split.chars) {
-                  return acc.concat(split.chars);
-                }
-                return acc;
-              }, []);
-              gsap.to(allFooterChars, { opacity: 0, duration: 0.3 });
-            } catch (e) {
-              console.warn('[Menu] Error animating footer chars:', e);
-            }
-          }
-        },
-      });
-    }
-    
-    // 2. Slide menu items up (only if they exist)
-    if (allWords.length > 0) {
-      tl.to(
-        allWords,
-        {
-          duration: 0.6,
-          yPercent: -120,
-          stagger: 0.03,
-          ease: "power3.inOut",
-        },
-        "-=0.3"
-      );
-    }
-    
-    // 3. Close overlay - THIS MUST COMPLETE
-    tl.to(
-      overlayElement,
-      {
-        duration: 0.8,
-        scaleY: 0,
-        ease: "power3.inOut",
-      },
-      "-=0.4"
-    );
-  });
+    tl.to(allWords, {
+      duration: 0.5,
+      yPercent: 120,
+      stagger: -0.03,
+      ease: "power2.in",
+    }, 0.1);
+  }
+  
+  // Animate overlay out smoothly - this is the main visual element
+  if (overlayElement) {
+    tl.to(overlayElement, {
+      duration: 0.7,
+      scaleY: 0,
+      ease: "power3.inOut",
+      transformOrigin: "top center",
+    }, 0.2);
+  }
+  
+  console.log('[Menu] Smooth close animation started');
 }
-

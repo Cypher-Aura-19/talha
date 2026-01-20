@@ -74,24 +74,19 @@ const PageTransition = ({ children }) => {
     
     console.log('[PageTransition] Starting navigation to:', url);
     
-    // CRITICAL: Close menu with smooth animation FIRST and wait for it (with longer timeout)
+    // CRITICAL: Close menu FIRST with smooth animation
+    let menuClosePromise = Promise.resolve();
     if (typeof window !== "undefined") {
-      try {
-        const menuModule = await import("@/lib/scripts/menu");
-        if (menuModule?.closeMenuOnNavigate) {
-          console.log('[PageTransition] Closing menu with smooth animation');
-          
-          // Race between menu close and timeout (max 2.5 seconds to ensure animation completes)
-          await Promise.race([
-            menuModule.closeMenuOnNavigate(),
-            new Promise(resolve => setTimeout(resolve, 2500))
-          ]);
-          
-          console.log('[PageTransition] Menu close complete or timed out');
-        }
-      } catch (e) {
-        console.error('[PageTransition] Error closing menu:', e);
-      }
+      menuClosePromise = import("@/lib/scripts/menu")
+        .then((mod) => {
+          if (mod?.closeMenuOnNavigate) {
+            console.log('[PageTransition] Starting smooth menu close');
+            mod.closeMenuOnNavigate();
+            // Give menu time to animate (700ms for overlay close)
+            return new Promise(resolve => setTimeout(resolve, 300));
+          }
+        })
+        .catch(() => {});
     }
     
     // CRITICAL: Cleanup work page event listeners IMMEDIATELY if we're on work page
@@ -107,9 +102,12 @@ const PageTransition = ({ children }) => {
       }
     }
     
-    // CRITICAL: Preload images for target page
-    await preloadPageImages(url);
-    console.log('[PageTransition] Images preloaded for:', url);
+    // Preload images while menu is closing (parallel operation)
+    const imagePreloadPromise = preloadPageImages(url);
+    
+    // Wait for both menu close and image preload
+    await Promise.all([menuClosePromise, imagePreloadPromise]);
+    console.log('[PageTransition] Menu closed and images preloaded for:', url);
     
     // CRITICAL: Stop Lenis scroll immediately to prevent page jumping
     if (typeof window !== "undefined" && window.lenis) {
@@ -117,7 +115,7 @@ const PageTransition = ({ children }) => {
       window.lenis.stop();
     }
     
-    // Start transition immediately after menu close and image preload
+    // Start transition immediately
     proceedWithTransition(url);
   }, [pathname, preloadPageImages]);
 
