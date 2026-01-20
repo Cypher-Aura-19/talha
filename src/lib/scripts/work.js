@@ -273,6 +273,10 @@ export function initWork() {
     const a = document.createElement("a");
     a.href = slideData.slideUrl;
     a.textContent = "Access Log";
+    
+    // CRITICAL: Mark as internal link for PageTransition to handle
+    a.setAttribute('data-internal-link', 'true');
+    
     slideLink.appendChild(a);
 
     slideHeader.appendChild(slideTitle);
@@ -333,9 +337,8 @@ export function initWork() {
       splitInstances.push(split);
     }
 
-    // Split paragraphs (not links)
-    const paragraphs = slide.querySelectorAll("p");
-    paragraphs.forEach((element) => {
+    const slideContent = slide.querySelectorAll("p, a");
+    slideContent.forEach((element) => {
       const split = SplitText.create(element, {
         type: "lines",
         linesClass: "line",
@@ -343,30 +346,6 @@ export function initWork() {
         reduceWhiteSpace: false,
       });
       splitInstances.push(split);
-    });
-
-    // Split links separately and wrap content, not the <a> tag itself
-    const links = slide.querySelectorAll("a");
-    links.forEach((link) => {
-      // Store the href before splitting
-      const href = link.getAttribute('href');
-      
-      // Create a span wrapper for the text content
-      const textContent = link.textContent;
-      link.innerHTML = `<span class="link-text">${textContent}</span>`;
-      
-      // Split the span, not the <a> tag
-      const span = link.querySelector('.link-text');
-      const split = SplitText.create(span, {
-        type: "lines",
-        linesClass: "line",
-        mask: "lines",
-        reduceWhiteSpace: false,
-      });
-      splitInstances.push(split);
-      
-      // Ensure href is preserved
-      link.setAttribute('href', href);
     });
   }
 

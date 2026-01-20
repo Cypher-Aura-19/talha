@@ -225,6 +225,11 @@ const PageTransition = ({ children }) => {
 
   const onAnchorClick = useCallback(
     (e) => {
+      // Check if the clicked element is a link or inside a link
+      const link = e.target.closest('a[href^="/"]');
+      
+      if (!link) return;
+      
       if (isTransitioning.current) {
         e.preventDefault();
         return;
@@ -236,13 +241,13 @@ const PageTransition = ({ children }) => {
         e.shiftKey ||
         e.altKey ||
         e.button !== 0 ||
-        e.currentTarget.target === "_blank"
+        link.target === "_blank"
       ) {
         return;
       }
 
       e.preventDefault();
-      const href = e.currentTarget.href;
+      const href = link.href;
       const url = new URL(href).pathname;
       if (url !== pathname) {
         console.log('[PageTransition] Link clicked:', url);
@@ -463,32 +468,18 @@ const PageTransition = ({ children }) => {
       isInitialMount.current = false;
     }
 
-    // Use event delegation on document to catch dynamically created links
+    // Use event delegation on document body to catch all link clicks (including dynamically added ones)
     const handleDocumentClick = (e) => {
-      // Find the closest anchor tag
       const link = e.target.closest('a[href^="/"]');
-      
-      if (!link) return;
-      
-      // Create a synthetic event that looks like it came from the link
-      const syntheticEvent = {
-        ...e,
-        currentTarget: link,
-        preventDefault: () => e.preventDefault(),
-        metaKey: e.metaKey,
-        ctrlKey: e.ctrlKey,
-        shiftKey: e.shiftKey,
-        altKey: e.altKey,
-        button: e.button,
-      };
-      
-      onAnchorClick(syntheticEvent);
+      if (link) {
+        onAnchorClick(e);
+      }
     };
-
-    document.addEventListener("click", handleDocumentClick);
+    
+    document.body.addEventListener("click", handleDocumentClick);
 
     return () => {
-      document.removeEventListener("click", handleDocumentClick);
+      document.body.removeEventListener("click", handleDocumentClick);
       if (revealTimeoutRef.current) {
         clearTimeout(revealTimeoutRef.current);
       }
