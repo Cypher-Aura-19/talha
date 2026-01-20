@@ -224,10 +224,7 @@ const PageTransition = ({ children }) => {
   }, [pathname]);
 
   const onAnchorClick = useCallback(
-    (e, linkElement = null) => {
-      // Get the actual link element (either from parameter or event target)
-      const link = linkElement || e.currentTarget;
-      
+    (e) => {
       if (isTransitioning.current) {
         e.preventDefault();
         return;
@@ -239,15 +236,13 @@ const PageTransition = ({ children }) => {
         e.shiftKey ||
         e.altKey ||
         e.button !== 0 ||
-        link.target === "_blank"
+        e.currentTarget.target === "_blank"
       ) {
         return;
       }
 
       e.preventDefault();
-      const href = link.href;
-      if (!href) return;
-      
+      const href = e.currentTarget.href;
       const url = new URL(href).pathname;
       if (url !== pathname) {
         console.log('[PageTransition] Link clicked:', url);
@@ -470,10 +465,24 @@ const PageTransition = ({ children }) => {
 
     // Use event delegation on document to catch dynamically created links
     const handleDocumentClick = (e) => {
+      // Find the closest anchor tag
       const link = e.target.closest('a[href^="/"]');
-      if (link) {
-        onAnchorClick(e, link);
-      }
+      
+      if (!link) return;
+      
+      // Create a synthetic event that looks like it came from the link
+      const syntheticEvent = {
+        ...e,
+        currentTarget: link,
+        preventDefault: () => e.preventDefault(),
+        metaKey: e.metaKey,
+        ctrlKey: e.ctrlKey,
+        shiftKey: e.shiftKey,
+        altKey: e.altKey,
+        button: e.button,
+      };
+      
+      onAnchorClick(syntheticEvent);
     };
 
     document.addEventListener("click", handleDocumentClick);
