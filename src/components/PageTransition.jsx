@@ -50,11 +50,23 @@ const PageTransition = ({ children }) => {
 
     console.log(`[PageTransition] Preloading ${imagesToLoad.length} images for ${targetPath}`);
 
+    // Use a cache to avoid re-downloading images
+    if (!window.__imagePreloadCache) {
+      window.__imagePreloadCache = new Set();
+    }
+
     const promises = imagesToLoad.map((url) => {
+      // Skip if already loaded
+      if (window.__imagePreloadCache.has(url)) {
+        console.log(`[PageTransition] Already cached: ${url}`);
+        return Promise.resolve(url);
+      }
+
       return new Promise((resolve) => {
         const img = new Image();
         img.onload = () => {
           console.log(`[PageTransition] Loaded: ${url}`);
+          window.__imagePreloadCache.add(url);
           resolve(url);
         };
         img.onerror = () => {
@@ -101,9 +113,13 @@ const PageTransition = ({ children }) => {
       }
     }
     
-    // CRITICAL: Preload images for target page
-    await preloadPageImages(url);
-    console.log('[PageTransition] Images preloaded for:', url);
+    // Start preloading images in the background (don't wait for them)
+    // This allows the transition to start immediately while images load
+    preloadPageImages(url).then(() => {
+      console.log('[PageTransition] Images preloaded for:', url);
+    }).catch((e) => {
+      console.warn('[PageTransition] Error preloading images:', e);
+    });
     
     // CRITICAL: Stop Lenis scroll immediately to prevent page jumping
     if (typeof window !== "undefined" && window.lenis) {
@@ -111,7 +127,7 @@ const PageTransition = ({ children }) => {
       window.lenis.stop();
     }
     
-    // Start transition immediately from current scroll position
+    // Start transition immediately - don't wait for images
     proceedWithTransition(url);
   }, [pathname, preloadPageImages]);
 
