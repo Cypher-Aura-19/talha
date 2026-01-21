@@ -645,6 +645,8 @@
   z-index: 10000;
   opacity: 0;
   will-change: opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .location-card {
@@ -656,6 +658,9 @@
   overflow: hidden;
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
   will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .location-card-close {
@@ -687,6 +692,9 @@
   height: 350px;
   overflow: hidden;
   will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .location-card-image::after {
@@ -706,6 +714,9 @@
   height: 100%;
   object-fit: cover;
   will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .location-card-content {
@@ -714,6 +725,9 @@
   flex-direction: column;
   gap: 1rem;
   background: #f9f4eb;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .location-card-label {
@@ -724,6 +738,9 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .location-card-status {
@@ -752,6 +769,9 @@
   margin-bottom: 0.75rem;
   letter-spacing: -0.02em;
   overflow: visible;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .location-card-content h3 .word {
@@ -766,6 +786,9 @@
   line-height: 1.7;
   color: rgba(10, 10, 10, 0.8);
   margin-bottom: 1rem;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .location-card-coordinates {

@@ -123,6 +123,21 @@ export default function Contact() {
   return (
     <>
       <section className="contact">
+        {/* Video overlay renders FIRST - highest z-index */}
+        <div className="contact-gif" style={{
+          position: 'fixed',
+          top: '0',
+          left: '0',
+          width: '100vw',
+          height: '100vh',
+          zIndex: '9999',
+          transform: 'none',
+          borderRadius: '0',
+          right: 'auto'
+        }}>
+          <video src="/contact/vide.mp4" autoPlay loop playsInline preload="auto" loading="eager"></video>
+        </div>
+
         <div className="home-spotlight-top-bar">
           <div className="container">
             <div className="symbols-container">
@@ -221,21 +236,6 @@ export default function Contact() {
                 )}
               </form>
             </div>
-          </div>
-
-          {/* Video stays on RIGHT side */}
-          <div className="contact-gif" style={{
-            position: 'fixed',
-            top: '0',
-            left: '0',
-            width: '100vw',
-            height: '100vh',
-            zIndex: '9999',
-            transform: 'none',
-            borderRadius: '0',
-            right: 'auto'
-          }}>
-            <video src="/contact/vide.mp4" autoPlay loop playsInline preload="none" loading="lazy"></video>
           </div>
         </div>
         <div className="home-spotlight-bottom-bar">

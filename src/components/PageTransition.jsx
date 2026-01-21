@@ -39,6 +39,34 @@ const PageTransition = ({ children }) => {
         '/story/6.png',
         '/story/7.png',
         '/story/8.png'
+      ],
+      '/project-1': [
+        '/project-images/delivetree-1.webp',
+        '/project-images/delivetree-2.webp',
+        '/project-images/delivetree-3.webp',
+        '/project-images/delivetree-4.webp',
+        '/project-images/delivetree-5.webp'
+      ],
+      '/project-2': [
+        '/sqalify/1.webp',
+        '/sqalify/2.webp',
+        '/sqalify/3.webp',
+        '/sqalify/4.webp',
+        '/sqalify/5.webp'
+      ],
+      '/project-3': [
+        '/doc intel/1.webp',
+        '/doc intel/2.webp',
+        '/doc intel/3.webp',
+        '/doc intel/4.webp',
+        '/doc intel/5.webp'
+      ],
+      '/project-4': [
+        '/resume ai/1.webp',
+        '/resume ai/2.webp',
+        '/resume ai/3.webp',
+        '/resume ai/4.webp',
+        '/resume ai/5.webp'
       ]
     };
 
@@ -264,13 +292,16 @@ const PageTransition = ({ children }) => {
 
     console.log('[PageTransition] Starting reveal animation');
 
-    // Ensure content is visible before revealing
-    if (contentRef.current) {
-      gsap.set(contentRef.current, { autoAlpha: 1 });
-    }
-
     // CRITICAL: Kill any existing animations on blocks to prevent conflicts
     gsap.killTweensOf(blocksRef.current);
+
+    // CRITICAL: Hide content completely during block positioning to prevent layout shifts
+    if (contentRef.current) {
+      gsap.set(contentRef.current, { 
+        autoAlpha: 0,
+        visibility: 'hidden'
+      });
+    }
 
     // CRITICAL: Set blocks to fully cover the page from the LEFT side first
     // This ensures they're in the correct position before revealing
@@ -282,52 +313,65 @@ const PageTransition = ({ children }) => {
       clearProps: "none" // Don't clear properties yet
     });
 
-    // Use double RAF to ensure DOM is fully ready and painted
+    // Ensure overlay is visible and blocking
+    if (overlayRef.current) {
+      overlayRef.current.style.pointerEvents = "auto";
+      overlayRef.current.style.display = "flex";
+    }
+
+    // Use triple RAF to ensure DOM is fully ready, painted, and stable
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        // Now reveal: blocks shrink from LEFT side (revealing content from left to right)
-        gsap.to(blocksRef.current, {
-          scaleX: 0,
-          duration: 0.9,
-          stagger: 0.04,
-          ease: "power2.inOut",
-          transformOrigin: "left",
-          force3D: true,
-          overwrite: "auto",
-          onStart: () => {
-            // Ensure overlay is visible during animation
-            if (overlayRef.current) {
-              overlayRef.current.style.pointerEvents = "auto";
-            }
-          },
-          onComplete: () => {
-            console.log('[PageTransition] Reveal animation complete');
-            isTransitioning.current = false;
-            if (overlayRef.current) {
-              overlayRef.current.style.pointerEvents = "none";
-            }
-            if (logoOverlayRef.current) {
-              logoOverlayRef.current.style.pointerEvents = "none";
-            }
-            
-            // Ensure all blocks are completely hidden and clear transforms
-            gsap.set(blocksRef.current, { 
-              scaleX: 0, 
-              x: 0, 
-              force3D: false,
-              clearProps: "transform"
+        requestAnimationFrame(() => {
+          // NOW show content behind the blocks (it will be covered)
+          if (contentRef.current) {
+            gsap.set(contentRef.current, { 
+              autoAlpha: 1,
+              visibility: 'visible'
             });
-            
-            // Restart Lenis scroll after transition
-            if (typeof window !== "undefined" && window.lenis) {
-              console.log('[PageTransition] Restarting Lenis scroll');
-              window.lenis.start();
-            }
-            
-            // Dispatch custom event to signal transition complete
-            console.log('[PageTransition] Dispatching transitionComplete event');
-            window.dispatchEvent(new CustomEvent('pageTransitionComplete'));
-          },
+          }
+          
+          // Longer delay to ensure content and images are fully rendered before blocks start moving
+          setTimeout(() => {
+            // Now reveal: blocks shrink from LEFT side (revealing content from left to right)
+            gsap.to(blocksRef.current, {
+              scaleX: 0,
+              duration: 0.9,
+              stagger: 0.04,
+              ease: "power2.inOut",
+              transformOrigin: "left",
+              force3D: true,
+              overwrite: "auto",
+              onComplete: () => {
+                console.log('[PageTransition] Reveal animation complete');
+                isTransitioning.current = false;
+                if (overlayRef.current) {
+                  overlayRef.current.style.pointerEvents = "none";
+                }
+                if (logoOverlayRef.current) {
+                  logoOverlayRef.current.style.pointerEvents = "none";
+                }
+                
+                // Ensure all blocks are completely hidden and clear transforms
+                gsap.set(blocksRef.current, { 
+                  scaleX: 0, 
+                  x: 0, 
+                  force3D: false,
+                  clearProps: "transform"
+                });
+                
+                // Restart Lenis scroll after transition
+                if (typeof window !== "undefined" && window.lenis) {
+                  console.log('[PageTransition] Restarting Lenis scroll');
+                  window.lenis.start();
+                }
+                
+                // Dispatch custom event to signal transition complete
+                console.log('[PageTransition] Dispatching transitionComplete event');
+                window.dispatchEvent(new CustomEvent('pageTransitionComplete'));
+              },
+            });
+          }, 150);
         });
       });
     });

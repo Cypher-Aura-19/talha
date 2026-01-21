@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import Link from 'next/link';
+import Footer from '@/components/Footer';
 
 export default function About() {
   useEffect(() => {
@@ -345,66 +346,7 @@ export default function About() {
         </div>
       </section>
 
-      <footer>
-        <div className="container">
-          <div className="footer-top">
-            <div className="footer-col">
-              <p className="mono"><span>&#9654;</span> Initialize Encrypted Connection</p>
-              <div className="footer-email-container">
-                <div className="footer-email-row">
-                  <input type="text" placeholder="your@email.com" />
-                  <button>
-                    <img src="/global/footer-right-arrow.webp" alt="" />
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div className="footer-col"></div>
-          </div>
-          <div className="footer-bottom">
-            <div className="footer-col">
-              <div className="footer-logo">
-                <img src="/global/logo.webp" alt="" />
-              </div>
-            </div>
-            <div className="footer-col">
-              <div className="footer-sub-col">
-                <p className="mono">Explore</p>
-                <div className="footer-links">
-                  <p><Link href="/">Home Base</Link></p>
-                  <p><Link href="/about">The Operator</Link></p>
-                  <p><Link href="/work">Mission Logs</Link></p>
-                  <p><Link href="/story">Off The Grid</Link></p>
-                  <p><Link href="/contact">Establish Uplink</Link></p>
-                </div>
-              </div>
-              <div className="footer-sub-col">
-                <p className="mono">Connect</p>
-                <div className="footer-copy">
-                  <p>Base: Faroe Islands</p>
-                  <p>work.talharizwan@gmail.com</p>
-                  <br />
-                  <p>LinkedIn</p>
-                  <p>GitHub</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="footer-copyright">
-            <div className="footer-col">
-              <p className="mono">MWT July 2025</p>
-            </div>
-            <div className="footer-col">
-              <div className="footer-sub-col">
-                <p className="mono">Made by Talha Rizwan</p>
-              </div>
-              <div className="footer-sub-col">
-                <p className="mono">&copy; 2025 All Rights Reserved</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </>
   );
 }

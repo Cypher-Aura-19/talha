@@ -8,6 +8,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
+import Footer from '@/components/Footer';
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
@@ -38,6 +39,7 @@ export default function Page() {
   const progressBarRef = useRef(null);
   const outroHeaderRef = useRef(null);
   const instructionRef = useRef(null);
+  const imageCache = useRef({});
 
   useGSAP(
     () => {
@@ -67,15 +69,26 @@ export default function Page() {
 
       // Location data
       const locations = {
-        1: { label: "Code Review Peak", title: "Cabin Desk", desc: "Reviewing code with a view. Where pull requests meet mountain peaks. Every line scrutinized with the precision of a climber checking their gear.", image: "/story/1.png" },
-        2: { label: "Namaz Point", title: "Epic Ledge", desc: "Five times a day, the prayer mat comes out. Facing the peaks in namaz, finding clarity before complex algorithms. Where faith meets focus.", image: "/story/2.png" },
-        3: { label: "Barça Fan Zone", title: "Match Day Passion", desc: "Cheering for Barça from the mountains. Where blaugrana colors meet nature's peaks. Every goal celebrated, every match watched with the dedication of a true culé.", image: "/story/3.png" },
-        4: { label: "Code Base Camp", title: "Forest Laptop", desc: "The foundation of all operations. Where projects begin and ideas take root. Surrounded by nature, building digital forests.", image: "/story/4.png" },
-        5: { label: "API Testing", title: "Server Rack", desc: "Testing endpoints at altitude. Where APIs are stress-tested against the elements. Every request validated, every response verified.", image: "/story/5.png" },
-        6: { label: "Problem Solving Peak", title: "Lodge Balcony", desc: "The highest point of clarity. Where complex problems become simple solutions. Perspective changes everything at this altitude.", image: "/story/6.png" },
-        7: { label: "Night Coding", title: "Aurora Cabin", desc: "Coding under the northern lights. Where the aurora illuminates late-night debugging sessions. Magic happens when the world sleeps.", image: "/story/7.png" },
-        8: { label: "Code Planning", title: "River Notebook", desc: "Planning by the river. Where architecture flows like water. Every system designed with the patience of a flowing stream.", image: "/story/8.png" }
+        1: { label: "Code Review Peak", title: "Cabin Desk", desc: "Reviewing code with a view. Where pull requests meet mountain peaks. Every line scrutinized with the precision of a climber checking their gear.", image: "/story/1.webp" },
+        2: { label: "Namaz Point", title: "Epic Ledge", desc: "Five times a day, the prayer mat comes out. Facing the peaks in namaz, finding clarity before complex algorithms. Where faith meets focus.", image: "/story/2.webp" },
+        3: { label: "Barça Fan Zone", title: "Match Day Passion", desc: "Cheering for Barça from the mountains. Where blaugrana colors meet nature's peaks. Every goal celebrated, every match watched with the dedication of a true culé.", image: "/story/3.webp" },
+        4: { label: "Iron Temple", title: "Strength Sanctuary", desc: "Where discipline meets determination. Early morning sessions, heavy weights, and the grind that builds both body and mind. Every rep a step closer to peak performance.", image: "/story/4.webp" },
+        5: { label: "API Testing", title: "Server Rack", desc: "Testing endpoints at altitude. Where APIs are stress-tested against the elements. Every request validated, every response verified.", image: "/story/5.webp" },
+        6: { label: "Problem Solving Peak", title: "Lodge Balcony", desc: "The highest point of clarity. Where complex problems become simple solutions. Perspective changes everything at this altitude.", image: "/story/6.webp" },
+        7: { label: "Night Coding", title: "Aurora Cabin", desc: "Coding under the northern lights. Where the aurora illuminates late-night debugging sessions. Magic happens when the world sleeps.", image: "/story/7.webp" },
+        8: { label: "Code Planning", title: "River Notebook", desc: "Planning by the river. Where architecture flows like water. Every system designed with the patience of a flowing stream.", image: "/story/8.webp" }
       };
+
+      // Preload all location card images immediately
+      console.log('[Story] Preloading location card images...');
+      Object.values(locations).forEach(location => {
+        if (!imageCache.current[location.image]) {
+          const img = document.createElement('img');
+          img.src = location.image;
+          imageCache.current[location.image] = img;
+          console.log('[Story] Preloading:', location.image);
+        }
+      });
 
       // ========== HERO HEADING ANIMATION ==========
       // Animate hero heading immediately after page transition - NO DELAY
@@ -106,7 +119,7 @@ export default function Page() {
         }
       }
 
-      // Function to open card - Slow, smooth, cinematic animation
+      // Function to open card - Fast, smooth animation with preloaded images
       const openCard = (locationId) => {
         const location = locations[locationId];
         
@@ -114,7 +127,13 @@ export default function Page() {
         cardLabel.textContent = `▶ ${location.label}`;
         cardTitle.textContent = location.title;
         cardDesc.textContent = location.desc;
-        cardImageEl.src = location.image;
+        
+        // Use preloaded image from cache
+        if (imageCache.current[location.image]) {
+          cardImageEl.src = imageCache.current[location.image].src;
+        } else {
+          cardImageEl.src = location.image;
+        }
 
         // Show overlay
         gsap.set(cardOverlay, { display: 'flex' });
@@ -126,97 +145,66 @@ export default function Page() {
         });
         
         gsap.set(card, { 
-          scale: 0.85,
+          scale: 0.9,
           opacity: 0,
-          y: 40,
+          y: 20,
           force3D: true
         });
         
         gsap.set(cardImage, { 
           opacity: 0,
-          scale: 1.15,
-          y: 20,
+          scale: 1.1,
           force3D: true
         });
         
-        gsap.set(cardLabel, { 
+        gsap.set([cardLabel, cardTitle, cardDesc], { 
           opacity: 0,
-          x: -30,
-          force3D: true
-        });
-        
-        gsap.set(cardTitle, { 
-          opacity: 0,
-          y: 30,
-          force3D: true
-        });
-        
-        gsap.set(cardDesc, { 
-          opacity: 0,
-          y: 30,
+          y: 15,
           force3D: true
         });
 
-        // Create slow, smooth timeline
+        // Create fast, smooth timeline - reduced durations
         const tl = gsap.timeline();
 
-        // 1. Overlay fades in slowly
+        // 1. Overlay fades in quickly
         tl.to(cardOverlay, {
           opacity: 1,
-          duration: 0.6,
-          ease: 'power1.inOut',
+          duration: 0.3,
+          ease: 'power2.out',
           force3D: true
         }, 0)
         
-        // 2. Card gracefully scales and fades in
+        // 2. Card scales and fades in
         .to(card, {
           scale: 1,
           opacity: 1,
           y: 0,
-          duration: 1,
+          duration: 0.5,
           ease: 'power3.out',
           force3D: true
-        }, 0.2)
+        }, 0.1)
         
-        // 3. Image zooms in smoothly
+        // 3. Image fades in smoothly
         .to(cardImage, {
           opacity: 1,
           scale: 1,
-          y: 0,
-          duration: 1.2,
+          duration: 0.6,
           ease: 'power2.out',
           force3D: true
-        }, 0.5)
+        }, 0.2)
         
-        // 4. Label slides in from left
-        .to(cardLabel, {
-          opacity: 1,
-          x: 0,
-          duration: 0.8,
-          ease: 'power2.out',
-          force3D: true
-        }, 0.9)
-        
-        // 5. Title rises up
-        .to(cardTitle, {
+        // 4. Content fades in with stagger
+        .to([cardLabel, cardTitle, cardDesc], {
           opacity: 1,
           y: 0,
-          duration: 0.9,
+          duration: 0.4,
+          stagger: 0.08,
           ease: 'power2.out',
           force3D: true
-        }, 1.1)
-        
-        // 6. Description fades in last
-        .to(cardDesc, {
-          opacity: 1,
-          y: 0,
-          duration: 0.9,
-          ease: 'power2.out',
-          force3D: true
-        }, 1.3);
+        }, 0.4);
       };
 
-      // Function to close card - Slow, smooth reverse animation
+      // Function to close card - Fast, smooth reverse animation
       const closeCard = () => {
         const tl = gsap.timeline({
           onComplete: () => {
@@ -224,36 +212,36 @@ export default function Page() {
           }
         });
 
-        // Reverse the opening animation - smooth and slow
+        // Reverse the opening animation - fast and smooth
         tl.to([cardDesc, cardTitle, cardLabel], {
           opacity: 0,
-          y: 20,
-          duration: 0.5,
-          stagger: 0.08,
+          y: 10,
+          duration: 0.25,
+          stagger: 0.05,
           ease: 'power2.in',
           force3D: true
         }, 0)
         .to(cardImage, {
           opacity: 0,
-          scale: 1.1,
-          duration: 0.6,
+          scale: 1.05,
+          duration: 0.3,
+          ease: 'power2.in',
+          force3D: true
+        }, 0.1)
+        .to(card, {
+          scale: 0.95,
+          opacity: 0,
+          y: 15,
+          duration: 0.35,
           ease: 'power2.in',
           force3D: true
         }, 0.2)
-        .to(card, {
-          scale: 0.9,
-          opacity: 0,
-          y: 30,
-          duration: 0.7,
-          ease: 'power2.in',
-          force3D: true
-        }, 0.4)
         .to(cardOverlay, {
           opacity: 0,
-          duration: 0.5,
+          duration: 0.25,
           ease: 'power1.in',
           force3D: true
-        }, 0.6);
+        }, 0.3);
       };
 
       // Add click handlers to markers
@@ -644,7 +632,7 @@ export default function Page() {
 
           <div className="story-marker story-marker-4" ref={marker4Ref}>
             <span className="story-marker-icon"></span>
-            <p className="story-marker-label">Code Base Camp</p>
+            <p className="story-marker-label">Iron Temple</p>
           </div>
 
           <div className="story-marker story-marker-5" ref={marker5Ref}>
@@ -851,68 +839,8 @@ export default function Page() {
           </div>
         </section>
 
-        <footer>
-          <div className="container">
-            <div className="footer-top">
-              <div className="footer-col">
-                <p className="mono"><span>&#9654;</span> Initialize Encrypted Connection</p>
-                <div className="footer-email-container">
-                  <div className="footer-email-row">
-                    <input type="text" placeholder="your@email.com" />
-                    <button>
-                      <Image src="/global/footer-right-arrow.webp" alt="Submit" width={20} height={20} />
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div className="footer-col"></div>
-            </div>
-            <div className="footer-bottom">
-              <div className="footer-col">
-                <div className="footer-logo">
-                  <Image src="/global/logo.webp" alt="Logo" width={120} height={40} />
-                </div>
-              </div>
-              <div className="footer-col">
-                <div className="footer-sub-col">
-                  <p className="mono">Explore</p>
-                  <div className="footer-links">
-                    <p><Link href="/">Home Base</Link></p>
-                    <p><Link href="/about">The Operator</Link></p>
-                    <p><Link href="/work">Mission Logs</Link></p>
-                    <p><Link href="/story">Off The Grid</Link></p>
-                    <p><Link href="/contact">Establish Uplink</Link></p>
-                  </div>
-                </div>
-                <div className="footer-sub-col">
-                  <p className="mono">Connect</p>
-                  <div className="footer-copy">
-                    <p>Base: Faroe Islands</p>
-                    <p>work.talharizwan@gmail.com</p>
-                    <br />
-                    <p>LinkedIn</p>
-                    <p>GitHub</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="footer-copyright">
-              <div className="footer-col">
-                <p className="mono">MWT July 2025</p>
-              </div>
-              <div className="footer-col">
-                <div className="footer-sub-col">
-                  <p className="mono">Made by Talha Rizwan</p>
-                </div>
-                <div className="footer-sub-col">
-                  <p className="mono">&copy; 2025 All Rights Reserved</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </>
   );
 }
-

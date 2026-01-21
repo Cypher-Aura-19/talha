@@ -27,6 +27,8 @@
   gap: 1rem;
   max-height: 60vh;
   justify-content: center;
+  position: relative;
+  z-index: 1;
 }
 
 .contact .contact-header-title h2 {
@@ -40,7 +42,7 @@
   top: 50%;
   right: 2.75rem;
   transform: translateY(-50%);
-  z-index: 0;
+  z-index: 10;
   width: 45%;
   aspect-ratio: 16/9;
 }
@@ -101,7 +103,7 @@
   max-width: none;
   margin-top: 0.5rem;
   position: relative;
-  z-index: 10;
+  z-index: 5;
 }
 
 .contact-form {
