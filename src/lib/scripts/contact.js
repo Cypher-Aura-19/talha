@@ -70,8 +70,8 @@ export function initContact() {
           },
           onComplete: () => {
             console.log('[Contact] Video animation complete');
+            // Don't clear all props - keep the final position
             gsap.set(contactGif, { 
-              clearProps: "all",
               force3D: false,
               willChange: 'auto'
             });
