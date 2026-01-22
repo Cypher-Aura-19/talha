@@ -101,7 +101,7 @@
 
 .story-marker-1 {
   top: 40svh;
-  left: 50vw;
+  left: 44vw;
 }
 
 .story-marker-2 {
@@ -137,6 +137,11 @@
 .story-marker-8 {
   top: 52svh;
   left: 67vw;
+}
+
+.story-marker-9 {
+  top: 38svh;
+  left: 62vw;
 }
 
 .story-marker .story-marker-label {
@@ -334,6 +339,24 @@
 .story-marker.story-marker-8 .story-marker-label {
   color: var(--accent-2);
   border-left: 3px solid var(--accent-2);
+}
+
+.story-marker.story-marker-9 .story-marker-icon {
+  background-color: var(--accent-1);
+  border-color: var(--accent-1);
+}
+
+.story-marker.story-marker-9 .story-marker-icon::after {
+  background-color: #ffffff;
+}
+
+.story-marker.story-marker-9 .story-marker-icon::before {
+  border-color: var(--accent-1);
+}
+
+.story-marker.story-marker-9 .story-marker-label {
+  color: var(--accent-1);
+  border-left: 3px solid var(--accent-1);
 }
 
 @keyframes pulse-ring {
@@ -1098,6 +1121,11 @@
   .story-marker-8 {
     top: 45svh;
     left: 88vw;
+  }
+
+  .story-marker-9 {
+    top: 35svh;
+    left: 70vw;
   }
 
   .story-hero-content .story-hero-content-block {

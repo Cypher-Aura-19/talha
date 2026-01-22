@@ -27,6 +27,7 @@ export default function Page() {
   const marker6Ref = useRef(null);
   const marker7Ref = useRef(null);
   const marker8Ref = useRef(null);
+  const marker9Ref = useRef(null);
   const cardOverlayRef = useRef(null);
   const cardRef = useRef(null);
   const cardCloseRef = useRef(null);
@@ -57,6 +58,7 @@ export default function Page() {
       const marker6 = marker6Ref.current;
       const marker7 = marker7Ref.current;
       const marker8 = marker8Ref.current;
+      const marker9 = marker9Ref.current;
       const progressBar = progressBarRef.current;
       const cardOverlay = cardOverlayRef.current;
       const card = cardRef.current;
@@ -76,7 +78,8 @@ export default function Page() {
         5: { label: "API Testing", title: "Server Rack", desc: "Testing endpoints at altitude. Where APIs are stress-tested against the elements. Every request validated, every response verified.", image: "/story/5.webp" },
         6: { label: "Problem Solving Peak", title: "Lodge Balcony", desc: "The highest point of clarity. Where complex problems become simple solutions. Perspective changes everything at this altitude.", image: "/story/6.webp" },
         7: { label: "Night Coding", title: "Aurora Cabin", desc: "Coding under the northern lights. Where the aurora illuminates late-night debugging sessions. Magic happens when the world sleeps.", image: "/story/7.webp" },
-        8: { label: "Code Planning", title: "River Notebook", desc: "Planning by the river. Where architecture flows like water. Every system designed with the patience of a flowing stream.", image: "/story/8.webp" }
+        8: { label: "Code Planning", title: "River Notebook", desc: "Planning by the river. Where architecture flows like water. Every system designed with the patience of a flowing stream.", image: "/story/8.webp" },
+        9: { label: "Binge Station", title: "Series Command", desc: "Where code breaks meet season breaks. From hunting demons with the Winchesters to surviving the Upside Down and the apocalypse. Every episode is a masterclass in suspense. The only thing more addictive than debugging is the next episode.", image: "/story/9.webp" }
       };
 
       // Preload all location card images immediately
@@ -288,6 +291,7 @@ export default function Page() {
       marker6.style.cursor = 'pointer';
       marker7.style.cursor = 'pointer';
       marker8.style.cursor = 'pointer';
+      marker9.style.cursor = 'pointer';
 
       marker1.addEventListener('click', () => openCard(1));
       marker2.addEventListener('click', () => openCard(2));
@@ -297,6 +301,7 @@ export default function Page() {
       marker6.addEventListener('click', () => openCard(6));
       marker7.addEventListener('click', () => openCard(7));
       marker8.addEventListener('click', () => openCard(8));
+      marker9.addEventListener('click', () => openCard(9));
 
       cardClose.addEventListener('click', closeCard);
       cardOverlay.addEventListener('click', (e) => {
@@ -559,6 +564,23 @@ export default function Page() {
           gsap.set(marker8, {
             opacity: marker8Opacity,
           });
+
+          let marker9Opacity;
+          if (self.progress <= 0.58) {
+            marker9Opacity = 0;
+          } else if (self.progress <= 0.605) {
+            marker9Opacity = ease((self.progress - 0.58) / 0.025);
+          } else if (self.progress <= 0.7) {
+            marker9Opacity = 1;
+          } else if (self.progress <= 0.75) {
+            marker9Opacity = 1 - ease((self.progress - 0.7) / 0.05);
+          } else {
+            marker9Opacity = 0;
+          }
+
+          gsap.set(marker9, {
+            opacity: marker9Opacity,
+          });
         },
       });
 
@@ -688,6 +710,11 @@ export default function Page() {
           <div className="story-marker story-marker-8" ref={marker8Ref}>
             <span className="story-marker-icon"></span>
             <p className="story-marker-label">Code Planning</p>
+          </div>
+
+          <div className="story-marker story-marker-9" ref={marker9Ref}>
+            <span className="story-marker-icon"></span>
+            <p className="story-marker-label">Binge Station</p>
           </div>
 
           <div className="story-hero-content" ref={heroContentRef}>
