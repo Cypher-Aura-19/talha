@@ -50,12 +50,19 @@ export default function Contact() {
     });
   };
 
-  // Handle video unmuting
+  // Handle video unmuting and optimization
   useEffect(() => {
     const video = videoRef.current;
     if (video) {
       // Start muted for autoplay
       video.muted = true;
+      
+      // Optimize video playback
+      video.setAttribute('playsinline', 'true');
+      video.setAttribute('webkit-playsinline', 'true');
+      
+      // Force video to load and buffer
+      video.load();
       
       // Unmute after video starts playing
       const handlePlaying = () => {
@@ -64,10 +71,19 @@ export default function Contact() {
         console.log('[Contact] Video unmuted and playing with sound');
       };
       
+      // Ensure smooth playback
+      const handleCanPlay = () => {
+        console.log('[Contact] Video can play smoothly');
+        // Force play to ensure no stuttering
+        video.play().catch(err => console.log('[Contact] Play error:', err));
+      };
+      
       video.addEventListener('playing', handlePlaying, { once: true });
+      video.addEventListener('canplaythrough', handleCanPlay, { once: true });
       
       return () => {
         video.removeEventListener('playing', handlePlaying);
+        video.removeEventListener('canplaythrough', handleCanPlay);
       };
     }
   }, []);
@@ -199,7 +215,9 @@ export default function Contact() {
           zIndex: '9999',
           transform: 'none',
           borderRadius: '0',
-          right: 'auto'
+          right: 'auto',
+          willChange: 'transform',
+          backfaceVisibility: 'hidden'
         }}>
           <video 
             ref={videoRef}
@@ -212,7 +230,9 @@ export default function Contact() {
               width: '100%',
               height: '100%',
               objectFit: 'cover',
-              willChange: 'transform'
+              willChange: 'transform',
+              backfaceVisibility: 'hidden',
+              transform: 'translateZ(0)'
             }}
           ></video>
         </div>

@@ -54,14 +54,27 @@ export function initContact() {
         // 2. Remove inline styles to revert to natural CSS position
         contactGif.removeAttribute('style');
 
-        // 3. Animate from "Big" to "Small" using Flip
+        // 3. Animate from "Big" to "Small" using Flip with GPU acceleration
         Flip.from(state, {
           duration: 2,
           ease: "power4.inOut",
           absolute: true,
+          force3D: true,
+          immediateRender: true,
+          onStart: () => {
+            // Ensure GPU acceleration during animation
+            gsap.set(contactGif, { 
+              force3D: true,
+              willChange: 'transform'
+            });
+          },
           onComplete: () => {
             console.log('[Contact] Video animation complete');
-            gsap.set(contactGif, { clearProps: "all" });
+            gsap.set(contactGif, { 
+              clearProps: "all",
+              force3D: false,
+              willChange: 'auto'
+            });
             
             // Show the form and other content after video animation
             const formWrapper = document.querySelector('.contact-form-wrapper');
@@ -76,7 +89,8 @@ export function initContact() {
                 opacity: 1,
                 y: 0,
                 duration: 1.2,
-                ease: 'power3.out'
+                ease: 'power3.out',
+                force3D: true
               }, 0);
             }
             
@@ -85,7 +99,8 @@ export function initContact() {
                 opacity: 1,
                 y: 0,
                 duration: 1.2,
-                ease: 'power3.out'
+                ease: 'power3.out',
+                force3D: true
               }, 0.15);
             }
             
@@ -94,7 +109,8 @@ export function initContact() {
                 opacity: 1,
                 y: 0,
                 duration: 1.4,
-                ease: 'power3.out'
+                ease: 'power3.out',
+                force3D: true
               }, 0.3);
             }
           }

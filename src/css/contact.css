@@ -47,6 +47,9 @@
   z-index: 10;
   width: 45%;
   aspect-ratio: 16/9;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .contact .contact-gif video {
@@ -54,6 +57,9 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .home-spotlight-top-bar {
