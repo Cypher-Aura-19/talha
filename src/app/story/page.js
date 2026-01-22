@@ -90,8 +90,39 @@ export default function Page() {
         }
       });
 
+      // ========== HERO IMAGE LOADING ==========
+      // CRITICAL: Wait for hero image to load before starting animations
+      const ensureHeroImageLoaded = () => {
+        return new Promise((resolve) => {
+          if (!heroImgElement) {
+            resolve();
+            return;
+          }
+
+          // If image is already loaded
+          if (heroImgElement.complete && heroImgElement.naturalHeight !== 0) {
+            console.log('[Story] Hero image already loaded');
+            resolve();
+            return;
+          }
+
+          // Wait for image to load
+          console.log('[Story] Waiting for hero image to load...');
+          heroImgElement.onload = () => {
+            console.log('[Story] Hero image loaded');
+            resolve();
+          };
+          
+          // Fallback in case of error
+          heroImgElement.onerror = () => {
+            console.warn('[Story] Hero image failed to load');
+            resolve();
+          };
+        });
+      };
+
       // ========== HERO HEADING ANIMATION ==========
-      // Animate hero heading immediately after page transition - NO DELAY
+      // Animate hero heading AFTER image loads and transition completes
       if (heroHeading) {
         const heroHeadingSplit = SplitText.create(heroHeading, {
           type: "words",
@@ -101,7 +132,11 @@ export default function Page() {
         gsap.set(heroHeadingSplit.words, { yPercent: 120 });
 
         // Listen for page transition complete
-        const animateHeroHeading = () => {
+        const animateHeroHeading = async () => {
+          // Wait for hero image to be fully loaded
+          await ensureHeroImageLoaded();
+          
+          console.log('[Story] Starting heading animation');
           gsap.to(heroHeadingSplit.words, {
             yPercent: 0,
             duration: 0.5,

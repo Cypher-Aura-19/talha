@@ -37,25 +37,6 @@ export function initContact() {
   if (contactGif) {
     const video = contactGif.querySelector("video");
 
-    if (video) {
-      // Track if video has played once
-      let hasPlayedOnce = false;
-      
-      // Set initial volume to full (unmuted)
-      video.muted = false;
-      video.volume = 1.0;
-      console.log('[Contact] Video starting with full volume');
-      
-      // Listen for when video ends (before looping)
-      video.addEventListener('ended', () => {
-        if (!hasPlayedOnce) {
-          console.log('[Contact] Video first play ended, muting for loop');
-          video.muted = true;
-          hasPlayedOnce = true;
-        }
-      });
-    }
-
     const performAnimation = () => {
       console.log('[Contact] Setting up video animation');
       
@@ -81,6 +62,41 @@ export function initContact() {
           onComplete: () => {
             console.log('[Contact] Video animation complete');
             gsap.set(contactGif, { clearProps: "all" });
+            
+            // Show the form and other content after video animation
+            const formWrapper = document.querySelector('.contact-form-wrapper');
+            const callout = document.querySelector('.contact-callout p');
+            const title = document.querySelector('.contact-header-title h2');
+            
+            // Smooth staggered fade-in with better easing
+            const tl = gsap.timeline({ delay: 0.3 });
+            
+            if (callout) {
+              tl.to(callout, {
+                opacity: 1,
+                y: 0,
+                duration: 1.2,
+                ease: 'power3.out'
+              }, 0);
+            }
+            
+            if (title) {
+              tl.to(title, {
+                opacity: 1,
+                y: 0,
+                duration: 1.2,
+                ease: 'power3.out'
+              }, 0.15);
+            }
+            
+            if (formWrapper) {
+              tl.to(formWrapper, {
+                opacity: 1,
+                y: 0,
+                duration: 1.4,
+                ease: 'power3.out'
+              }, 0.3);
+            }
           }
         });
       }, videoDuration * 1000); // Convert to milliseconds

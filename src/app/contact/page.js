@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import '@/css/contact.css';
 
 export default function Contact() {
@@ -11,6 +11,7 @@ export default function Contact() {
   });
   const [status, setStatus] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const videoRef = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -49,12 +50,73 @@ export default function Contact() {
     });
   };
 
+  // Handle video unmuting
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      // Start muted for autoplay
+      video.muted = true;
+      
+      // Unmute after video starts playing
+      const handlePlaying = () => {
+        video.muted = false;
+        video.volume = 1.0;
+        console.log('[Contact] Video unmuted and playing with sound');
+      };
+      
+      video.addEventListener('playing', handlePlaying, { once: true });
+      
+      return () => {
+        video.removeEventListener('playing', handlePlaying);
+      };
+    }
+  }, []);
+
   useEffect(() => {
     console.log('[Contact] Component mounted');
     
     let cleanup = null;
     let eventListenerAdded = false;
     let scriptsLoaded = false;
+    
+    // CRITICAL: Preload and prepare video before transition ends
+    const preloadVideo = () => {
+      return new Promise((resolve) => {
+        const videoElement = videoRef.current;
+        if (!videoElement) {
+          console.warn('[Contact] Video element not found');
+          resolve();
+          return;
+        }
+        
+        // If video is already loaded
+        if (videoElement.readyState >= 3) {
+          console.log('[Contact] Video already loaded');
+          resolve();
+          return;
+        }
+        
+        // Wait for video to be ready to play
+        console.log('[Contact] Waiting for video to load...');
+        
+        const handleCanPlay = () => {
+          console.log('[Contact] Video can play');
+          resolve();
+        };
+        
+        videoElement.addEventListener('canplaythrough', handleCanPlay, { once: true });
+        
+        // Fallback timeout - don't wait forever
+        setTimeout(() => {
+          console.log('[Contact] Video preload timeout, proceeding anyway');
+          videoElement.removeEventListener('canplaythrough', handleCanPlay);
+          resolve();
+        }, 2000);
+        
+        // Force load the video
+        videoElement.load();
+      });
+    };
     
     const loadScripts = async () => {
       if (scriptsLoaded) {
@@ -65,6 +127,10 @@ export default function Contact() {
       try {
         console.log('[Contact] Loading scripts...');
         scriptsLoaded = true;
+        
+        // Wait for video to be ready first
+        await preloadVideo();
+        console.log('[Contact] Video preloaded successfully');
         
         if (!window.lenis) {
           const lenisModule = await import('@/lib/scripts/lenis-scroll.js');
@@ -135,19 +201,32 @@ export default function Contact() {
           borderRadius: '0',
           right: 'auto'
         }}>
-          <video src="/contact/vide.mp4" autoPlay loop playsInline preload="auto" loading="eager"></video>
+          <video 
+            ref={videoRef}
+            src="/contact/vide.mp4" 
+            autoPlay 
+            loop 
+            playsInline 
+            preload="auto"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              willChange: 'transform'
+            }}
+          ></video>
         </div>
 
         <div className="home-spotlight-top-bar">
           <div className="container">
             <div className="symbols-container">
               <div className="symbol">
-                <img src="/symbols/s1-light.png" alt="Symbol" />
+                <img src="/symbols/s1-light.webp" alt="Symbol" />
               </div>
             </div>
             <div className="symbols-container">
               <div className="symbol">
-                <img src="/symbols/s1-light.png" alt="Symbol" />
+                <img src="/symbols/s1-light.webp" alt="Symbol" />
               </div>
             </div>
           </div>

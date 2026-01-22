@@ -31,14 +31,17 @@ const PageTransition = ({ children }) => {
       ],
       '/story': [
         '/story/hero.webp',
-        '/story/1.png',
-        '/story/2.png',
-        '/story/3.png',
-        '/story/4.png',
-        '/story/5.png',
-        '/story/6.png',
-        '/story/7.png',
-        '/story/8.png'
+        '/story/1.webp',
+        '/story/2.webp',
+        '/story/3.webp',
+        '/story/4.webp',
+        '/story/5.webp',
+        '/story/6.webp',
+        '/story/7.webp',
+        '/story/8.webp'
+      ],
+      '/contact': [
+        '/contact/vide.mp4'  // Preload video for contact page
       ],
       '/project-1': [
         '/project-images/delivetree-1.webp',
@@ -90,6 +93,25 @@ const PageTransition = ({ children }) => {
         return Promise.resolve(url);
       }
 
+      // Check if it's a video file
+      if (url.endsWith('.mp4') || url.endsWith('.webm')) {
+        return new Promise((resolve) => {
+          const video = document.createElement('video');
+          video.preload = 'auto';
+          video.onloadeddata = () => {
+            console.log(`[PageTransition] Video loaded: ${url}`);
+            window.__imagePreloadCache.add(url);
+            resolve(url);
+          };
+          video.onerror = () => {
+            console.warn(`[PageTransition] Failed to load video: ${url}`);
+            resolve(url);
+          };
+          video.src = url;
+        });
+      }
+
+      // Regular image loading
       return new Promise((resolve) => {
         const img = new Image();
         img.onload = () => {

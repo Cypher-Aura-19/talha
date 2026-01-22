@@ -14,14 +14,14 @@ function preloadPageImages(targetPath) {
     ],
     '/story': [
       '/story/hero.webp',
-      '/story/1.png',
-      '/story/2.png',
-      '/story/3.png',
-      '/story/4.png',
-      '/story/5.png',
-      '/story/6.png',
-      '/story/7.png',
-      '/story/8.png'
+      '/story/1.webp',
+      '/story/2.webp',
+      '/story/3.webp',
+      '/story/4.webp',
+      '/story/5.webp',
+      '/story/6.webp',
+      '/story/7.webp',
+      '/story/8.webp'
     ]
   };
 
