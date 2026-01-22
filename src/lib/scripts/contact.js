@@ -51,8 +51,18 @@ export function initContact() {
         // 1. Capture the current "Big" (Fullscreen) state
         const state = Flip.getState(contactGif);
 
-        // 2. Remove inline styles to revert to natural CSS position
-        contactGif.removeAttribute('style');
+        // 2. Set the final CSS position (don't remove style, set it explicitly)
+        gsap.set(contactGif, {
+          position: 'absolute',
+          top: '50%',
+          right: '2.75rem',
+          left: 'auto',
+          width: '45%',
+          height: 'auto',
+          transform: 'translateY(-50%)',
+          zIndex: 10,
+          borderRadius: 0
+        });
 
         // 3. Animate from "Big" to "Small" using Flip with GPU acceleration
         Flip.from(state, {
@@ -61,20 +71,8 @@ export function initContact() {
           absolute: true,
           force3D: true,
           immediateRender: true,
-          onStart: () => {
-            // Ensure GPU acceleration during animation
-            gsap.set(contactGif, { 
-              force3D: true,
-              willChange: 'transform'
-            });
-          },
           onComplete: () => {
             console.log('[Contact] Video animation complete');
-            // Don't clear all props - keep the final position
-            gsap.set(contactGif, { 
-              force3D: false,
-              willChange: 'auto'
-            });
             
             // Show the form and other content after video animation
             const formWrapper = document.querySelector('.contact-form-wrapper');
