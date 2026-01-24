@@ -12,6 +12,7 @@
   --base-100: #f9f4eb;
   --base-200: #efece5;
   --base-300: #0a0a0a;
+  --transition-bg: #1a1a1a; /* Dark grey for transitions instead of pure black */
   --base-secondary-dark: #686560;
   --base-secondary-fade: rgba(249, 244, 235, 0.15);
   --accent-1: #b1c1ef;
@@ -209,7 +210,7 @@ a span {
 .block {
   flex: 1;
   height: 100%;
-  background: var(--base-300);
+  background: var(--transition-bg);
   transform: scaleX(0);
   transform-origin: left;
   position: relative;
@@ -228,7 +229,7 @@ a span {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: var(--base-300);
+  background: var(--transition-bg);
   pointer-events: none;
   opacity: 0;
 }
